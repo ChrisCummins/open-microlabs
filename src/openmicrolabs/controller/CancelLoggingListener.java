@@ -36,7 +36,7 @@ public class CancelLoggingListener extends OMLController implements
 	@Override
 	public void actionPerformed (ActionEvent e)
 	{
-		// TODO Auto-generated method stub
+		// TODO: CancelLoggignListener
 
 	}
 

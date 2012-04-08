@@ -18,6 +18,12 @@
 
 package openmicrolabs.model;
 
+import openmicrolabs.settings.CommSettings;
+import openmicrolabs.settings.LogSettings;
+
+import org.jfree.data.general.SeriesChangeListener;
+import org.jfree.data.time.TimeSeriesCollection;
+
 /**
  * This implementation of the Model interface performs the necessary roles of an
  * Open MicroLabs model.
@@ -27,5 +33,68 @@ package openmicrolabs.model;
  */
 public class OMLModel implements Model
 {
+
+	@Override
+	public boolean testConnection ()
+	{
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public void startLogging ()
+	{
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void stopLogging ()
+	{
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void setCommSettings (CommSettings c)
+	{
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void setLogSettings (LogSettings l)
+	{
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public CommSettings getCommSettings ()
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public LogSettings getLogSettings ()
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public TimeSeriesCollection getData ()
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void addNewDataListener (SeriesChangeListener l)
+	{
+		// TODO Auto-generated method stub
+		
+	}
 
 }

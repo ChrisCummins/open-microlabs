@@ -36,7 +36,7 @@ public class NewDataListener extends OMLController implements
 	@Override
 	public void seriesChanged (SeriesChangeEvent event)
 	{
-		// TODO Auto-generated method stub
+		// TODO: New data listener
 
 	}
 

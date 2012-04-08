@@ -35,7 +35,7 @@ public class ShowGUISettingsListener extends OMLController implements ActionList
 	@Override
 	public void actionPerformed (ActionEvent e)
 	{
-		// TODO Auto-generated method stub
+		// TODO: GUI Settings Listener.
 		
 	}
 

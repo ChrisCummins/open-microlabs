@@ -18,6 +18,9 @@
 
 package openmicrolabs.controller;
 
+import openmicrolabs.model.Model;
+import openmicrolabs.view.View;
+
 /**
  * This implementation of the Controller interface performs the duties of
  * instantiating a model and view, then attaching the required listeners.
@@ -27,5 +30,15 @@ package openmicrolabs.controller;
  */
 public class OMLController implements Controller
 {
+	protected Model m;
+	protected View v;
+
+	@Override
+	public void init (Model m, View v)
+	{
+		this.m = m;
+		this.v = v;
+		//TODO: Add listeners
+	}
 
 }

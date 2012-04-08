@@ -18,6 +18,11 @@
 
 package openmicrolabs.view;
 
+import java.awt.event.ActionListener;
+
+import openmicrolabs.settings.CommSettings;
+import openmicrolabs.settings.LogSettings;
+
 /**
  * This interface specifies the required behaviour of the View portion of the
  * Open MicroLabs MCV architecture. It is responsible for obtaining information
@@ -30,4 +35,100 @@ package openmicrolabs.view;
 public interface View
 {
 
+	/**
+	 * Display an information message to the user.
+	 * 
+	 * @param msg
+	 *            Message to be displayed.
+	 */
+	public void showMessage (String msg);
+
+	/**
+	 * Display an error message to the user.
+	 * 
+	 * @param ms
+	 *            Message to be displayed.
+	 */
+	public void showError (String ms);
+
+	/**
+	 * Get CommSettings from GUI.
+	 * 
+	 * @return CommSettings.
+	 * @see openmicrolabs.settings.CommSettings#CommSettings()
+	 */
+	public CommSettings getCommSettings ();
+
+	/**
+	 * Get LogSettings from GUI.
+	 * 
+	 * @return LogSettings.
+	 * @see openmicrolabs.settings.LogSettings#LogSettings()
+	 */
+	public LogSettings getLogSettings ();
+
+	/**
+	 * Informs the view that logging has begun.
+	 */
+	public void loggingStarted ();
+
+	/**
+	 * Informs the view that new data has been added to the data model.
+	 */
+	public void updateViews ();
+
+	/**
+	 * Add an action listener for when CommSettings are set.
+	 * 
+	 * @param l
+	 *            ActionListener.
+	 * @see openmicrolabs.controller.CommSettingsListener#actionPerformed(java.awt.event.ActionEvent)
+	 */
+	public void addCommSettingsListener (ActionListener l);
+
+	/**
+	 * Add an action listener for a request to test the connection.
+	 * 
+	 * @param l
+	 *            ActionListener.
+	 * @see openmicrolabs.controller.TestConnectionListener#actionPerformed(java.awt.event.ActionEvent)
+	 */
+	public void addTestConnectionListener (ActionListener l);
+
+	/**
+	 * Add an action listener for a request to display the GUISettings view.
+	 * 
+	 * @param l
+	 *            ActionListener.
+	 * @see openmicrolabs.controller.ShowGUISettingsListener#actionPerformed(java.awt.event.ActionEvent)
+	 */
+	public void addShowGUISettingsListener (ActionListener l);
+
+	/**
+	 * Add an action listener for when GUISettings are set.
+	 * 
+	 * @param l
+	 *            ActionListener.
+	 * @see openmicrolabs.controller.GUISettingsListener#actionPerformed(java.awt.event.ActionEvent)
+	 */
+	public void addGUISettingsListener (ActionListener l);
+
+	/**
+	 * Add an action listener for a request to start logging.
+	 * 
+	 * @param l
+	 *            ActionListener.
+	 * @see openmicrolabs.controller.StartLoggingListener#actionPerformed(java.awt.event.ActionEvent)
+	 */
+	public void addStartLoggingListener (ActionListener l);
+
+	/**
+	 * Add an action listener for a request to cancel logging.
+	 * 
+	 * @param l
+	 *            ActionListener.
+	 * @see openmicrolabs.controller.CancelLoggingListener#actionPerformed(java.awt.event.ActionEvent)
+	 */
+	public void addCancelLoggingListener (ActionListener l);
+	
 }

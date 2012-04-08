@@ -37,7 +37,7 @@ public class SerialBuffer extends SerialComm
 			int stopBits, int parity, int flowControl)
 	{
 		super (portName, baudRate, dataBits, stopBits, parity, flowControl);
-		// TODO Auto-generated constructor stub
+		// TODO: Change SerialBuffer constructor
 	}
 
 }

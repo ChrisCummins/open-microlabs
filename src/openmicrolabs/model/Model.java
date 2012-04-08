@@ -18,6 +18,12 @@
 
 package openmicrolabs.model;
 
+import org.jfree.data.general.SeriesChangeListener;
+import org.jfree.data.time.TimeSeriesCollection;
+
+import openmicrolabs.settings.CommSettings;
+import openmicrolabs.settings.LogSettings;
+
 /**
  * This interface specifies the required behaviour of a model class for the Open
  * MicroLabs software. It handles data flow to and from the controller and is
@@ -29,5 +35,79 @@ package openmicrolabs.model;
  */
 public interface Model
 {
+
+	/**
+	 * Tests the connection with the microcontroller at the set comm settings.
+	 * setCommSettings() must have been called beforehand.
+	 * 
+	 * @return <code>true</code> if connection is established, else
+	 *         <code>false</code>.
+	 * @see Model#setCommSettings(CommSettings)
+	 */
+	public boolean testConnection ();
+
+	/**
+	 * Starts a logging session. setLogSettings() must have been called
+	 * beforehand.
+	 * 
+	 * @see Model#startLogging()
+	 */
+	public void startLogging ();
+
+	/**
+	 * Stops a running logging session prematurely and prevents any more
+	 * readings from being made.
+	 */
+	public void stopLogging ();
+
+	/**
+	 * Set the comm settings for serial communications with the microcontroller.
+	 * 
+	 * @param c
+	 *            CommSettings.
+	 * @see openmicrolabs.settings.CommSettings#CommSettings()
+	 */
+	public void setCommSettings (CommSettings c);
+
+	/**
+	 * Set the settings for a logging session.
+	 * 
+	 * @param l
+	 *            LogSettings.
+	 * @see openmicrolabs.settings.LogSettings#LogSettings()
+	 */
+	public void setLogSettings (LogSettings l);
+
+	/**
+	 * Returns the set CommSettings.
+	 * 
+	 * @return CommSettings currently in use.
+	 * @see openmicrolabs.settings.CommSettings#CommSettings()
+	 */
+	public CommSettings getCommSettings ();
+
+	/**
+	 * Returns the LogSettings.
+	 * 
+	 * @return LogSettings currently in use.
+	 * @see openmicrolabs.settings.LogSettings#LogSettings()
+	 */
+	public LogSettings getLogSettings ();
+
+	/**
+	 * Returns the current data which has been read from the microcontroller.
+	 * 
+	 * @return TimeSeriesCollection
+	 */
+	public TimeSeriesCollection getData ();
+
+	/**
+	 * Adds a series change listener to the microcontroller data model,
+	 * therefore enabling new data to be read.
+	 * 
+	 * @param l
+	 *            SeriesChangeListener.
+	 */
+	public void addNewDataListener (SeriesChangeListener l);
 
 }

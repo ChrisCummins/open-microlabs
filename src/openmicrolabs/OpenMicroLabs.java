@@ -18,6 +18,10 @@
 
 package openmicrolabs;
 
+import openmicrolabs.controller.OMLController;
+import openmicrolabs.model.OMLModel;
+import openmicrolabs.view.OMLView;
+
 /**
  * This class is responsible for instantiating the Open MicroLabs program and
  * should be the only class that is run.
@@ -25,17 +29,19 @@ package openmicrolabs;
  * @author Chris Cummins
  * 
  */
-public class StartGUI
+public class OpenMicroLabs
 {
 
 	/**
 	 * Instantiates a Controller.
-	 * @param args none.
+	 * 
+	 * @param args
+	 *            none.
 	 */
 	public static void main (String[] args)
 	{
-		// TODO Auto-generated method stub
-
+		OMLController c = new OMLController ();
+		c.init (new OMLModel (), new OMLView ());
 	}
 
 }

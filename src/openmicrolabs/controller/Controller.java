@@ -18,6 +18,9 @@
 
 package openmicrolabs.controller;
 
+import openmicrolabs.model.Model;
+import openmicrolabs.view.View;
+
 /**
  * This interface specifies the required behaviour for a Open MicroLabs
  * controller, fulfilling the roles of a controller within the MCV architecture.
@@ -27,5 +30,14 @@ package openmicrolabs.controller;
  */
 public interface Controller
 {
+	/**
+	 * Initialise the Open MicroLabs program.
+	 * 
+	 * @param m
+	 *            Model to be used.
+	 * @param v
+	 *            View to be used.
+	 */
+	public void init (Model m, View v);
 
 }

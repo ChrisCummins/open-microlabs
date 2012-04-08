@@ -37,7 +37,7 @@ public class GUISettingsListener extends OMLController implements
 	@Override
 	public void actionPerformed (ActionEvent e)
 	{
-		// TODO Auto-generated method stub
+		// TODO: GUI Settings Listener
 
 	}
 
