@@ -28,4 +28,32 @@ package openmicrolabs.signals;
 public class OMLRaw implements Signal
 {
 
+	/**
+	 * Returns the argument, since it is a raw signal and so no conversion is
+	 * required.
+	 */
+	@Override
+	public double toValue (double rawInt)
+	{
+		return rawInt;
+	}
+
+	/**
+	 * Formats the value to a 4-digit decimal value.
+	 */
+	@Override
+	public String toString (double rawInt)
+	{
+		return String.format ("%04d", rawInt);
+	}
+
+	/**
+	 * Returns Raw.
+	 */
+	@Override
+	public String name ()
+	{
+		return "Raw";
+	}
+
 }

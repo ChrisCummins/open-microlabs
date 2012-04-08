@@ -19,12 +19,41 @@
 package openmicrolabs.signals;
 
 /**
- * This interface represents the raw result from a microcontroller AD conversion.
+ * This interface represents the raw result from a microcontroller AD
+ * conversion.
  * 
  * @author Chris Cummins
  * 
  */
 public interface Signal
 {
+
+	/**
+	 * Converts an unsigned 10-bit integer [0, 1023] to a double value
+	 * representing the physical value that this signal represents.
+	 * 
+	 * @param rawInt
+	 *            Value to be converted.
+	 * @return Converted value.
+	 */
+	public double toValue (double rawInt);
+
+	/**
+	 * Converts an unsigned 10-bit integer [0, 1023] to formatted String
+	 * representing the physical value that this signal represents, with units
+	 * and rounded to an appropriate number of decimal places.
+	 * 
+	 * @param rawInt
+	 *            Value to be converted.
+	 * @return Converted value as human readable string.
+	 */
+	public String toString (double rawInt);
+
+	/**
+	 * Returns the name of the Signal as a string.
+	 * 
+	 * @return String.
+	 */
+	public String name ();
 
 }

@@ -28,4 +28,100 @@ package openmicrolabs.settings;
 public class CommSettings
 {
 
+	private final String PORTNAME;
+	private final int BAUDRATE;
+	private final int DATABITS;
+	private final int STOPBITS;
+	private final int PARITY;
+	private final int FLOWCONTROL;
+
+	/**
+	 * Constructs a CommSettings object from arguments.
+	 * 
+	 * @param portName
+	 *            Port name to connect to.
+	 * @param baudRate
+	 *            The baud rate to use (b/s).
+	 * @param dataBits
+	 *            The number of databits to use.
+	 * @param stopBits
+	 *            The number of stopbits to use.
+	 * @param parity
+	 *            The parity to set.
+	 * @param flowControl
+	 *            The flow control to set.
+	 * @see cummins.serial.SerialComm#SerialComm(String, int, int, int, int,
+	 *      int)
+	 */
+	public CommSettings (String portName, int baudRate, int dataBits,
+			int stopBits, int parity, int flowControl)
+	{
+		this.PORTNAME = portName;
+		this.BAUDRATE = baudRate;
+		this.DATABITS = dataBits;
+		this.STOPBITS = stopBits;
+		this.PARITY = parity;
+		this.FLOWCONTROL = flowControl;
+	}
+
+	/**
+	 * Get port name.
+	 * 
+	 * @return String.
+	 */
+	public String portName ()
+	{
+		return PORTNAME;
+	}
+
+	/**
+	 * Get baud rate.
+	 * 
+	 * @return Int.
+	 */
+	public int baudRate ()
+	{
+		return BAUDRATE;
+	}
+
+	/**
+	 * Get data bits.
+	 * 
+	 * @return Int.
+	 */
+	public int dataBits ()
+	{
+		return DATABITS;
+	}
+
+	/**
+	 * Get stop bits.
+	 * 
+	 * @return Int.
+	 */
+	public int stopBits ()
+	{
+		return STOPBITS;
+	}
+
+	/**
+	 * Get parity.
+	 * 
+	 * @return Int.
+	 */
+	public int parity ()
+	{
+		return PARITY;
+	}
+
+	/**
+	 * Get flow control.
+	 * 
+	 * @return Int.
+	 */
+	public int flowControl ()
+	{
+		return FLOWCONTROL;
+	}
+
 }

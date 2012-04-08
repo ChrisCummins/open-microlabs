@@ -18,14 +18,45 @@
 
 package openmicrolabs.signals;
 
+import cummins.maths.DecimalRounder;
+
 /**
  * This implementation of the Signal interface represents a voltage signal, with
- * an assumed AREF of 5V, thus giving a range of [0, 5].
+ * an assumed AREF of 5V, thus giving a range of [0, 5]V. With 10 bits of
+ * accuracy, the absolute accuray is +/- 9.76mV.
  * 
  * @author Chris Cummins
  * 
  */
-public class Voltage implements Signal
+public class OMLVoltage implements Signal
 {
+
+	/**
+	 * Converts the value to a voltage in the range [0, 5]V.
+	 */
+	@Override
+	public double toValue (double rawInt)
+	{
+		return rawInt * 0.00488758553;
+	}
+
+	/**
+	 * This method provides formatting of OMLVoltage values for normal formatted
+	 * display. It rounds the value to 2 decimal places and appends a 'V' unit.
+	 */
+	@Override
+	public String toString (double rawInt)
+	{
+		return (new DecimalRounder (2)).round (this.toValue (rawInt)) + "V";
+	}
+
+	/**
+	 * Returns Voltage.
+	 */
+	@Override
+	public String name ()
+	{
+		return "Voltage";
+	}
 
 }
