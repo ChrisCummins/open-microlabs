@@ -18,6 +18,12 @@
 
 package openmicrolabs.model;
 
+import gnu.io.NoSuchPortException;
+import gnu.io.PortInUseException;
+import gnu.io.UnsupportedCommOperationException;
+
+import java.io.IOException;
+
 import org.jfree.data.general.SeriesChangeListener;
 import org.jfree.data.time.TimeSeriesCollection;
 
@@ -42,9 +48,11 @@ public interface Model
 	 * 
 	 * @return <code>true</code> if connection is established, else
 	 *         <code>false</code>.
-	 * @see Model#setCommSettings(CommSettings)
+	 * @throws IOException
+	 *             In case of IO error
+	 * @see Model#setCommSettings(CommSettings) .
 	 */
-	public boolean testConnection ();
+	public boolean testConnection () throws IOException;
 
 	/**
 	 * Starts a logging session. setLogSettings() must have been called
@@ -67,7 +75,8 @@ public interface Model
 	 *            CommSettings.
 	 * @see openmicrolabs.settings.CommSettings#CommSettings()
 	 */
-	public void setCommSettings (CommSettings c);
+	public void setCommSettings (CommSettings c) throws NoSuchPortException,
+			PortInUseException, UnsupportedCommOperationException, IOException;
 
 	/**
 	 * Set the settings for a logging session.

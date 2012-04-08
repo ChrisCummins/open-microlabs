@@ -18,6 +18,12 @@
 
 package openmicrolabs.model;
 
+import gnu.io.NoSuchPortException;
+import gnu.io.PortInUseException;
+import gnu.io.UnsupportedCommOperationException;
+
+import java.io.IOException;
+
 import openmicrolabs.settings.CommSettings;
 import openmicrolabs.settings.LogSettings;
 
@@ -33,68 +39,96 @@ import org.jfree.data.time.TimeSeriesCollection;
  */
 public class OMLModel implements Model
 {
+	private SerialBuffer buffer;
+	private SerialReader reader;
+	private OMLDataseries dataset;
 
+	/**
+	 * Tests the connection with the microcontroller at the set comm settings.
+	 * setCommSettings() must have been called beforehand.
+	 * 
+	 */
 	@Override
-	public boolean testConnection ()
+	public boolean testConnection () throws IOException
 	{
-		// TODO Auto-generated method stub
-		return false;
+		return buffer.testConnection ();
 	}
 
+	/**
+	 * Creates a new OMLDataseries from the SerialReader and then starts
+	 * logging.
+	 */
 	@Override
 	public void startLogging ()
 	{
-		// TODO Auto-generated method stub
-		
+		dataset = new OMLDataseries (reader);
+		dataset.statLogging ();
 	}
 
+	/**
+	 * Stops logging.
+	 */
 	@Override
 	public void stopLogging ()
 	{
-		// TODO Auto-generated method stub
-		
+		dataset.stopLogging ();
 	}
 
+	/**
+	 * Creates a new SerialBuffer with the given CommSettings.
+	 */
 	@Override
-	public void setCommSettings (CommSettings c)
+	public void setCommSettings (CommSettings c) throws NoSuchPortException,
+			PortInUseException, UnsupportedCommOperationException, IOException
 	{
-		// TODO Auto-generated method stub
-		
+		buffer = new SerialBuffer (c);
 	}
 
+	/**
+	 * Creates a new SerialReader with the given LogSettings, then updates the
+	 * SerialBuffer to the latest version.
+	 */
 	@Override
 	public void setLogSettings (LogSettings l)
 	{
-		// TODO Auto-generated method stub
-		
+		reader = new SerialReader (l, buffer);
+		buffer = reader.getSerialBuffer ();
 	}
 
+	/**
+	 * Returns the CommSettings from the SerialBuffer.
+	 */
 	@Override
 	public CommSettings getCommSettings ()
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return buffer.getCommSettings ();
 	}
 
+	/**
+	 * Returns the log settings from the Serialreader.
+	 */
 	@Override
 	public LogSettings getLogSettings ()
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return reader.getLogSettings ();
 	}
 
+	/**
+	 * Returns the TimeSeriesCollection from the OMLDataseries.
+	 */
 	@Override
 	public TimeSeriesCollection getData ()
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return dataset.getData ();
 	}
 
+	/**
+	 * Adds a new SeriesChangeListener to the OMLDataseries.
+	 */
 	@Override
 	public void addNewDataListener (SeriesChangeListener l)
 	{
-		// TODO Auto-generated method stub
-		
+		dataset.addNewDataListener (l);
 	}
 
 }

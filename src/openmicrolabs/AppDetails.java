@@ -36,6 +36,7 @@ public abstract class AppDetails
 	private static final String VERSION = "v0.3 Beta";
 	private static final String AUTHOR = "Chris Cummins";
 	private static final String DATA_DELIMITER = ", ";
+	private static final String SERIAL_DELIMITER = ",";
 	private static final long SLEEP_TIME = 25;
 
 	/**
@@ -71,11 +72,22 @@ public abstract class AppDetails
 	/**
 	 * Returns the delimiter to be used during File Writing.
 	 * 
-	 * @return Dat string.
+	 * @return Delimiter string.
 	 */
 	public static final String datDelimiter ()
 	{
 		return DATA_DELIMITER;
+	}
+
+	/**
+	 * Returns the delimiter used by the microcontroller to seperate ADC values
+	 * during serial comms.
+	 * 
+	 * @return Delimiter string.
+	 */
+	public static final String serialDelimiter ()
+	{
+		return SERIAL_DELIMITER;
 	}
 
 	/**
