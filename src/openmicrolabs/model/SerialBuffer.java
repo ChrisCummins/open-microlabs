@@ -18,14 +18,26 @@
 
 package openmicrolabs.model;
 
+import cummins.serial.SerialComm;
+
 /**
- * This implementation of the Model interface performs the necessary roles of an
- * Open MicroLabs model.
+ * This extension of the SerialComm class from the JCummins Library provides
+ * Open MicroLabs specific functionality to the class. It represents the lowest
+ * level communication with the microcontroller, sending data request characters
+ * and then reading the response from the microcontroller after waiting for a
+ * calculated amount of sleep time.
  * 
  * @author Chris Cummins
  * 
  */
-public class OMLModel implements Model
+public class SerialBuffer extends SerialComm
 {
+
+	public SerialBuffer (String portName, int baudRate, int dataBits,
+			int stopBits, int parity, int flowControl)
+	{
+		super (portName, baudRate, dataBits, stopBits, parity, flowControl);
+		// TODO Auto-generated constructor stub
+	}
 
 }

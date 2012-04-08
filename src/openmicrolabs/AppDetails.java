@@ -36,6 +36,7 @@ public abstract class AppDetails
 	private static final String VERSION = "v0.3 Beta";
 	private static final String AUTHOR = "Chris Cummins";
 	private static final String DATA_DELIMITER = ", ";
+	private static final long SLEEP_TIME = 25;
 
 	/**
 	 * Returns the program name.
@@ -97,6 +98,18 @@ public abstract class AppDetails
 		g.dispose ();
 
 		return bi;
+	}
+
+	/**
+	 * Returns the time in milliseconds that should be allowed for the
+	 * microcontroller to perform one ADC conversion and transmit the result to
+	 * USART.
+	 * 
+	 * @return long sleep time per channel.
+	 */
+	public static final long sleepTime ()
+	{
+		return SLEEP_TIME;
 	}
 
 }

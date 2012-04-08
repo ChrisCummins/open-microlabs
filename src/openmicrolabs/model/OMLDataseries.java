@@ -18,14 +18,25 @@
 
 package openmicrolabs.model;
 
+import java.util.Observable;
+import java.util.Observer;
+
 /**
- * This implementation of the Model interface performs the necessary roles of an
- * Open MicroLabs model.
+ * This implementation of the Observer interface is responsible reading and
+ * storing data read from the SerialReader. It also serves as the means for
+ * passing data to the Model.
  * 
  * @author Chris Cummins
  * 
  */
-public class OMLModel implements Model
+public class OMLDataseries implements Observer
 {
+
+	@Override
+	public void update (Observable arg0, Object arg1)
+	{
+		// TODO Auto-generated method stub
+
+	}
 
 }

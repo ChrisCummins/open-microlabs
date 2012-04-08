@@ -16,16 +16,16 @@
  * along with Open MicroLabs.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package openmicrolabs.model;
+package openmicrolabs.signals;
 
 /**
- * This implementation of the Model interface performs the necessary roles of an
- * Open MicroLabs model.
+ * This implementation of the Signal interface represents a voltage signal, with
+ * an assumed AREF of 5V, thus giving a range of [0, 5].
  * 
  * @author Chris Cummins
  * 
  */
-public class OMLModel implements Model
+public class Voltage implements Signal
 {
 
 }

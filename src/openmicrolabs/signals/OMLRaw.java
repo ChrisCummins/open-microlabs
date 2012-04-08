@@ -16,16 +16,16 @@
  * along with Open MicroLabs.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package openmicrolabs.model;
+package openmicrolabs.signals;
 
 /**
- * This implementation of the Model interface performs the necessary roles of an
- * Open MicroLabs model.
+ * This implementation of the Signal interface represents a raw signal, with no
+ * conversion performed. It is a 10-bit unsigned int in the range [0, 1023].
  * 
  * @author Chris Cummins
  * 
  */
-public class OMLModel implements Model
+public class OMLRaw implements Signal
 {
 
 }

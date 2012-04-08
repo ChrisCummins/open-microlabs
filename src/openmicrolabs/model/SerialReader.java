@@ -18,14 +18,18 @@
 
 package openmicrolabs.model;
 
+import java.util.Observable;
+
 /**
- * This implementation of the Model interface performs the necessary roles of an
- * Open MicroLabs model.
+ * This observable class performs the actions of reading data through the
+ * SerialBuffer and then interpreting it and updating any observers of this new
+ * data. Once started, it will perform as many readings as specified by the
+ * LogSettings.
  * 
  * @author Chris Cummins
  * 
  */
-public class OMLModel implements Model
+public class SerialReader extends Observable
 {
 
 }
