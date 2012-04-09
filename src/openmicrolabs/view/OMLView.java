@@ -20,8 +20,16 @@ package openmicrolabs.view;
 
 import java.awt.event.ActionListener;
 
+import javax.swing.JOptionPane;
+
+import org.jfree.data.time.TimeSeriesCollection;
+
+import openmicrolabs.AppDetails;
 import openmicrolabs.settings.CommSettings;
+import openmicrolabs.settings.GUISettings;
 import openmicrolabs.settings.LogSettings;
+import openmicrolabs.signals.OMLVoltage;
+import openmicrolabs.signals.OMLSignal;
 
 /**
  * This implementation of the View interface is responsible for rendering and
@@ -32,89 +40,113 @@ import openmicrolabs.settings.LogSettings;
  */
 public class OMLView implements View
 {
+	public static final String LABEL_START = "<html><font size=\"3\" "
+			+ "face=\"verdana\" color=\"black\">";
+	public static final String LABEL_END = "</font></html>";
+	
+	private static final OMLSignal o1 = new OMLSignal ();
+	private static final OMLVoltage o2 = new OMLVoltage ();
+	public static final OMLSignal[] SIGNAL_TYPES = { o1, o2 };
+
+	private CommSettingsView comView;
+	private OMLSettingsView omlView;
+	private GUISettingsView guiView;
+	private LoggerView logView;
+	private FileLogger fileLogger;
+	
+	private GUISettings g = new GUISettings (30000.0, 0, 1023);
+
+	public OMLView ()
+	{
+		comView = new CommSettingsView();
+		comView.setVisible (true);
+	}
+	
+	public static void showMessageBox (String msg)
+	{
+		JOptionPane.showMessageDialog (null, msg, AppDetails.name () + " "
+				+ AppDetails.version (), JOptionPane.PLAIN_MESSAGE);
+	}
+
+	public static void showErrorBox (String msg)
+	{
+		JOptionPane.showMessageDialog (null, msg, AppDetails.name () + " "
+				+ AppDetails.version (), JOptionPane.ERROR_MESSAGE);
+	}
 
 	@Override
 	public void showMessage (String msg)
 	{
-		// TODO Auto-generated method stub
-		
+		showMessageBox (msg);
 	}
 
 	@Override
-	public void showError (String ms)
+	public void showError (String msg)
 	{
-		// TODO Auto-generated method stub
-		
+		showErrorBox (msg);
 	}
 
 	@Override
 	public CommSettings getCommSettings ()
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return comView.getCommSettings ();
 	}
 
 	@Override
 	public LogSettings getLogSettings ()
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return omlView.getLogSettings ();
 	}
 
 	@Override
-	public void loggingStarted ()
+	public void loggingStarted (LogSettings l, TimeSeriesCollection t)
 	{
-		// TODO Auto-generated method stub
-		
+		omlView.setVisible (false);
+		logView = new LoggerView(l, g, t);
+		logView.setVisible (true);
 	}
 
 	@Override
 	public void updateViews ()
 	{
-		// TODO Auto-generated method stub
-		
+		//TODO: update filelogger.
+		logView.updateView ();
 	}
 
 	@Override
 	public void addCommSettingsListener (ActionListener l)
 	{
-		// TODO Auto-generated method stub
-		
+		comView.addDoneButtonListener (l);
 	}
 
 	@Override
 	public void addTestConnectionListener (ActionListener l)
 	{
-		// TODO Auto-generated method stub
-		
+		comView.addTestButtonListener (l);
 	}
 
 	@Override
 	public void addShowGUISettingsListener (ActionListener l)
 	{
-		// TODO Auto-generated method stub
-		
+		omlView.addGUIButtonListener (l);
 	}
 
 	@Override
 	public void addGUISettingsListener (ActionListener l)
 	{
 		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
 	public void addStartLoggingListener (ActionListener l)
 	{
-		// TODO Auto-generated method stub
-		
+		omlView.addDoneButtonListener (l);
 	}
 
 	@Override
 	public void addCancelLoggingListener (ActionListener l)
 	{
-		// TODO Auto-generated method stub
-		
+		logView.addCancelButtonListener (l);
 	}
 
 }

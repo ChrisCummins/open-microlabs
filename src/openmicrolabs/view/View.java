@@ -20,6 +20,8 @@ package openmicrolabs.view;
 
 import java.awt.event.ActionListener;
 
+import org.jfree.data.time.TimeSeriesCollection;
+
 import openmicrolabs.settings.CommSettings;
 import openmicrolabs.settings.LogSettings;
 
@@ -70,7 +72,7 @@ public interface View
 	/**
 	 * Informs the view that logging has begun.
 	 */
-	public void loggingStarted ();
+	public void loggingStarted (LogSettings l, TimeSeriesCollection t);
 
 	/**
 	 * Informs the view that new data has been added to the data model.
