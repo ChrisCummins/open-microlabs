@@ -16,7 +16,7 @@
  * along with Open MicroLabs.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package openmicrolabs.settings;
+package openmicrolabs.data;
 
 /**
  * This class contains the required settings for starting a Open MicroLabs

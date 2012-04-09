@@ -27,8 +27,8 @@ import java.io.IOException;
 import org.jfree.data.general.SeriesChangeListener;
 import org.jfree.data.time.TimeSeriesCollection;
 
-import openmicrolabs.settings.CommSettings;
-import openmicrolabs.settings.LogSettings;
+import openmicrolabs.data.CommSettings;
+import openmicrolabs.data.LogSettings;
 
 /**
  * This interface specifies the required behaviour of a model class for the Open
@@ -79,7 +79,7 @@ public interface Model
 	 * 
 	 * @param c
 	 *            CommSettings.
-	 * @see openmicrolabs.settings.CommSettings#CommSettings()
+	 * @see openmicrolabs.data.CommSettings#CommSettings()
 	 */
 	public void setCommSettings (CommSettings c);
 
@@ -88,7 +88,7 @@ public interface Model
 	 * 
 	 * @param l
 	 *            LogSettings.
-	 * @see openmicrolabs.settings.LogSettings#LogSettings()
+	 * @see openmicrolabs.data.LogSettings#LogSettings()
 	 */
 	public void setLogSettings (LogSettings l);
 
@@ -96,7 +96,7 @@ public interface Model
 	 * Returns the set CommSettings.
 	 * 
 	 * @return CommSettings currently in use.
-	 * @see openmicrolabs.settings.CommSettings#CommSettings()
+	 * @see openmicrolabs.data.CommSettings#CommSettings()
 	 */
 	public CommSettings getCommSettings ();
 
@@ -104,7 +104,7 @@ public interface Model
 	 * Returns the LogSettings.
 	 * 
 	 * @return LogSettings currently in use.
-	 * @see openmicrolabs.settings.LogSettings#LogSettings()
+	 * @see openmicrolabs.data.LogSettings#LogSettings()
 	 */
 	public LogSettings getLogSettings ();
 

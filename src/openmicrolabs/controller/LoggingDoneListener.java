@@ -26,19 +26,19 @@ import openmicrolabs.view.View;
 
 /**
  * This implementation of the ActionListener interface is responsible for
- * receiving show GUISettings requests from the user and so updating the view
- * accordingly.
+ * receiving logging cancel requests form the user and so updating the view and
+ * model accordingly.
  * 
  * @author Chris Cummins
  * 
  */
-public class ShowGUISettingsListener extends OMLController implements ActionListener
+public class LoggingDoneListener extends OMLController implements
+		ActionListener
 {
-	
 	private final Model m;
 	private final View v;
 	
-	public ShowGUISettingsListener (Model m, View v)
+	public LoggingDoneListener (Model m, View v)
 	{
 		this.m = m;
 		this.v = v;
@@ -47,7 +47,14 @@ public class ShowGUISettingsListener extends OMLController implements ActionList
 	@Override
 	public void actionPerformed (ActionEvent e)
 	{
-		v.showGraphSettings ();
+		if (m.isLogging ())
+			if (v.showYesNoPrompt ("Readings in progress!\nAre you sure you "
+					+ "would like to exit?"))
+				v.returnFromLogScreen ();
+			else
+				return;
+		else
+			v.returnFromLogScreen ();
 	}
 
 }

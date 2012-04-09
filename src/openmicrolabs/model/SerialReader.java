@@ -18,143 +18,126 @@
 
 package openmicrolabs.model;
 
-import java.io.IOException;
-import java.util.Observable;
+import gnu.io.NoSuchPortException;
+import gnu.io.PortInUseException;
+import gnu.io.UnsupportedCommOperationException;
 
-import openmicrolabs.AppDetails;
-import openmicrolabs.settings.LogSettings;
+import java.io.IOException;
+
+import openmicrolabs.data.AppDetails;
+import openmicrolabs.data.CommSettings;
+import cummins.serial.SerialComm;
 
 /**
- * This observable class performs the actions of reading data through the
- * SerialBuffer and then interpreting it and updating any observers of this new
- * data which can be accessed via the <code>getDatabuffer</code> method. Once
- * started, it will perform as many readings as specified by the LogSettings.
+ * This extension of the SerialComm class from the JCummins Library provides
+ * Open MicroLabs specific functionality to the class. It represents the lowest
+ * level communication with the microcontroller, sending data request characters
+ * and then reading the response from the microcontroller after waiting for a
+ * calculated amount of sleep time.
  * 
  * @author Chris Cummins
  * 
  */
-public class SerialReader extends Observable implements Runnable
+public class SerialReader extends SerialComm
 {
-	private final LogSettings logSettings;
-	private final SerialBuffer serialBuffer;
-	private final long RESTTIME;
-
-	private boolean isRunning;
-	private Double[] databuffer;
+	private final CommSettings C;
+	private long sleepTime = 100;
 
 	/**
-	 * Creates a SerialReader object form the given arguments. It then sets the
-	 * SerialBuffer sleep time to the required amount calculated, and sets the
-	 * size of the databuffer to numer of active signals in the datamask.
+	 * Creates an instance of superclass SerialComm and attempts to connect to
+	 * it. In case of error, an exception is thrown.
 	 * 
-	 * @param l
-	 *            LogSettings.
-	 * @param b
-	 *            SerialBuffer.
+	 * @param c
+	 *            CommSettings to connect with.
 	 */
-	public SerialReader (LogSettings l, SerialBuffer b)
+	public SerialReader (CommSettings c)
 	{
-		this.logSettings = l;
-		this.serialBuffer = b;
-		this.setBufferSleepTime ();
-		this.RESTTIME = l.readDelay () - serialBuffer.getSleepTime ();
-		this.databuffer = new Double[logSettings.datamask ().activeSignals ().length];
-	}
-
-	public void run ()
-	{
-		for (int i = 0; i < logSettings.readCount (); i++)
-		{
-			takeReading ();
-			try
-			{
-				Thread.sleep (RESTTIME);
-			} catch (InterruptedException e)
-			{
-				return;
-			}
-		}
-	}
-
-	public void stop ()
-	{
-		isRunning = false;
+		super (c.portName (), c.baudRate (), c.dataBits (), c.stopBits (), c
+				.parity (), c.flowControl ());
+		this.C = c;
 	}
 
 	/**
-	 * Returns the contents of the databuffer.
+	 * Sends the argument to the connected serial port transmitter, then sleeps
+	 * for the time specified with sleepTime before returning the contents of
+	 * the serial read buffer.
 	 * 
-	 * @return Double array.
+	 * @param c
+	 *            Char to be transmitted.
+	 * @return String buffer.
+	 * @throws IOException
+	 *             In case of IO error.
 	 */
-	public Double[] getDatabuffer ()
+	public String sendDataRequest (char c) throws IOException
 	{
-		return databuffer;
-	}
-
-	/**
-	 * Returns the SerialBuffer currently in use.
-	 * 
-	 * @return SerialBuffer.
-	 */
-	public SerialBuffer getSerialBuffer ()
-	{
-		return serialBuffer;
-	}
-
-	public boolean isRunning ()
-	{
-		return isRunning;
-	}
-
-	/**
-	 * Returns the LogSettings currently in use.
-	 * 
-	 * @return LogSettings.
-	 */
-	public LogSettings getLogSettings ()
-	{
-		return logSettings;
-	}
-
-	/*
-	 * Calculates the required SerialBuffer sleep time for the given datamask
-	 * and sets it.
-	 */
-	private void setBufferSleepTime ()
-	{
-		serialBuffer
-				.setSleepTime (logSettings.datamask ().activeSignals ().length
-						* AppDetails.sleepTime ());
-	}
-
-	private void takeReading ()
-	{
+		super.write (c);
 		try
 		{
-			// Get information from microcontroller.
-			String stringbuffer = serialBuffer.sendDataRequest (logSettings
-					.datamask ().asciiChar ());
-
-			// Split information into seperate strings.
-			String[] splitbuffer = stringbuffer.split (AppDetails
-					.serialDelimiter ()); //
-
-			// Iterate over databuffer.
-			for (int i = 0; i < databuffer.length; i++)
-				try
-				{
-					// Convert strings to doubles.
-					databuffer[i] = Double.parseDouble (splitbuffer[i]);
-				} catch (NumberFormatException | ArrayIndexOutOfBoundsException e)
-				{
-					// Else assign them null.
-					databuffer[i] = null;
-				}
-		} catch (IOException e)
+			Thread.sleep (sleepTime);
+		} catch (InterruptedException e)
 		{
-			databuffer = null;
+			// Don't care.
 		}
-		setChanged ();
-		notifyObservers (databuffer);
+		return super.read ();
 	}
+
+	/**
+	 * Sends a full data request (ASCII 255) to the serial transmitter, then
+	 * sleeps for the time specified with sleepTime before returning
+	 * <code>true</code> if information was received on the serial buffer, else
+	 * <code>false</code>.
+	 * 
+	 * @return <code>true</code> if information was received, else
+	 *         <code>false</code>.
+	 * @throws IOException
+	 *             In case of IO error.
+	 * @throws UnsupportedCommOperationException
+	 * @throws PortInUseException
+	 * @throws NoSuchPortException
+	 * @see SerialReader#sendDataRequest(char)
+	 */
+	public boolean testConnection () throws IOException, NoSuchPortException,
+			PortInUseException, UnsupportedCommOperationException
+	{
+		super.connect (AppDetails.name ());
+		String s = sendDataRequest ((char) 255);
+		super.close ();
+		if (s.length () > 0)
+			return true;
+		else
+			return false;
+	}
+
+	/**
+	 * Sets a new sleep time (ms), for use in serial comm reads.
+	 * 
+	 * @param s
+	 *            Sleep time (ms).
+	 * @see SerialReader#sendDataRequest(char)
+	 */
+	public void setSleepTime (long s)
+	{
+		this.sleepTime = s;
+	}
+
+	/**
+	 * Returns the CommSettings currently in use.
+	 * 
+	 * @return CommSettings.
+	 */
+	public CommSettings getCommSettings ()
+	{
+		return C;
+	}
+
+	/**
+	 * Returns the sleep time currently in use.
+	 * 
+	 * @return Sleep time (ms).
+	 */
+	public long getSleepTime ()
+	{
+		return sleepTime;
+	}
+
 }

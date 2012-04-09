@@ -39,8 +39,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.TitledBorder;
 
-import openmicrolabs.AppDetails;
-import openmicrolabs.settings.CommSettings;
+import openmicrolabs.data.AppDetails;
+import openmicrolabs.data.CommSettings;
 
 /**
  * This extension of JFrame draws a frame that can be used to set the comm
@@ -60,6 +60,8 @@ public class CommSettingsView extends JFrame
 	private static final int btmHeight = 50;
 	private static final int midHeight = frameHeight - btmHeight
 			- topHeight - 30;
+	
+	private Object[][] comOptions;
 	private static final Object[] baudOptions = { 1200, 2400, 4800, 9600,
 			19200, 38400 };
 	private static final Object[][] databitOptions = {
@@ -82,6 +84,7 @@ public class CommSettingsView extends JFrame
 					SerialPort.FLOWCONTROL_RTSCTS_OUT } };
 
 	private JComboBox<Object> comBox;
+	private JButton comRefreshButton;
 	private final JComboBox<Object> baudBox = CreateJComboBox.fromObjects (
 			baudOptions, 5);
 	private final JComboBox<Object> dataBox = CreateJComboBox.fromObjects (
@@ -100,6 +103,7 @@ public class CommSettingsView extends JFrame
 	 */
 	public CommSettingsView ()
 	{
+		//TODO: comOptions.
 		this.setTitle (AppDetails.name ());
 		this.setSize (frameWidth, frameHeight);
 		this.setResizable (false);
@@ -108,6 +112,11 @@ public class CommSettingsView extends JFrame
 		this.setIconImage (AppDetails.icon ());
 		this.setBackground (Color.white);
 		this.setContentPane (createContentPane ());
+	}
+	
+	public void setPortnameOptions(Object[][] comOptions)
+	{
+		this.comOptions = comOptions;
 	}
 
 	/**
@@ -125,6 +134,11 @@ public class CommSettingsView extends JFrame
 				(int) stopbitOptions[1][stopBox.getSelectedIndex ()],
 				(int) parityOptions[1][parityBox.getSelectedIndex ()],
 				(int) flowcontrolOptions[1][flowBox.getSelectedIndex ()]);
+	}
+	
+	public void addRefreshPortsButtonListener (ActionListener l)
+	{
+		comRefreshButton.addActionListener (l);
 	}
 
 	/**
@@ -245,10 +259,10 @@ public class CommSettingsView extends JFrame
 		}
 		comBox.setBackground (Color.white);
 		midComPanel.add (comBox, BorderLayout.WEST);
-		JButton midComRefreshButton = new JButton (new ImageIcon (
+		comRefreshButton = new JButton (new ImageIcon (
 				"img/12x12/refresh.png", AppDetails.name ()));
-		midComRefreshButton.setBackground (Color.white);
-		midComPanel.add (midComRefreshButton, BorderLayout.EAST);
+		comRefreshButton.setBackground (Color.white);
+		midComPanel.add (comRefreshButton, BorderLayout.EAST);
 
 		midPanel.add (midComPanel);
 

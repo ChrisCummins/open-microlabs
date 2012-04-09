@@ -24,10 +24,10 @@ import javax.swing.JOptionPane;
 
 import org.jfree.data.time.TimeSeriesCollection;
 
-import openmicrolabs.AppDetails;
-import openmicrolabs.settings.CommSettings;
-import openmicrolabs.settings.GraphSettings;
-import openmicrolabs.settings.LogSettings;
+import openmicrolabs.data.AppDetails;
+import openmicrolabs.data.CommSettings;
+import openmicrolabs.data.GraphSettings;
+import openmicrolabs.data.LogSettings;
 import openmicrolabs.signals.OMLVoltage;
 import openmicrolabs.signals.OMLSignal;
 
@@ -54,7 +54,8 @@ public class OMLView implements View
 	private LoggerView logView;
 	private FileLogger fileLogger;
 
-	private GraphSettings g = new GraphSettings (30000.0, 0, 1023);
+	private static final double defaultTimeRange = 30000.0;
+	private GraphSettings g = new GraphSettings (defaultTimeRange, 0, 1023);
 
 	public OMLView ()
 	{
@@ -130,9 +131,13 @@ public class OMLView implements View
 	@Override
 	public void loggingStarted (LogSettings l, TimeSeriesCollection t)
 	{
-		if ((l.readCount () * l.readDelay ()) < g.timeRange ())
+		System.out.println("total time: " + (l.readCount () * l.readDelay () + ". timeRange: " + g.timeRange ()));
+		if ((l.readCount () * l.readDelay ()) < defaultTimeRange)
 			g.timeRange ((double) (l.readCount () * l.readDelay ()));
+		else
+			g.timeRange (defaultTimeRange);
 		omlView.setVisible (false);
+		System.out.println("g: " + g.timeRange ());
 		logView = new LoggerView (l, g, t);
 		logView.setVisible (true);
 	}

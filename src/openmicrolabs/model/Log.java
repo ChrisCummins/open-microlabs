@@ -30,31 +30,42 @@ import org.jfree.data.time.TimeSeriesCollection;
 
 /**
  * This implementation of the Observer interface is responsible reading and
- * storing data read from the SerialReader. It also serves as the means for
+ * storing data read from the Logger. It also serves as the means for
  * passing data to the Model.
  * 
  * @author Chris Cummins
  * 
  */
-public class OMLDataseries implements Observer
+public class Log implements Observer
 {
 
-	private final SerialReader reader;
+	private final Logger reader;
+	private final Thread readerThread;
+	
+	private SerialBuffer queue;
+	private Thread queueThread;
+	
 	private final TimeSeries[] series;
 	private final TimeSeriesCollection seriesCollection;
-	private Thread logSession; 
 
 	/**
-	 * Creates a new OMLDataseries object. It adds itself as an observer to the
-	 * SerialReader argument and creates new TimeSeries and
+	 * Creates a new Log object. It adds itself as an observer to the
+	 * Logger argument and creates new TimeSeries and
 	 * TimeSeriesCollections to appropriately store the data from the
-	 * SerialReader.
+	 * Logger.
 	 * 
 	 * @param reader
 	 */
-	public OMLDataseries (SerialReader reader)
+	public Log (Logger reader)
 	{
 		this.reader = reader;
+		this.queue = new SerialBuffer();
+
+		this.reader.addObserver (queue);
+		this.queue.addObserver (this);
+		
+		this.readerThread = new Thread(reader);
+		this.queueThread = new Thread(queue);
 
 		this.series = new TimeSeries[reader.getLogSettings ().datamask ()
 				.activeSignals ().length];
@@ -76,9 +87,8 @@ public class OMLDataseries implements Observer
 	 */
 	public void startLogging ()
 	{
-		reader.addObserver (this);
-		logSession = new Thread(reader);
-		logSession.start ();
+		readerThread.start ();
+		queueThread.start ();
 	}
 
 	/**
@@ -86,13 +96,10 @@ public class OMLDataseries implements Observer
 	 */
 	public void stopLogging ()
 	{
-		logSession.interrupt ();
+		readerThread.interrupt ();
 	}
 
-	/**
-	 * This method is fired every time the SerialReader updates it's databuffer.
-	 * It add's new data to the TimeSeriesCollection.
-	 */
+	
 	@Override
 	public void update (Observable arg0, Object arg1)
 	{

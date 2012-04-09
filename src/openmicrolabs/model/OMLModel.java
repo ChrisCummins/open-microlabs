@@ -24,9 +24,9 @@ import gnu.io.UnsupportedCommOperationException;
 
 import java.io.IOException;
 
-import openmicrolabs.AppDetails;
-import openmicrolabs.settings.CommSettings;
-import openmicrolabs.settings.LogSettings;
+import openmicrolabs.data.AppDetails;
+import openmicrolabs.data.CommSettings;
+import openmicrolabs.data.LogSettings;
 
 import org.jfree.data.general.SeriesChangeListener;
 import org.jfree.data.time.TimeSeriesCollection;
@@ -40,9 +40,9 @@ import org.jfree.data.time.TimeSeriesCollection;
  */
 public class OMLModel implements Model
 {
-	private SerialBuffer buffer;
-	private SerialReader reader;
-	private OMLDataseries dataset;
+	private SerialReader buffer;
+	private Logger reader;
+	private Log dataset;
 
 	/**
 	 * Tests the connection with the microcontroller at the set comm settings.
@@ -65,13 +65,13 @@ public class OMLModel implements Model
 	}
 
 	/**
-	 * Creates a new OMLDataseries from the SerialReader and then starts
+	 * Creates a new Log from the Logger and then starts
 	 * logging.
 	 */
 	@Override
 	public void startLogging ()
 	{
-		dataset = new OMLDataseries (reader);
+		dataset = new Log (reader);
 		dataset.startLogging ();
 	}
 
@@ -85,30 +85,30 @@ public class OMLModel implements Model
 	}
 
 	/**
-	 * Creates a new SerialBuffer with the given CommSettings.
+	 * Creates a new SerialReader with the given CommSettings.
 	 */
 	@Override
 	public void setCommSettings (CommSettings c)
 	{
-		buffer = new SerialBuffer (c);
+		buffer = new SerialReader (c);
 	}
 
 	/**
-	 * Creates a new SerialReader with the given LogSettings, then updates the
-	 * SerialBuffer to the latest version.
+	 * Creates a new Logger with the given LogSettings, then updates the
+	 * SerialReader to the latest version.
 	 */
 	@Override
 	public void setLogSettings (LogSettings l)
 	{
+		reader = new Logger (l, buffer);
+		buffer = reader.getSerialBuffer ();
 		if (buffer.getSleepTime () > l.readDelay ())
 			throw new IllegalArgumentException ("Minimum valid read delay is "
 					+ buffer.getSleepTime () + "ms!");
-		reader = new SerialReader (l, buffer);
-		buffer = reader.getSerialBuffer ();
 	}
 
 	/**
-	 * Returns the CommSettings from the SerialBuffer.
+	 * Returns the CommSettings from the SerialReader.
 	 */
 	@Override
 	public CommSettings getCommSettings ()
@@ -126,7 +126,7 @@ public class OMLModel implements Model
 	}
 
 	/**
-	 * Returns the TimeSeriesCollection from the OMLDataseries.
+	 * Returns the TimeSeriesCollection from the Log.
 	 */
 	@Override
 	public TimeSeriesCollection getData ()
@@ -135,7 +135,7 @@ public class OMLModel implements Model
 	}
 
 	/**
-	 * Adds a new SeriesChangeListener to the OMLDataseries.
+	 * Adds a new SeriesChangeListener to the Log.
 	 */
 	@Override
 	public void addNewDataListener (SeriesChangeListener l)

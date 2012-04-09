@@ -20,9 +20,9 @@ package openmicrolabs.test.view;
 
 import cummins.gui.GUITools;
 
-import openmicrolabs.settings.Datamask;
-import openmicrolabs.settings.GraphSettings;
-import openmicrolabs.settings.LogSettings;
+import openmicrolabs.data.Datamask;
+import openmicrolabs.data.GraphSettings;
+import openmicrolabs.data.LogSettings;
 import openmicrolabs.signals.OMLSignal;
 import openmicrolabs.signals.OMLVoltage;
 import openmicrolabs.view.LoggerView;

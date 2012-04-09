@@ -21,40 +21,29 @@ package openmicrolabs.controller;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import openmicrolabs.model.Model;
 import openmicrolabs.view.View;
 
 /**
  * This implementation of the ActionListener interface is responsible for
- * receiving logging cancel requests form the user and so updating the view and
- * model accordingly.
+ * receiving show GUISettings requests from the user and so updating the view
+ * accordingly.
  * 
  * @author Chris Cummins
  * 
  */
-public class CancelLoggingListener extends OMLController implements
-		ActionListener
+public class GraphSettingsShowListener extends OMLController implements ActionListener
 {
-	private final Model m;
 	private final View v;
 	
-	public CancelLoggingListener (Model m, View v)
+	public GraphSettingsShowListener (View v)
 	{
-		this.m = m;
 		this.v = v;
 	}
 
 	@Override
 	public void actionPerformed (ActionEvent e)
 	{
-		if (m.isLogging ())
-			if (v.showYesNoPrompt ("Readings in progress!\nAre you sure you "
-					+ "would like to exit?"))
-				v.returnFromLogScreen ();
-			else
-				return;
-		else
-			v.returnFromLogScreen ();
+		v.showGraphSettings ();
 	}
 
 }

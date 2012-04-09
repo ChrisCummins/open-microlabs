@@ -26,22 +26,22 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 
+import openmicrolabs.data.CommSettings;
 import openmicrolabs.model.Model;
-import openmicrolabs.settings.CommSettings;
 import openmicrolabs.view.View;
 
 /**
  * @author Chris Cummins
  * 
  */
-public class TestConnectionListener extends OMLController implements
+public class CommSettingsTestListener extends OMLController implements
 		ActionListener
 {
 
 	private final Model m;
 	private final View v;
 
-	public TestConnectionListener (Model m, View v)
+	public CommSettingsTestListener (Model m, View v)
 	{
 		this.m = m;
 		this.v = v;

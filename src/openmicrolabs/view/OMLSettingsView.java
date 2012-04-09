@@ -37,9 +37,9 @@ import javax.swing.JTextArea;
 import cummins.gui.CreateJComboBox;
 import cummins.gui.GUITools;
 
-import openmicrolabs.AppDetails;
-import openmicrolabs.settings.Datamask;
-import openmicrolabs.settings.LogSettings;
+import openmicrolabs.data.AppDetails;
+import openmicrolabs.data.Datamask;
+import openmicrolabs.data.LogSettings;
 import openmicrolabs.signals.OMLSignal;
 
 /**

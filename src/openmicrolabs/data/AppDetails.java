@@ -16,7 +16,7 @@
  * along with Open MicroLabs.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package openmicrolabs;
+package openmicrolabs.data;
 
 import java.awt.Color;
 import java.awt.Graphics;
@@ -37,7 +37,7 @@ public abstract class AppDetails
 	private static final String AUTHOR = "Chris Cummins";
 	private static final String DATA_DELIMITER = ", ";
 	private static final String SERIAL_DELIMITER = ",";
-	private static final long SLEEP_TIME = 25;
+	private static final long SLEEP_TIME = 3;
 
 	/**
 	 * Returns the program name.
@@ -100,7 +100,7 @@ public abstract class AppDetails
 		BufferedImage bi = new BufferedImage (16, 16,
 				BufferedImage.TYPE_INT_RGB);
 		Graphics g = bi.getGraphics ();
-		g.setColor (Color.white);
+		g.setColor (Color.black);
 		g.fillRect (0, 0, 15, 15);
 		g.setColor (Color.red);
 		g.fillOval (0, 0, 15, 15);

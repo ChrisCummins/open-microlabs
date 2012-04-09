@@ -1,4 +1,4 @@
-/* Chris Cummins - 8 Apr 2012
+/* Chris Cummins - 9 Apr 2012
  *
  * This file is part of Open MicroLabs.
  *
@@ -18,126 +18,52 @@
 
 package openmicrolabs.model;
 
-import gnu.io.NoSuchPortException;
-import gnu.io.PortInUseException;
-import gnu.io.UnsupportedCommOperationException;
-
-import java.io.IOException;
-
-import openmicrolabs.AppDetails;
-import openmicrolabs.settings.CommSettings;
-import cummins.serial.SerialComm;
+import java.util.LinkedList;
+import java.util.Observable;
+import java.util.Observer;
 
 /**
- * This extension of the SerialComm class from the JCummins Library provides
- * Open MicroLabs specific functionality to the class. It represents the lowest
- * level communication with the microcontroller, sending data request characters
- * and then reading the response from the microcontroller after waiting for a
- * calculated amount of sleep time.
- * 
  * @author Chris Cummins
  * 
  */
-public class SerialBuffer extends SerialComm
+public class SerialBuffer extends Observable implements Observer, Runnable
 {
-	private final CommSettings C;
-	private long sleepTime = 100;
 
-	/**
-	 * Creates an instance of superclass SerialComm and attempts to connect to
-	 * it. In case of error, an exception is thrown.
-	 * 
-	 * @param c
-	 *            CommSettings to connect with.
-	 */
-	public SerialBuffer (CommSettings c)
-	{
-		super (c.portName (), c.baudRate (), c.dataBits (), c.stopBits (), c
-				.parity (), c.flowControl ());
-		this.C = c;
-	}
+	private LinkedList<Double[]> queue = new LinkedList<Double[]> ();
+	private Double[] msg;
 
-	/**
-	 * Sends the argument to the connected serial port transmitter, then sleeps
-	 * for the time specified with sleepTime before returning the contents of
-	 * the serial read buffer.
-	 * 
-	 * @param c
-	 *            Char to be transmitted.
-	 * @return String buffer.
-	 * @throws IOException
-	 *             In case of IO error.
-	 */
-	public String sendDataRequest (char c) throws IOException
+	@Override
+	public void run ()
 	{
-		super.write (c);
-		try
+		while (true)
 		{
-			Thread.sleep (sleepTime);
-		} catch (InterruptedException e)
-		{
-			// Don't care.
+			msg = get ();
+			setChanged ();
+			notifyObservers (msg);
 		}
-		return super.read ();
 	}
 
-	/**
-	 * Sends a full data request (ASCII 255) to the serial transmitter, then
-	 * sleeps for the time specified with sleepTime before returning
-	 * <code>true</code> if information was received on the serial buffer, else
-	 * <code>false</code>.
-	 * 
-	 * @return <code>true</code> if information was received, else
-	 *         <code>false</code>.
-	 * @throws IOException
-	 *             In case of IO error.
-	 * @throws UnsupportedCommOperationException
-	 * @throws PortInUseException
-	 * @throws NoSuchPortException
-	 * @see SerialBuffer#sendDataRequest(char)
-	 */
-	public boolean testConnection () throws IOException, NoSuchPortException,
-			PortInUseException, UnsupportedCommOperationException
+	@Override
+	public void update (Observable arg0, Object arg1)
 	{
-		super.connect (AppDetails.name ());
-		String s = sendDataRequest ((char) 255);
-		super.close ();
-		if (s.length () > 0)
-			return true;
-		else
-			return false;
+		put ((Double[]) arg1);
 	}
 
-	/**
-	 * Sets a new sleep time (ms), for use in serial comm reads.
-	 * 
-	 * @param s
-	 *            Sleep time (ms).
-	 * @see SerialBuffer#sendDataRequest(char)
-	 */
-	public void setSleepTime (long s)
+	private void put (Double[] d)
 	{
-		this.sleepTime = s;
+		queue.add (d);
 	}
 
-	/**
-	 * Returns the CommSettings currently in use.
-	 * 
-	 * @return CommSettings.
-	 */
-	public CommSettings getCommSettings ()
+	private Double[] get ()
 	{
-		return C;
+		while (queue.isEmpty ())
+			try
+			{
+				Thread.sleep (1);
+			} catch (InterruptedException e)
+			{
+				// Don't care.
+			}
+		return queue.removeFirst ();
 	}
-
-	/**
-	 * Returns the sleep time currently in use.
-	 * 
-	 * @return Sleep time (ms).
-	 */
-	public long getSleepTime ()
-	{
-		return sleepTime;
-	}
-
 }

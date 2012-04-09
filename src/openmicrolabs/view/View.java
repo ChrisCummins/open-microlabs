@@ -22,8 +22,8 @@ import java.awt.event.ActionListener;
 
 import org.jfree.data.time.TimeSeriesCollection;
 
-import openmicrolabs.settings.CommSettings;
-import openmicrolabs.settings.LogSettings;
+import openmicrolabs.data.CommSettings;
+import openmicrolabs.data.LogSettings;
 
 /**
  * This interface specifies the required behaviour of the View portion of the
@@ -59,7 +59,7 @@ public interface View
 	 * Get CommSettings from GUI.
 	 * 
 	 * @return CommSettings.
-	 * @see openmicrolabs.settings.CommSettings#CommSettings()
+	 * @see openmicrolabs.data.CommSettings#CommSettings()
 	 */
 	public CommSettings getCommSettings ();
 
@@ -69,7 +69,7 @@ public interface View
 	 * Get LogSettings from GUI.
 	 * 
 	 * @return LogSettings.
-	 * @see openmicrolabs.settings.LogSettings#LogSettings()
+	 * @see openmicrolabs.data.LogSettings#LogSettings()
 	 */
 	public LogSettings getLogSettings ();
 
@@ -94,7 +94,7 @@ public interface View
 	 * 
 	 * @param l
 	 *            ActionListener.
-	 * @see openmicrolabs.controller.CommSettingsListener#actionPerformed(java.awt.event.ActionEvent)
+	 * @see openmicrolabs.controller.CommSettingsDoneListener#actionPerformed(java.awt.event.ActionEvent)
 	 */
 	public void addCommSettingsListener (ActionListener l);
 
@@ -103,7 +103,7 @@ public interface View
 	 * 
 	 * @param l
 	 *            ActionListener.
-	 * @see openmicrolabs.controller.TestConnectionListener#actionPerformed(java.awt.event.ActionEvent)
+	 * @see openmicrolabs.controller.CommSettingsTestListener#actionPerformed(java.awt.event.ActionEvent)
 	 */
 	public void addTestConnectionListener (ActionListener l);
 
@@ -112,7 +112,7 @@ public interface View
 	 * 
 	 * @param l
 	 *            ActionListener.
-	 * @see openmicrolabs.controller.ShowGUISettingsListener#actionPerformed(java.awt.event.ActionEvent)
+	 * @see openmicrolabs.controller.GraphSettingsShowListener#actionPerformed(java.awt.event.ActionEvent)
 	 */
 	public void addShowGUISettingsListener (ActionListener l);
 
@@ -121,7 +121,7 @@ public interface View
 	 * 
 	 * @param l
 	 *            ActionListener.
-	 * @see openmicrolabs.controller.GUISettingsListener#actionPerformed(java.awt.event.ActionEvent)
+	 * @see openmicrolabs.controller.GraphSettingsDoneListenner#actionPerformed(java.awt.event.ActionEvent)
 	 */
 	public void addGUISettingsListener (ActionListener l);
 
@@ -139,7 +139,7 @@ public interface View
 	 * 
 	 * @param l
 	 *            ActionListener.
-	 * @see openmicrolabs.controller.CancelLoggingListener#actionPerformed(java.awt.event.ActionEvent)
+	 * @see openmicrolabs.controller.LoggingDoneListener#actionPerformed(java.awt.event.ActionEvent)
 	 */
 	public void addCancelLoggingListener (ActionListener l);
 

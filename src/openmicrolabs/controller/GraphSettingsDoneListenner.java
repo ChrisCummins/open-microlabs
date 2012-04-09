@@ -21,7 +21,6 @@ package openmicrolabs.controller;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import openmicrolabs.model.Model;
 import openmicrolabs.view.View;
 
 /**
@@ -33,15 +32,13 @@ import openmicrolabs.view.View;
  * @author Chris Cummins
  * 
  */
-public class GUISettingsListener extends OMLController implements
+public class GraphSettingsDoneListenner extends OMLController implements
 		ActionListener
 {
-	private final Model m;
 	private final View v;
 	
-	public GUISettingsListener (Model m, View v)
+	public GraphSettingsDoneListenner (View v)
 	{
-		this.m = m;
 		this.v = v;
 	}
 

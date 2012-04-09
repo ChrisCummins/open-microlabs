@@ -18,16 +18,7 @@
 
 package openmicrolabs.controller;
 
-import gnu.io.NoSuchPortException;
-import gnu.io.PortInUseException;
-import gnu.io.UnsupportedCommOperationException;
-
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.io.IOException;
-
 import openmicrolabs.model.Model;
-import openmicrolabs.settings.CommSettings;
 import openmicrolabs.view.View;
 
 /**
@@ -48,8 +39,8 @@ public class OMLController implements Controller
 		this.m = m;
 		this.v = v;
 
-		this.v.addCommSettingsListener (new CommSettingsListener (m, v));
-		this.v.addTestConnectionListener (new TestConnectionListener (m, v));
+		this.v.addCommSettingsListener (new CommSettingsDoneListener (m, v));
+		this.v.addTestConnectionListener (new CommSettingsTestListener (m, v));
 	}
 
 }

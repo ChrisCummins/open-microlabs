@@ -42,9 +42,9 @@ import org.jfree.data.time.TimeSeriesDataItem;
 import cummins.gui.GUITools;
 import cummins.maths.MathsTools;
 
-import openmicrolabs.AppDetails;
-import openmicrolabs.settings.GraphSettings;
-import openmicrolabs.settings.LogSettings;
+import openmicrolabs.data.AppDetails;
+import openmicrolabs.data.GraphSettings;
+import openmicrolabs.data.LogSettings;
 import openmicrolabs.signals.OMLSignal;
 
 /**
