@@ -18,6 +18,7 @@
 
 package openmicrolabs;
 
+import cummins.gui.GUITools;
 import openmicrolabs.controller.OMLController;
 import openmicrolabs.model.OMLModel;
 import openmicrolabs.view.OMLView;
@@ -40,6 +41,8 @@ public class OpenMicroLabs
 	 */
 	public static void main (String[] args)
 	{
+		GUITools.setNativeLookAndFeel ();
+		
 		OMLController c = new OMLController ();
 		c.init (new OMLModel (), new OMLView ());
 	}

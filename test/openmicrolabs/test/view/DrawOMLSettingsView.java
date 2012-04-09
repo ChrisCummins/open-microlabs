@@ -16,44 +16,33 @@
  * along with Open MicroLabs.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package openmicrolabs.signals;
+package openmicrolabs.test.view;
+
+import cummins.gui.GUITools;
+
+import openmicrolabs.view.OMLSettingsView;
 
 /**
- * This implementation of the Signal interface represents a raw signal, with no
- * conversion performed. It is a 10-bit unsigned int in the range [0, 1023].
+ * Testing class for CommSettingsView.
  * 
  * @author Chris Cummins
- * 
+ * @see openmicrolabs.view.OMLSettingsView
  */
-public class OMLRaw implements Signal
+public class DrawOMLSettingsView
 {
 
 	/**
-	 * Returns the argument, since it is a raw signal and so no conversion is
-	 * required.
+	 * Renders a CommSettingsView frame.
+	 * 
+	 * @param args
+	 *            None.
 	 */
-	@Override
-	public double toValue (double rawInt)
+	public static void main (String[] args)
 	{
-		return rawInt;
-	}
+		GUITools.setNativeLookAndFeel ();
 
-	/**
-	 * Formats the value to a 4-digit decimal value.
-	 */
-	@Override
-	public String toString (double rawInt)
-	{
-		return String.format ("%04d", rawInt);
-	}
-
-	/**
-	 * Returns Raw.
-	 */
-	@Override
-	public String name ()
-	{
-		return "Raw";
+		OMLSettingsView frame = new OMLSettingsView ();
+		frame.setVisible (true);
 	}
 
 }

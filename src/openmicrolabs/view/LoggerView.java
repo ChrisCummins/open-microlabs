@@ -43,7 +43,7 @@ import cummins.gui.GUITools;
 import cummins.maths.MathsTools;
 
 import openmicrolabs.AppDetails;
-import openmicrolabs.settings.GUISettings;
+import openmicrolabs.settings.GraphSettings;
 import openmicrolabs.settings.LogSettings;
 import openmicrolabs.signals.OMLSignal;
 
@@ -58,7 +58,7 @@ public class LoggerView extends JFrame
 	private static final long serialVersionUID = -4475975253216864808L;
 	private static final String graphTitle = AppDetails.name () + " "
 			+ AppDetails.version ();
-	private static final String graphXlabel = null;
+	private static final String graphXlabel = "Time (hh:mm:ss)";
 	private static final String graphYlabel = null;
 
 	// GUI CONFIG --------------------------------------------------------------
@@ -80,10 +80,11 @@ public class LoggerView extends JFrame
 	private final JButton doneButton = new JButton ("Cancel");
 
 	private final LogSettings l;
-	private final GUISettings g;
+	private final GraphSettings g;
+	private JFreeChart snsChart;
 	private final TimeSeriesCollection dataset;
 
-	public LoggerView (LogSettings l, GUISettings g,
+	public LoggerView (LogSettings l, GraphSettings g,
 			TimeSeriesCollection dataset)
 	{
 		this.l = l;
@@ -109,7 +110,7 @@ public class LoggerView extends JFrame
 
 	public void updateView ()
 	{
-		int currentReads = dataset.getItemCount (0) + 1;
+		int currentReads = dataset.getItemCount (0);
 
 		// Set progressBar.
 		progressBar.setValue (currentReads);
@@ -137,7 +138,8 @@ public class LoggerView extends JFrame
 			for (Object j : series.getItems ())
 			{
 				TimeSeriesDataItem n = (TimeSeriesDataItem) j;
-				totalValue += n.getValue ().doubleValue ();
+				if (n.getValue () != null)
+					totalValue += n.getValue ().doubleValue ();
 			}
 
 			// Update text labels.
@@ -155,6 +157,40 @@ public class LoggerView extends JFrame
 					/ series.getItemCount ()));
 		}
 
+		if (currentReads == l.readCount ())
+			finishReading ();
+	}
+
+	private void finishReading ()
+	{
+		// Set graph to full view of readings.
+		final XYPlot plot = snsChart.getXYPlot ();
+		ValueAxis axis = plot.getDomainAxis ();
+		axis.setAutoRange (true);
+		axis.setFixedAutoRange (l.readCount () * l.readDelay ());
+		axis = plot.getRangeAxis ();
+		axis.setRange (g.minY (), g.maxY ());
+
+		// Update title.
+		this.setTitle (AppDetails.name ());
+
+		// Update footerLabel.
+		footerLabel.setSize (doneButton.getLocation ().x, 30);
+		footerLabel.setText (OMLView.LABEL_START + "<b>"
+				+ dataset.getItemCount (0) + " readings complete." + "</b>"
+				+ OMLView.LABEL_END);
+		footerLabel.setHorizontalAlignment (JLabel.CENTER);
+
+		btmPanel.remove (progressBar);
+		btmPanel.repaint ();
+		doneButton.setText ("Done");
+		doneButton.setIcon (new ImageIcon ("img/22x22/play.png", AppDetails
+				.name ()));
+	}
+
+	public void setTimeRange (double timeRange)
+	{
+
 	}
 
 	public void addCancelButtonListener (ActionListener l)
@@ -170,9 +206,8 @@ public class LoggerView extends JFrame
 		mainPanel.setBackground (Color.white);
 
 		// Create graph.
-		final JFreeChart snsChart = ChartFactory.createTimeSeriesChart (
-				graphTitle, graphXlabel, graphYlabel, dataset, true, true,
-				false);
+		snsChart = ChartFactory.createTimeSeriesChart (graphTitle, graphXlabel,
+				graphYlabel, dataset, true, true, false);
 		final XYPlot plot = snsChart.getXYPlot ();
 		ValueAxis axis = plot.getDomainAxis ();
 		axis.setAutoRange (true);
@@ -181,7 +216,8 @@ public class LoggerView extends JFrame
 		else
 			axis.setFixedAutoRange (l.readCount () * l.readDelay ());
 		axis = plot.getRangeAxis ();
-		axis.setRange (0.0, 1023.0);
+		axis.setRange (g.minY (), g.maxY ());
+
 		ChartPanel snsChartPanel = new ChartPanel (snsChart);
 		snsChartPanel.setPreferredSize (new Dimension (frameWidth - 20,
 				graphHeight - 10));

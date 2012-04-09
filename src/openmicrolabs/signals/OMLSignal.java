@@ -25,7 +25,7 @@ package openmicrolabs.signals;
  * @author Chris Cummins
  * 
  */
-public interface Signal
+public class OMLSignal
 {
 
 	/**
@@ -36,7 +36,10 @@ public interface Signal
 	 *            Value to be converted.
 	 * @return Converted value.
 	 */
-	public double toValue (double rawInt);
+	public double toValue (double rawInt)
+	{
+		return rawInt;
+	}
 
 	/**
 	 * Converts an unsigned 10-bit integer [0, 1023] to formatted String
@@ -47,13 +50,18 @@ public interface Signal
 	 *            Value to be converted.
 	 * @return Converted value as human readable string.
 	 */
-	public String toString (double rawInt);
+	public String toString (double rawInt)
+	{
+		return String.format ("%04d", (int) rawInt);
+	}
 
 	/**
 	 * Returns the name of the Signal as a string.
 	 * 
 	 * @return String.
 	 */
-	public String name ();
+	public String name (){
+		return "Raw";
+	}
 
 }

@@ -119,7 +119,7 @@ public class CommSettingsView extends JFrame
 	public CommSettings getCommSettings ()
 	{
 		return new CommSettings (
-				DiscoverPorts.listToArray ()[comBox.getSelectedIndex ()],
+				DiscoverPorts.listNamesToArray ()[comBox.getSelectedIndex ()],
 				(int) baudBox.getSelectedItem (),
 				(int) databitOptions[1][dataBox.getSelectedIndex ()],
 				(int) stopbitOptions[1][stopBox.getSelectedIndex ()],

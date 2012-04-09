@@ -27,7 +27,7 @@ import javax.swing.JFrame;
  * @author Chris Cummins
  * 
  */
-public class GUISettingsView extends JFrame
+public class GraphSettingsView extends JFrame
 {
 	/** Serial UID. */
 	private static final long serialVersionUID = -1475245631891524654L;

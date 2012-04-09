@@ -52,8 +52,12 @@ public interface Model
 	 *             In case of IO error
 	 * @see Model#setCommSettings(CommSettings) .
 	 */
-	public boolean testConnection () throws IOException;
+	public boolean testConnection () throws NoSuchPortException,
+	PortInUseException, UnsupportedCommOperationException, IOException;
 
+	public void connect () throws NoSuchPortException,
+	PortInUseException, UnsupportedCommOperationException, IOException;
+	
 	/**
 	 * Starts a logging session. setLogSettings() must have been called
 	 * beforehand.
@@ -62,6 +66,8 @@ public interface Model
 	 */
 	public void startLogging ();
 
+	public boolean isLogging ();
+	
 	/**
 	 * Stops a running logging session prematurely and prevents any more
 	 * readings from being made.
@@ -75,8 +81,7 @@ public interface Model
 	 *            CommSettings.
 	 * @see openmicrolabs.settings.CommSettings#CommSettings()
 	 */
-	public void setCommSettings (CommSettings c) throws NoSuchPortException,
-			PortInUseException, UnsupportedCommOperationException, IOException;
+	public void setCommSettings (CommSettings c);
 
 	/**
 	 * Set the settings for a logging session.

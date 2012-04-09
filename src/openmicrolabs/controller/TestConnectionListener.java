@@ -1,4 +1,4 @@
-/* Chris Cummins - 8 Apr 2012
+/* Chris Cummins - 9 Apr 2012
  *
  * This file is part of Open MicroLabs.
  *
@@ -31,25 +31,50 @@ import openmicrolabs.settings.CommSettings;
 import openmicrolabs.view.View;
 
 /**
- * This implementation of the Controller interface performs the duties of
- * instantiating a model and view, then attaching the required listeners.
- * 
  * @author Chris Cummins
  * 
  */
-public class OMLController implements Controller
+public class TestConnectionListener extends OMLController implements
+		ActionListener
 {
-	protected Model m;
-	protected View v;
 
-	@Override
-	public void init (Model m, View v)
+	private final Model m;
+	private final View v;
+
+	public TestConnectionListener (Model m, View v)
 	{
 		this.m = m;
 		this.v = v;
-
-		this.v.addCommSettingsListener (new CommSettingsListener (m, v));
-		this.v.addTestConnectionListener (new TestConnectionListener (m, v));
 	}
 
+	@Override
+	public void actionPerformed (ActionEvent arg0)
+	{
+		CommSettings c = v.getCommSettings ();
+		try
+		{
+			m.setCommSettings (c);
+			if (m.testConnection ())
+				v.showMessage ("Test succeeded!");
+			else
+				v.showError ("Test failed! No response from microcontroller.");
+		} catch (NoSuchPortException e)
+		{
+			v.showError ("Unable to connect to com port, " + c.portName ()
+					+ " does not exist!");
+		} catch (PortInUseException e)
+		{
+			v.showError ("Unable to connect to com port, " + c.portName ()
+					+ " already in use!");
+		} catch (UnsupportedCommOperationException e)
+		{
+			v.showError ("Unable to connect to com port, " + c.portName ()
+					+ " does not support this type of operation!");
+		} catch (IOException e)
+		{
+			v.showError ("Unable to connect to com port, " + c.portName ()
+					+ " access denied!");
+		}
+
+	}
 }

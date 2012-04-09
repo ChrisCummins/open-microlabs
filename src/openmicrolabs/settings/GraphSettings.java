@@ -24,12 +24,12 @@ package openmicrolabs.settings;
  * @author Chris Cummins
  * 
  */
-public class GUISettings
+public class GraphSettings
 {
 
-	private final double TIMERANGE;
-	private final double MINY;
-	private final double MAXY;
+	private Double timeRange;
+	private final double minY;
+	private final double maxY;
 
 	/**
 	 * Creates a GUISettings object from arguments.
@@ -44,18 +44,17 @@ public class GUISettings
 	 * @throws IllegalArgument
 	 *             Exception If any of the values are out of range.
 	 */
-	public GUISettings (double timeRange, double minY, double maxY)
+	public GraphSettings (Double timeRange, double minY, double maxY)
 	{
-		if (timeRange < 0 || minY < 0 || maxY < 0)
+		if (minY < 0 || maxY < 0)
 			throw new IllegalArgumentException (
-					"Arguments must be greater than 0!");
+					"Y axis arguments too low! Acceptable range: [0, 1023.0]");
 		if (minY > 1023.0 || maxY > 1023.0)
 			throw new IllegalArgumentException (
-					"Y axis arguments too high! Range [0, 1023.0]");
-
-		this.TIMERANGE = timeRange;
-		this.MINY = minY;
-		this.MAXY = maxY;
+					"Y axis arguments too high! Acceptable range: [0, 1023.0]");
+		this.timeRange = timeRange;
+		this.minY = minY;
+		this.maxY = maxY;
 	}
 
 	/**
@@ -64,9 +63,14 @@ public class GUISettings
 	 * 
 	 * @return Double.
 	 */
-	public double timeRange ()
+	public Double timeRange ()
 	{
-		return TIMERANGE;
+		return timeRange;
+	}
+	
+	public void timeRange (Double timeRange)
+	{
+		this.timeRange = timeRange;
 	}
 
 	/**
@@ -76,7 +80,7 @@ public class GUISettings
 	 */
 	public double minY ()
 	{
-		return MINY;
+		return minY;
 	}
 
 	/**
@@ -86,7 +90,7 @@ public class GUISettings
 	 */
 	public double maxY ()
 	{
-		return MAXY;
+		return maxY;
 	}
 
 }

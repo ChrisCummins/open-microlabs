@@ -18,6 +18,9 @@
 
 package openmicrolabs.controller;
 
+import openmicrolabs.model.Model;
+import openmicrolabs.view.View;
+
 import org.jfree.data.general.SeriesChangeEvent;
 import org.jfree.data.general.SeriesChangeListener;
 
@@ -33,11 +36,19 @@ public class NewDataListener extends OMLController implements
 		SeriesChangeListener
 {
 
+	private final Model m;
+	private final View v;
+	
+	public NewDataListener (Model m, View v)
+	{
+		this.m = m;
+		this.v = v;
+	}
+
 	@Override
 	public void seriesChanged (SeriesChangeEvent event)
 	{
-		// TODO: New data listener
-
+		v.updateViews ();
 	}
 
 }

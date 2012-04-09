@@ -18,8 +18,17 @@
 
 package openmicrolabs.controller;
 
+import gnu.io.NoSuchPortException;
+import gnu.io.PortInUseException;
+import gnu.io.UnsupportedCommOperationException;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
+
+import openmicrolabs.model.Model;
+import openmicrolabs.settings.CommSettings;
+import openmicrolabs.view.View;
 
 /**
  * This implementation of the ActionListener interface is responsible for
@@ -34,11 +43,43 @@ public class CommSettingsListener extends OMLController implements
 		ActionListener
 {
 
+	private final Model m;
+	private final View v;
+	
+	public CommSettingsListener (Model m, View v)
+	{
+		this.m = m;
+		this.v = v;
+	}
+	
 	@Override
 	public void actionPerformed (ActionEvent arg0)
 	{
-		// TODO: CommSettingsListener
-
+		CommSettings c = v.getCommSettings ();
+		try
+		{
+			m.setCommSettings (v.getCommSettings ());
+			m.connect ();
+			v.showOMLSettings ();
+			v.addShowGUISettingsListener (new ShowGUISettingsListener (m, v));
+			v.addStartLoggingListener (new LogSettingsListener (m, v));
+		} catch (NoSuchPortException e)
+		{
+			v.showError ("Unable to connect to com port, " + c.portName ()
+					+ " does not exist!");
+		} catch (PortInUseException e)
+		{
+			v.showError ("Unable to connect to com port, " + c.portName ()
+					+ " already in use!");
+		} catch (UnsupportedCommOperationException e)
+		{
+			v.showError ("Unable to connect to com port, " + c.portName ()
+					+ " does not support this type of operation!");
+		} catch (IOException e)
+		{
+			v.showError ("Unable to connect to com port, " + c.portName ()
+					+ " access denied!");
+		}
 	}
 
 }

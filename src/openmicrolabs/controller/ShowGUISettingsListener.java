@@ -21,6 +21,9 @@ package openmicrolabs.controller;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import openmicrolabs.model.Model;
+import openmicrolabs.view.View;
+
 /**
  * This implementation of the ActionListener interface is responsible for
  * receiving show GUISettings requests from the user and so updating the view
@@ -31,12 +34,20 @@ import java.awt.event.ActionListener;
  */
 public class ShowGUISettingsListener extends OMLController implements ActionListener
 {
+	
+	private final Model m;
+	private final View v;
+	
+	public ShowGUISettingsListener (Model m, View v)
+	{
+		this.m = m;
+		this.v = v;
+	}
 
 	@Override
 	public void actionPerformed (ActionEvent e)
 	{
-		// TODO: GUI Settings Listener.
-		
+		v.showGraphSettings ();
 	}
 
 }

@@ -26,7 +26,7 @@ import org.jfree.data.time.TimeSeriesCollection;
 
 import openmicrolabs.AppDetails;
 import openmicrolabs.settings.CommSettings;
-import openmicrolabs.settings.GUISettings;
+import openmicrolabs.settings.GraphSettings;
 import openmicrolabs.settings.LogSettings;
 import openmicrolabs.signals.OMLVoltage;
 import openmicrolabs.signals.OMLSignal;
@@ -43,25 +43,25 @@ public class OMLView implements View
 	public static final String LABEL_START = "<html><font size=\"3\" "
 			+ "face=\"verdana\" color=\"black\">";
 	public static final String LABEL_END = "</font></html>";
-	
+
 	private static final OMLSignal o1 = new OMLSignal ();
 	private static final OMLVoltage o2 = new OMLVoltage ();
 	public static final OMLSignal[] SIGNAL_TYPES = { o1, o2 };
 
 	private CommSettingsView comView;
 	private OMLSettingsView omlView;
-	private GUISettingsView guiView;
+	private GraphSettingsView graphView;
 	private LoggerView logView;
 	private FileLogger fileLogger;
-	
-	private GUISettings g = new GUISettings (30000.0, 0, 1023);
+
+	private GraphSettings g = new GraphSettings (30000.0, 0, 1023);
 
 	public OMLView ()
 	{
-		comView = new CommSettingsView();
+		comView = new CommSettingsView ();
 		comView.setVisible (true);
 	}
-	
+
 	public static void showMessageBox (String msg)
 	{
 		JOptionPane.showMessageDialog (null, msg, AppDetails.name () + " "
@@ -87,9 +87,38 @@ public class OMLView implements View
 	}
 
 	@Override
+	public boolean showYesNoPrompt (String msg)
+	{
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
 	public CommSettings getCommSettings ()
 	{
 		return comView.getCommSettings ();
+	}
+
+	@Override
+	public void showOMLSettings ()
+	{
+		comView.setVisible (false);
+		omlView = new OMLSettingsView ();
+		omlView.setVisible (true);
+		graphView = new GraphSettingsView ();
+	}
+
+	@Override
+	public void showGraphSettings ()
+	{
+		graphView.setVisible (true);
+	}
+
+	@Override
+	public void graphSettingsComplete ()
+	{
+		// TODO: Update g from graphView.
+		graphView.setVisible (false);
 	}
 
 	@Override
@@ -101,15 +130,17 @@ public class OMLView implements View
 	@Override
 	public void loggingStarted (LogSettings l, TimeSeriesCollection t)
 	{
+		if ((l.readCount () * l.readDelay ()) < g.timeRange ())
+			g.timeRange ((double) (l.readCount () * l.readDelay ()));
 		omlView.setVisible (false);
-		logView = new LoggerView(l, g, t);
+		logView = new LoggerView (l, g, t);
 		logView.setVisible (true);
 	}
 
 	@Override
 	public void updateViews ()
 	{
-		//TODO: update filelogger.
+		// TODO: update filelogger.
 		logView.updateView ();
 	}
 
@@ -147,6 +178,14 @@ public class OMLView implements View
 	public void addCancelLoggingListener (ActionListener l)
 	{
 		logView.addCancelButtonListener (l);
+	}
+
+	@Override
+	public void returnFromLogScreen ()
+	{
+		omlView.setVisible (true);
+		logView.setVisible (false);
+		logView.dispose ();
 	}
 
 }

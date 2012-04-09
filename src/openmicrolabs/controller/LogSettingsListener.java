@@ -21,23 +21,50 @@ package openmicrolabs.controller;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import openmicrolabs.model.Model;
+import openmicrolabs.settings.LogSettings;
+import openmicrolabs.view.View;
+
 /**
  * This implementation of the ActionListener interface is responsible for
  * getting log settings from the view and setting those to the model.
  * Additionally, it will interpret any exceptions thrown by the model and feed
  * those back to the view for the user.
+ * 
  * @author Chris Cummins
  * 
  */
 public class LogSettingsListener extends OMLController implements
 		ActionListener
 {
+	
+	private final Model m;
+	private final View v;
+	
+	public LogSettingsListener (Model m, View v)
+	{
+		this.m = m;
+		this.v = v;
+	}
 
 	@Override
 	public void actionPerformed (ActionEvent arg0)
 	{
-		// TODO: LogSettings listenr
-
+		try
+		{
+			LogSettings l = v.getLogSettings ();
+			m.setLogSettings (l);
+			m.startLogging ();
+			v.loggingStarted (l, m.getData ());
+			m.addNewDataListener (new NewDataListener (m, v));
+			v.addCancelLoggingListener (new CancelLoggingListener (m, v));
+		} catch (NumberFormatException e)
+		{
+			v.showError ("Text areas must contain positive integers only!");
+		} catch (IllegalArgumentException e1)
+		{
+			v.showError (e1.getMessage ());
+		}
 	}
 
 }

@@ -20,7 +20,7 @@ package openmicrolabs.settings;
 
 import java.util.ArrayList;
 
-import openmicrolabs.signals.Signal;
+import openmicrolabs.signals.OMLSignal;
 
 /**
  * This class contains a representation of the active ports on the slave
@@ -31,8 +31,8 @@ import openmicrolabs.signals.Signal;
  */
 public class Datamask
 {
-	private final Signal[] SIGNALS;
-	private final Signal[] ACTIVESIGNALS;
+	private final OMLSignal[] SIGNALS;
+	private final OMLSignal[] ACTIVESIGNALS;
 	private final char CHAR;
 
 	/**
@@ -42,7 +42,7 @@ public class Datamask
 	 *            An array of signal types, one representing each pin.
 	 *            <code>null</code> if the pin is not active.
 	 */
-	public Datamask (Signal[] signals)
+	public Datamask (OMLSignal[] signals)
 	{
 		this.SIGNALS = signals;
 		this.ACTIVESIGNALS = getActiveSignals ();
@@ -55,7 +55,7 @@ public class Datamask
 	 * 
 	 * @return Array of Signals, with <code>null</code> entries.
 	 */
-	public Signal[] signals ()
+	public OMLSignal[] signals ()
 	{
 		return SIGNALS;
 	}
@@ -67,9 +67,38 @@ public class Datamask
 	 * 
 	 * @return Array of Signals.
 	 */
-	public Signal[] activeSignals ()
+	public OMLSignal[] activeSignals ()
 	{
 		return ACTIVESIGNALS;
+	}
+
+	/**
+	 * Returns
+	 * <code>true<code> if selected pin is active, else <code>false</code>.
+	 * 
+	 * @param n
+	 *            Pin index to check.
+	 * @return <code>true</code> or <code>false</code>.
+	 */
+	public boolean pin (int n)
+	{
+		if (SIGNALS[n] != null)
+			return true;
+		else
+			return false;
+	}
+
+	/**
+	 * Returns the signal at the specified pin index, or <code>null</code> if
+	 * pin is inactive.
+	 * 
+	 * @param n
+	 *            Pin index to check.
+	 * @return OMLSignal.
+	 */
+	public OMLSignal signal (int n)
+	{
+		return SIGNALS[n];
 	}
 
 	/**
@@ -88,13 +117,13 @@ public class Datamask
 	 * 
 	 * @return Array of Signals.
 	 */
-	private Signal[] getActiveSignals ()
+	private OMLSignal[] getActiveSignals ()
 	{
-		ArrayList<Signal> activeSignals = new ArrayList<Signal> ();
-		for (Signal signal : SIGNALS)
+		ArrayList<OMLSignal> activeSignals = new ArrayList<OMLSignal> ();
+		for (OMLSignal signal : SIGNALS)
 			if (signal != null)
 				activeSignals.add (signal);
-		Signal[] array = new Signal[activeSignals.size ()];
+		OMLSignal[] array = new OMLSignal[activeSignals.size ()];
 		activeSignals.toArray (array);
 
 		return array;
@@ -108,7 +137,7 @@ public class Datamask
 	private char getChar ()
 	{
 		String binary = "";
-		for (Signal signal : SIGNALS)
+		for (OMLSignal signal : SIGNALS)
 			if (signal != null)
 				binary += "1";
 			else

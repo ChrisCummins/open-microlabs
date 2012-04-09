@@ -24,6 +24,7 @@ import gnu.io.UnsupportedCommOperationException;
 
 import java.io.IOException;
 
+import openmicrolabs.AppDetails;
 import openmicrolabs.settings.CommSettings;
 import openmicrolabs.settings.LogSettings;
 
@@ -46,12 +47,21 @@ public class OMLModel implements Model
 	/**
 	 * Tests the connection with the microcontroller at the set comm settings.
 	 * setCommSettings() must have been called beforehand.
+	 * @throws UnsupportedCommOperationException 
+	 * @throws PortInUseException 
+	 * @throws NoSuchPortException 
 	 * 
 	 */
 	@Override
-	public boolean testConnection () throws IOException
+	public boolean testConnection () throws NoSuchPortException, PortInUseException, UnsupportedCommOperationException, IOException
 	{
 		return buffer.testConnection ();
+	}
+	
+	public void connect () throws NoSuchPortException,
+	PortInUseException, UnsupportedCommOperationException, IOException
+	{
+		buffer.connect (AppDetails.name ());
 	}
 
 	/**
@@ -62,7 +72,7 @@ public class OMLModel implements Model
 	public void startLogging ()
 	{
 		dataset = new OMLDataseries (reader);
-		dataset.statLogging ();
+		dataset.startLogging ();
 	}
 
 	/**
@@ -78,8 +88,7 @@ public class OMLModel implements Model
 	 * Creates a new SerialBuffer with the given CommSettings.
 	 */
 	@Override
-	public void setCommSettings (CommSettings c) throws NoSuchPortException,
-			PortInUseException, UnsupportedCommOperationException, IOException
+	public void setCommSettings (CommSettings c)
 	{
 		buffer = new SerialBuffer (c);
 	}
@@ -91,6 +100,9 @@ public class OMLModel implements Model
 	@Override
 	public void setLogSettings (LogSettings l)
 	{
+		if (buffer.getSleepTime () > l.readDelay ())
+			throw new IllegalArgumentException ("Minimum valid read delay is "
+					+ buffer.getSleepTime () + "ms!");
 		reader = new SerialReader (l, buffer);
 		buffer = reader.getSerialBuffer ();
 	}
@@ -129,6 +141,12 @@ public class OMLModel implements Model
 	public void addNewDataListener (SeriesChangeListener l)
 	{
 		dataset.addNewDataListener (l);
+	}
+
+	@Override
+	public boolean isLogging ()
+	{
+		return reader.isRunning ();
 	}
 
 }

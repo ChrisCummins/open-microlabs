@@ -21,7 +21,7 @@ package openmicrolabs.model;
 import java.util.Observable;
 import java.util.Observer;
 
-import openmicrolabs.signals.Signal;
+import openmicrolabs.signals.OMLSignal;
 
 import org.jfree.data.general.SeriesChangeListener;
 import org.jfree.data.time.Millisecond;
@@ -39,9 +39,10 @@ import org.jfree.data.time.TimeSeriesCollection;
 public class OMLDataseries implements Observer
 {
 
-	private final SerialReader READER;
-	private final TimeSeries[] SERIES;
-	private final TimeSeriesCollection SERIESCOLLECTION;
+	private final SerialReader reader;
+	private final TimeSeries[] series;
+	private final TimeSeriesCollection seriesCollection;
+	private Thread logSession; 
 
 	/**
 	 * Creates a new OMLDataseries object. It adds itself as an observer to the
@@ -53,20 +54,19 @@ public class OMLDataseries implements Observer
 	 */
 	public OMLDataseries (SerialReader reader)
 	{
-		this.READER = reader;
-		this.READER.addObserver (this);
+		this.reader = reader;
 
-		this.SERIES = new TimeSeries[READER.getLogSettings ().datamask ()
+		this.series = new TimeSeries[reader.getLogSettings ().datamask ()
 				.activeSignals ().length];
 
-		this.SERIESCOLLECTION = new TimeSeriesCollection ();
+		this.seriesCollection = new TimeSeriesCollection ();
 
 		int index = 0;
-		for (Signal signal : READER.getLogSettings ().datamask ().signals ())
+		for (OMLSignal signal : reader.getLogSettings ().datamask ().signals ())
 			if (signal != null)
 			{
-				SERIES[index] = new TimeSeries ("0x0" + index);
-				SERIESCOLLECTION.addSeries (SERIES[index]);
+				series[index] = new TimeSeries ("0x0" + index);
+				seriesCollection.addSeries (series[index]);
 				index++;
 			}
 	}
@@ -74,9 +74,11 @@ public class OMLDataseries implements Observer
 	/**
 	 * Starts a logging session.
 	 */
-	public void statLogging ()
+	public void startLogging ()
 	{
-		READER.run ();
+		reader.addObserver (this);
+		logSession = new Thread(reader);
+		logSession.start ();
 	}
 
 	/**
@@ -84,7 +86,7 @@ public class OMLDataseries implements Observer
 	 */
 	public void stopLogging ()
 	{
-		READER.stop ();
+		logSession.interrupt ();
 	}
 
 	/**
@@ -94,9 +96,9 @@ public class OMLDataseries implements Observer
 	@Override
 	public void update (Observable arg0, Object arg1)
 	{
-		Double[] d = READER.getDatabuffer ();
-		for (int i = 0; i < SERIES.length; i++)
-			SERIES[i].add (new Millisecond (), d[i]);
+		Double[] d = (Double[]) arg1;
+		for (int i = 0; i < series.length; i++)
+			series[i].add (new Millisecond (), d[i]);
 	}
 
 	/**
@@ -109,7 +111,7 @@ public class OMLDataseries implements Observer
 	 */
 	public void addNewDataListener (SeriesChangeListener l)
 	{
-		SERIES[SERIES.length - 1].addChangeListener (l);
+		series[series.length - 1].addChangeListener (l);
 	}
 
 	/**
@@ -118,6 +120,6 @@ public class OMLDataseries implements Observer
 	 */
 	public TimeSeriesCollection getData ()
 	{
-		return SERIESCOLLECTION;
+		return seriesCollection;
 	}
 }

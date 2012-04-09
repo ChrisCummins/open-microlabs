@@ -33,10 +33,10 @@ import openmicrolabs.settings.LogSettings;
  * @author Chris Cummins
  * 
  */
-public class SerialReader extends Observable
+public class SerialReader extends Observable implements Runnable
 {
-	private final LogSettings LOGSETTINGS;
-	private final SerialBuffer SERIALBUFFER;
+	private final LogSettings logSettings;
+	private final SerialBuffer serialBuffer;
 	private final long RESTTIME;
 
 	private boolean isRunning;
@@ -54,31 +54,25 @@ public class SerialReader extends Observable
 	 */
 	public SerialReader (LogSettings l, SerialBuffer b)
 	{
-		this.LOGSETTINGS = l;
-		this.SERIALBUFFER = b;
+		this.logSettings = l;
+		this.serialBuffer = b;
 		this.setBufferSleepTime ();
-		this.RESTTIME = l.readDelay () - SERIALBUFFER.getSleepTime ();
-		this.databuffer = new Double[LOGSETTINGS.datamask ().activeSignals ().length];
+		this.RESTTIME = l.readDelay () - serialBuffer.getSleepTime ();
+		this.databuffer = new Double[logSettings.datamask ().activeSignals ().length];
 	}
 
 	public void run ()
 	{
-		isRunning = true;
-
-		for (int i = 0; i < LOGSETTINGS.readCount (); i++)
+		for (int i = 0; i < logSettings.readCount (); i++)
 		{
-			if (isRunning)
+			takeReading ();
+			try
 			{
-				takeReading ();
-				try
-				{
-					Thread.sleep (RESTTIME);
-				} catch (InterruptedException e)
-				{
-					// Don't care.
-				}
-			} else
+				Thread.sleep (RESTTIME);
+			} catch (InterruptedException e)
+			{
 				return;
+			}
 		}
 	}
 
@@ -96,7 +90,7 @@ public class SerialReader extends Observable
 	{
 		return databuffer;
 	}
-	
+
 	/**
 	 * Returns the SerialBuffer currently in use.
 	 * 
@@ -104,16 +98,22 @@ public class SerialReader extends Observable
 	 */
 	public SerialBuffer getSerialBuffer ()
 	{
-		return SERIALBUFFER;
+		return serialBuffer;
 	}
-	
+
+	public boolean isRunning ()
+	{
+		return isRunning;
+	}
+
 	/**
 	 * Returns the LogSettings currently in use.
+	 * 
 	 * @return LogSettings.
 	 */
 	public LogSettings getLogSettings ()
 	{
-		return LOGSETTINGS;
+		return logSettings;
 	}
 
 	/*
@@ -122,8 +122,8 @@ public class SerialReader extends Observable
 	 */
 	private void setBufferSleepTime ()
 	{
-		SERIALBUFFER
-				.setSleepTime (LOGSETTINGS.datamask ().activeSignals ().length
+		serialBuffer
+				.setSleepTime (logSettings.datamask ().activeSignals ().length
 						* AppDetails.sleepTime ());
 	}
 
@@ -132,7 +132,7 @@ public class SerialReader extends Observable
 		try
 		{
 			// Get information from microcontroller.
-			String stringbuffer = SERIALBUFFER.sendDataRequest (LOGSETTINGS
+			String stringbuffer = serialBuffer.sendDataRequest (logSettings
 					.datamask ().asciiChar ());
 
 			// Split information into seperate strings.
@@ -154,6 +154,7 @@ public class SerialReader extends Observable
 		{
 			databuffer = null;
 		}
+		setChanged ();
 		notifyObservers (databuffer);
 	}
 }

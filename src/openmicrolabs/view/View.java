@@ -53,6 +53,8 @@ public interface View
 	 */
 	public void showError (String ms);
 
+	public boolean showYesNoPrompt (String msg);
+
 	/**
 	 * Get CommSettings from GUI.
 	 * 
@@ -61,6 +63,8 @@ public interface View
 	 */
 	public CommSettings getCommSettings ();
 
+	public void showOMLSettings ();
+
 	/**
 	 * Get LogSettings from GUI.
 	 * 
@@ -68,6 +72,10 @@ public interface View
 	 * @see openmicrolabs.settings.LogSettings#LogSettings()
 	 */
 	public LogSettings getLogSettings ();
+
+	public void showGraphSettings ();
+
+	public void graphSettingsComplete ();
 
 	/**
 	 * Informs the view that logging has begun.
@@ -78,6 +86,8 @@ public interface View
 	 * Informs the view that new data has been added to the data model.
 	 */
 	public void updateViews ();
+
+	public void returnFromLogScreen ();
 
 	/**
 	 * Add an action listener for when CommSettings are set.
@@ -132,5 +142,5 @@ public interface View
 	 * @see openmicrolabs.controller.CancelLoggingListener#actionPerformed(java.awt.event.ActionEvent)
 	 */
 	public void addCancelLoggingListener (ActionListener l);
-	
+
 }

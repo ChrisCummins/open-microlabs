@@ -49,22 +49,12 @@ public class SerialBuffer extends SerialComm
 	 * 
 	 * @param c
 	 *            CommSettings to connect with.
-	 * @throws NoSuchPortException
-	 *             If port does not exist.
-	 * @throws PortInUseException
-	 *             If port is in use.
-	 * @throws UnsupportedCommOperationException
-	 *             If port does not support this type of operation.
-	 * @throws IOException
-	 *             In case of IO error.
 	 */
-	public SerialBuffer (CommSettings c) throws NoSuchPortException,
-			PortInUseException, UnsupportedCommOperationException, IOException
+	public SerialBuffer (CommSettings c)
 	{
 		super (c.portName (), c.baudRate (), c.dataBits (), c.stopBits (), c
 				.parity (), c.flowControl ());
 		this.C = c;
-		super.connect (AppDetails.name ());
 	}
 
 	/**
@@ -101,11 +91,17 @@ public class SerialBuffer extends SerialComm
 	 *         <code>false</code>.
 	 * @throws IOException
 	 *             In case of IO error.
+	 * @throws UnsupportedCommOperationException
+	 * @throws PortInUseException
+	 * @throws NoSuchPortException
 	 * @see SerialBuffer#sendDataRequest(char)
 	 */
-	public boolean testConnection () throws IOException
+	public boolean testConnection () throws IOException, NoSuchPortException,
+			PortInUseException, UnsupportedCommOperationException
 	{
+		super.connect (AppDetails.name ());
 		String s = sendDataRequest ((char) 255);
+		super.close ();
 		if (s.length () > 0)
 			return true;
 		else
@@ -133,9 +129,10 @@ public class SerialBuffer extends SerialComm
 	{
 		return C;
 	}
-	
+
 	/**
 	 * Returns the sleep time currently in use.
+	 * 
 	 * @return Sleep time (ms).
 	 */
 	public long getSleepTime ()

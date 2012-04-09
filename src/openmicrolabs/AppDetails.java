@@ -100,7 +100,7 @@ public abstract class AppDetails
 		BufferedImage bi = new BufferedImage (16, 16,
 				BufferedImage.TYPE_INT_RGB);
 		Graphics g = bi.getGraphics ();
-		g.setColor (Color.black);
+		g.setColor (Color.white);
 		g.fillRect (0, 0, 15, 15);
 		g.setColor (Color.red);
 		g.fillOval (0, 0, 15, 15);
