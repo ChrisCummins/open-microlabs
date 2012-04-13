@@ -1,4 +1,4 @@
-/* Chris Cummins - 8 Apr 2012
+/* Chris Cummins - 9 Apr 2012
  *
  * This file is part of Open MicroLabs.
  *
@@ -16,33 +16,13 @@
  * along with Open MicroLabs.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package openmicrolabs.test.view;
-
-import ac.aston.oml.view.gui.OMLLogSettingsView;
-import jcummins.gui.GUITools;
-
+package ac.aston.oml.view;
 
 /**
- * Testing class for OMLCommSettingsView.
- * 
  * @author Chris Cummins
- * @see ac.aston.oml.view.gui.OMLLogSettingsView
+ *
  */
-public class DrawOMLSettingsView
+public interface FileLogger
 {
-
-	/**
-	 * Renders a OMLCommSettingsView frame.
-	 * 
-	 * @param args
-	 *            None.
-	 */
-	public static void main (String[] args)
-	{
-		GUITools.setNativeLookAndFeel ();
-
-		OMLLogSettingsView frame = new OMLLogSettingsView ();
-		frame.setVisible (true);
-	}
 
 }

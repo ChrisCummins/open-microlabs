@@ -1,4 +1,4 @@
-/* Chris Cummins - 8 Apr 2012
+/* Chris Cummins - 9 Apr 2012
  *
  * This file is part of Open MicroLabs.
  *
@@ -16,33 +16,35 @@
  * along with Open MicroLabs.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package openmicrolabs.test.view;
+package ac.aston.oml.view;
 
-import ac.aston.oml.view.gui.OMLLogSettingsView;
-import jcummins.gui.GUITools;
+import java.awt.event.ActionListener;
 
+import jcummins.gui.HTMLFontset;
+
+
+import org.jfree.data.time.TimeSeriesCollection;
+
+import ac.aston.oml.data.signals.OMLSignal;
 
 /**
- * Testing class for OMLCommSettingsView.
- * 
  * @author Chris Cummins
- * @see ac.aston.oml.view.gui.OMLLogSettingsView
+ *
  */
-public class DrawOMLSettingsView
+public interface LoggerView
 {
 
-	/**
-	 * Renders a OMLCommSettingsView frame.
-	 * 
-	 * @param args
-	 *            None.
-	 */
-	public static void main (String[] args)
-	{
-		GUITools.setNativeLookAndFeel ();
-
-		OMLLogSettingsView frame = new OMLLogSettingsView ();
-		frame.setVisible (true);
-	}
-
+	public void init (HTMLFontset h, TimeSeriesCollection t, String[] signals);
+	public void teardown ();
+	
+	public void setCurrentLabels (String[] s);
+	public void setMinLabels (String[] s);
+	public void setMaxLabels (String[] s);
+	public void setAvgLabels (String[] s);
+	public void setReadingsLabel (String s);
+	public void setSignalStrenghLabel (String s);
+	public void setProgressBar (int progress);
+	
+	public void addDoneButtonListener (ActionListener l);
+	
 }

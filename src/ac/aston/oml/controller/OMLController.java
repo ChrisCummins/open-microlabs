@@ -16,33 +16,31 @@
  * along with Open MicroLabs.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package openmicrolabs.test.view;
+package ac.aston.oml.controller;
 
-import ac.aston.oml.view.gui.OMLLogSettingsView;
-import jcummins.gui.GUITools;
-
+import ac.aston.oml.model.Model;
+import ac.aston.oml.view.ViewGateway;
 
 /**
- * Testing class for OMLCommSettingsView.
+ * This implementation of the Controller interface performs the duties of
+ * instantiating a model and view, then attaching the required listeners.
  * 
  * @author Chris Cummins
- * @see ac.aston.oml.view.gui.OMLLogSettingsView
+ * 
  */
-public class DrawOMLSettingsView
+public class OMLController implements Controller
 {
+	protected Model m;
+	protected ViewGateway v;
 
-	/**
-	 * Renders a OMLCommSettingsView frame.
-	 * 
-	 * @param args
-	 *            None.
-	 */
-	public static void main (String[] args)
+	@Override
+	public void init (Model m, ViewGateway v)
 	{
-		GUITools.setNativeLookAndFeel ();
+		this.m = m;
+		this.v = v;
 
-		OMLLogSettingsView frame = new OMLLogSettingsView ();
-		frame.setVisible (true);
+		this.v.addCommSettingsListener (new CommSettingsDoneListener (m, v));
+		this.v.addTestConnectionListener (new CommSettingsTestListener (m, v));
 	}
 
 }

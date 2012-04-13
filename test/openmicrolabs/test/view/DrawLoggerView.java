@@ -18,22 +18,23 @@
 
 package openmicrolabs.test.view;
 
-import cummins.gui.GUITools;
+import jcummins.gui.GUITools;
 
-import openmicrolabs.data.Datamask;
-import openmicrolabs.data.GraphSettings;
-import openmicrolabs.data.LogSettings;
-import openmicrolabs.signals.OMLSignal;
-import openmicrolabs.signals.OMLVoltage;
-import openmicrolabs.view.LoggerView;
 
 import org.jfree.data.time.TimeSeriesCollection;
 
+import ac.aston.oml.data.signals.OMLSignal;
+import ac.aston.oml.data.signals.OMLVoltage;
+import ac.aston.oml.model.data.Datamask;
+import ac.aston.oml.model.data.GraphSettings;
+import ac.aston.oml.model.data.LogSettings;
+import ac.aston.oml.view.gui.OMLLoggerView;
+
 /**
- * Testing class for CommSettingsView.
+ * Testing class for OMLCommSettingsView.
  * 
  * @author Chris Cummins
- * @see openmicrolabs.view.OMLSettingsView
+ * @see ac.aston.oml.view.gui.OMLLogSettingsView
  */
 public class DrawLoggerView
 {
@@ -48,7 +49,7 @@ public class DrawLoggerView
 	private static TimeSeriesCollection dataset;
 
 	/**
-	 * Renders a LoggerView frame.
+	 * Renders a OMLLoggerView frame.
 	 * 
 	 * @param args
 	 *            None.
@@ -56,7 +57,7 @@ public class DrawLoggerView
 	public static void main (String[] args)
 	{
 		GUITools.setNativeLookAndFeel ();
-		LoggerView frame = new LoggerView (l, g, dataset);
+		OMLLoggerView frame = new OMLLoggerView ();
 
 		frame.setVisible (true);
 	}

@@ -16,33 +16,24 @@
  * along with Open MicroLabs.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package openmicrolabs.test.view;
+package ac.aston.oml.view.gui;
 
-import ac.aston.oml.view.gui.OMLLogSettingsView;
-import jcummins.gui.GUITools;
+import javax.swing.JFrame;
+
+import ac.aston.oml.view.AdvancedSettingsView;
 
 
 /**
- * Testing class for OMLCommSettingsView.
+ * This extension of JFrame draws a frame that can be used to set the GUI
+ * settings for a logging session.
  * 
  * @author Chris Cummins
- * @see ac.aston.oml.view.gui.OMLLogSettingsView
+ * 
  */
-public class DrawOMLSettingsView
+public class OMLAdvancedSettingsView extends JFrame implements
+		AdvancedSettingsView
 {
-
-	/**
-	 * Renders a OMLCommSettingsView frame.
-	 * 
-	 * @param args
-	 *            None.
-	 */
-	public static void main (String[] args)
-	{
-		GUITools.setNativeLookAndFeel ();
-
-		OMLLogSettingsView frame = new OMLLogSettingsView ();
-		frame.setVisible (true);
-	}
+	/** Serial UID. */
+	private static final long serialVersionUID = -1475245631891524654L;
 
 }

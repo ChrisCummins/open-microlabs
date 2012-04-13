@@ -18,21 +18,24 @@
 
 package openmicrolabs.test.view;
 
-import openmicrolabs.view.CommSettingsView;
-import cummins.gui.GUITools;
+import ac.aston.oml.model.settings.OMLSettings;
+import ac.aston.oml.view.gui.OMLCommSettingsView;
+import jcummins.gui.GUITools;
+import jcummins.serial.DiscoverPorts;
+import openmicrolabs.test.OMLTestSettings;
 
 /**
- * Testing class for CommSettingsView.
+ * Testing class for OMLCommSettingsView.
  * 
  * @author Chris Cummins
- * @see openmicrolabs.view.CommSettingsView
+ * @see ac.aston.oml.view.gui.OMLCommSettingsView
  * 
  */
 public class DrawCommSettingsView
 {
 
 	/**
-	 * Renders a CommSettingsView frame.
+	 * Renders a OMLCommSettingsView frame.
 	 * 
 	 * @param args
 	 *            None.
@@ -41,7 +44,24 @@ public class DrawCommSettingsView
 	{
 		GUITools.setNativeLookAndFeel ();
 
-		CommSettingsView frame = new CommSettingsView ();
+		OMLSettings c = OMLTestSettings.getOMLSettings ();
+
+		final OMLCommSettingsView frame = new OMLCommSettingsView ();
+		frame.init (c.fontset ());
+
+		final String[] ports = DiscoverPorts.listToArray ();
+		if (ports.length < 1)
+		{
+			String[] s = { "None" };
+			frame.setComOptions (s);
+		} else
+			frame.setComOptions (ports);
+		frame.setBaudOptions (c.baudOptions (), 5);
+		frame.setDataOptions (c.databitOptions ()[0], 3);
+		frame.setStopOptions (c.stopbitOptions ()[0], 0);
+		frame.setParityOptions (c.parityOptions ()[0], 0);
+		frame.setFlowOptions (c.flowOptions ()[0], 0);
+
 		frame.setVisible (true);
 
 	}

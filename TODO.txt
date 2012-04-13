@@ -1,0 +1,26 @@
+jcummins.gui
+	HtmlFont
+	HtmlFontSet
+
+openmicrolabs.*
+	Close Program Listener
+	Messagebox set frames translucent
+	Tooltops
+	Dataseries names contains data type i.e. '0x01 (Voltage)', '0x02 (Temperature)'
+	
+openmicrolabs.view
+	readDelay in seconds
+	log file overwrite prompt
+
+openmicrolabs.model.data
+	IconFile
+	Multithreaded avg calculator
+
+openmicrolabs.model.file.logger
+	FileLogger
+
+openmicrolabs.model.file.report
+	HtmlLogFile
+
+openmicrolabs.model.settings
+	*

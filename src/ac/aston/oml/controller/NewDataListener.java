@@ -16,33 +16,37 @@
  * along with Open MicroLabs.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package openmicrolabs.test.view;
+package ac.aston.oml.controller;
 
-import ac.aston.oml.view.gui.OMLLogSettingsView;
-import jcummins.gui.GUITools;
 
+import org.jfree.data.general.SeriesChangeEvent;
+import org.jfree.data.general.SeriesChangeListener;
+
+import ac.aston.oml.view.ViewGateway;
 
 /**
- * Testing class for OMLCommSettingsView.
+ * This implementation of the SeriesChangeListener interface is responsible for
+ * handling new data notifications from the model and updating the view
+ * accordingly.
  * 
  * @author Chris Cummins
- * @see ac.aston.oml.view.gui.OMLLogSettingsView
+ * 
  */
-public class DrawOMLSettingsView
+public class NewDataListener extends OMLController implements
+		SeriesChangeListener
 {
 
-	/**
-	 * Renders a OMLCommSettingsView frame.
-	 * 
-	 * @param args
-	 *            None.
-	 */
-	public static void main (String[] args)
+	private final ViewGateway v;
+	
+	public NewDataListener (ViewGateway v)
 	{
-		GUITools.setNativeLookAndFeel ();
+		this.v = v;
+	}
 
-		OMLLogSettingsView frame = new OMLLogSettingsView ();
-		frame.setVisible (true);
+	@Override
+	public void seriesChanged (SeriesChangeEvent event)
+	{
+		v.updateViews ();
 	}
 
 }

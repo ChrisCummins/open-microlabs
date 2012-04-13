@@ -16,33 +16,28 @@
  * along with Open MicroLabs.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package openmicrolabs.test.view;
+package ac.aston.oml.controller;
 
-import ac.aston.oml.view.gui.OMLLogSettingsView;
-import jcummins.gui.GUITools;
-
+import ac.aston.oml.model.Model;
+import ac.aston.oml.view.ViewGateway;
 
 /**
- * Testing class for OMLCommSettingsView.
+ * This interface specifies the required behaviour for a Open MicroLabs
+ * controller, fulfilling the roles of a controller within the MCV architecture.
  * 
  * @author Chris Cummins
- * @see ac.aston.oml.view.gui.OMLLogSettingsView
+ * 
  */
-public class DrawOMLSettingsView
+public interface Controller
 {
-
 	/**
-	 * Renders a OMLCommSettingsView frame.
+	 * Initialise the Open MicroLabs program.
 	 * 
-	 * @param args
-	 *            None.
+	 * @param m
+	 *            Model to be used.
+	 * @param v
+	 *            ViewGateway to be used.
 	 */
-	public static void main (String[] args)
-	{
-		GUITools.setNativeLookAndFeel ();
-
-		OMLLogSettingsView frame = new OMLLogSettingsView ();
-		frame.setVisible (true);
-	}
+	public void init (Model m, ViewGateway v);
 
 }

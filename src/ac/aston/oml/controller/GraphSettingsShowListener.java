@@ -16,33 +16,35 @@
  * along with Open MicroLabs.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package openmicrolabs.test.view;
+package ac.aston.oml.controller;
 
-import ac.aston.oml.view.gui.OMLLogSettingsView;
-import jcummins.gui.GUITools;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import ac.aston.oml.view.ViewGateway;
 
 
 /**
- * Testing class for OMLCommSettingsView.
+ * This implementation of the ActionListener interface is responsible for
+ * receiving show GUISettings requests from the user and so updating the view
+ * accordingly.
  * 
  * @author Chris Cummins
- * @see ac.aston.oml.view.gui.OMLLogSettingsView
+ * 
  */
-public class DrawOMLSettingsView
+public class GraphSettingsShowListener extends OMLController implements ActionListener
 {
-
-	/**
-	 * Renders a OMLCommSettingsView frame.
-	 * 
-	 * @param args
-	 *            None.
-	 */
-	public static void main (String[] args)
+	private final ViewGateway v;
+	
+	public GraphSettingsShowListener (ViewGateway v)
 	{
-		GUITools.setNativeLookAndFeel ();
+		this.v = v;
+	}
 
-		OMLLogSettingsView frame = new OMLLogSettingsView ();
-		frame.setVisible (true);
+	@Override
+	public void actionPerformed (ActionEvent e)
+	{
+		v.showGraphSettings ();
 	}
 
 }

@@ -16,33 +16,35 @@
  * along with Open MicroLabs.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package openmicrolabs.test.view;
+package ac.aston.oml;
 
-import ac.aston.oml.view.gui.OMLLogSettingsView;
+import ac.aston.oml.controller.OMLController;
+import ac.aston.oml.model.OMLModel;
+import ac.aston.oml.view.gui.OMLView;
 import jcummins.gui.GUITools;
 
-
 /**
- * Testing class for OMLCommSettingsView.
+ * This class is responsible for instantiating the Open MicroLabs program and
+ * should be the only class that is run.
  * 
  * @author Chris Cummins
- * @see ac.aston.oml.view.gui.OMLLogSettingsView
+ * 
  */
-public class DrawOMLSettingsView
+public class OpenMicroLabs
 {
 
 	/**
-	 * Renders a OMLCommSettingsView frame.
+	 * Instantiates a Controller.
 	 * 
 	 * @param args
-	 *            None.
+	 *            none.
 	 */
 	public static void main (String[] args)
 	{
 		GUITools.setNativeLookAndFeel ();
-
-		OMLLogSettingsView frame = new OMLLogSettingsView ();
-		frame.setVisible (true);
+		
+		OMLController c = new OMLController ();
+		c.init (new OMLModel (), new OMLView ());
 	}
 
 }
