@@ -20,6 +20,8 @@ package ac.aston.oml.view;
 
 import java.awt.event.ActionListener;
 
+import jcummins.gui.HTMLFontset;
+
 /**
  * @author Chris Cummins
  *
@@ -27,13 +29,15 @@ import java.awt.event.ActionListener;
 public interface AdvancedSettingsView
 {
 	
-	public void createFrame ();
-	public void showFrame ();
-	public void hideFrame ();
-	public void closeFrame ();
+	public void init (HTMLFontset h);
+	public void teardown ();
 	
-	public void setTimeRangeOptions (Object[] o);
-	
+	public void setMinYText (String s);
+	public void setMaxYText (String s);
+	public void setTimeRangeOptions (Object[] o, int selectedIndex);
 	public void addDoneButtonListener (ActionListener l);
-
+	
+	public int getTimeRangeSelectedIndex ();
+	public String getMinYText();
+	public String getMaxYText();
 }

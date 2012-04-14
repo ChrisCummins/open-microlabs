@@ -22,29 +22,35 @@ import java.awt.event.ActionListener;
 
 import jcummins.gui.HTMLFontset;
 
-
 import org.jfree.data.time.TimeSeriesCollection;
-
-import ac.aston.oml.data.signals.OMLSignal;
 
 /**
  * @author Chris Cummins
- *
+ * 
  */
 public interface LoggerView
 {
 
-	public void init (HTMLFontset h, TimeSeriesCollection t, String[] signals);
+	public void init (HTMLFontset h, TimeSeriesCollection t, String graphTitle,
+			double graphMinY, double graphMaxY, double graphTimeRange,
+			String[] signals);
+
 	public void teardown ();
-	
-	public void setCurrentLabels (String[] s);
+
+	public void setValLabels (String[] s);
+
 	public void setMinLabels (String[] s);
+
 	public void setMaxLabels (String[] s);
+
 	public void setAvgLabels (String[] s);
+
 	public void setReadingsLabel (String s);
+
 	public void setSignalStrenghLabel (String s);
+
 	public void setProgressBar (int progress);
-	
+
 	public void addDoneButtonListener (ActionListener l);
-	
+
 }

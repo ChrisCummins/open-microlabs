@@ -37,7 +37,6 @@ import ac.aston.oml.view.CommSettingsView;
 
 import jcummins.gui.HTMLFontset;
 import jcummins.gui.JComboBoxUtils;
-import jcummins.gui.GUITools;
 import jcummins.misc.GetSystemProperties;
 
 
@@ -82,7 +81,6 @@ public class OMLCommSettingsView extends JFrame implements CommSettingsView
 		this.setSize (frameWidth, frameHeight);
 		this.setResizable (false);
 		this.setDefaultCloseOperation (JFrame.DO_NOTHING_ON_CLOSE);
-		GUITools.centreFrame (this);
 		this.setIconImage (AppDetails.icon ());
 		this.setBackground (Color.white);
 	}

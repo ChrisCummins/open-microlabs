@@ -27,7 +27,7 @@ import org.jfree.data.time.Millisecond;
 import org.jfree.data.time.TimeSeries;
 import org.jfree.data.time.TimeSeriesCollection;
 
-import ac.aston.oml.data.signals.OMLSignal;
+import ac.aston.oml.model.signals.OMLSignal;
 
 /**
  * This implementation of the Observer interface is responsible reading and

@@ -20,7 +20,7 @@ package ac.aston.oml.model.data;
 
 import java.util.ArrayList;
 
-import ac.aston.oml.data.signals.OMLSignal;
+import ac.aston.oml.model.signals.OMLSignal;
 
 
 /**

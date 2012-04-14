@@ -19,10 +19,10 @@
 package ac.aston.oml.view.gui;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -32,18 +32,15 @@ import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+import javax.swing.ScrollPaneConstants;
 
-import ac.aston.oml.data.signals.OMLSignal;
 import ac.aston.oml.model.data.AppDetails;
-import ac.aston.oml.model.data.Datamask;
-import ac.aston.oml.model.data.LogSettings;
 import ac.aston.oml.view.LogSettingsView;
 
+import jcummins.gui.HTMLFontset;
 import jcummins.gui.JComboBoxUtils;
-import jcummins.gui.GUITools;
-
-
 
 /**
  * This extension of JFrame draws a frame that can be used to set the settings
@@ -58,7 +55,7 @@ public class OMLLogSettingsView extends JFrame implements LogSettingsView,
 	/** Serial UID. */
 	private static final long serialVersionUID = -6428374697446518467L;
 
-	private static final int frameWidth = 600;
+	private static final int frameWidth = 800;
 	private static final int frameHeight = 200;
 	private static final int topHeight = 30;
 	private static final int btmHeight = 80;
@@ -66,36 +63,40 @@ public class OMLLogSettingsView extends JFrame implements LogSettingsView,
 
 	private static final String[] yesNo = { "No", "Yes" };
 
-	private final JCheckBox fileCheckBox = new JCheckBox ("Logger to file:");
+	private final JCheckBox fileCheckBox = new JCheckBox ("Log to file:");
 	private final JButton fileButton = new JButton (new ImageIcon (
 			"img/32x32/folder.png", AppDetails.name ()));
-	private final JLabel fileLabel = new JLabel (
-			System.getProperty ("user.dir") + File.separator + "log.dat");
-	@SuppressWarnings ("unchecked")
-	private final JComboBox<Object>[] pinOnBox = new JComboBox[8];
-	@SuppressWarnings ("unchecked")
-	private final JComboBox<Object>[] signalBox = new JComboBox[8];
-	private final Object[] signalTypeNames = new Object[OMLView.SIGNAL_TYPES.length];
+	private final JLabel fileLabel = new JLabel ();
+
 	private final JTextArea readDelayText = new JTextArea (1, 8);
 	private final JTextArea readCountText = new JTextArea (1, 8);
 	private final JButton guiButton = new JButton ("Advanced");
 	private final JButton doneButton = new JButton ("Done");
 
+	private JComboBox<Object>[] pinOnBox;
+	private JComboBox<Object>[] signalBox;
+
+	private HTMLFontset h;
+
 	public OMLLogSettingsView ()
 	{
-		for (int i = 0; i < OMLView.SIGNAL_TYPES.length; i++)
-		{
-			signalTypeNames[i] = OMLView.SIGNAL_TYPES[i].name ();
-		}
-
 		this.setTitle (AppDetails.name ());
-		this.setSize (frameWidth, frameHeight);
 		this.setResizable (false);
 		this.setDefaultCloseOperation (JFrame.EXIT_ON_CLOSE);
-		GUITools.centreFrame (this);
 		this.setIconImage (AppDetails.icon ());
 		this.setBackground (Color.white);
-		this.setContentPane (this.createContentPane ());
+	}
+
+	public void init (HTMLFontset h, int pinCount, String[] signalTypes)
+	{
+		this.setSize (frameWidth, frameHeight);
+		this.h = h;
+		this.setContentPane (createContentPane (pinCount, signalTypes));
+	}
+
+	public void teardown ()
+	{
+		this.dispose ();
 	}
 
 	/**
@@ -115,76 +116,60 @@ public class OMLLogSettingsView extends JFrame implements LogSettingsView,
 				fileLabel.setEnabled (true);
 			}
 
-		for (int i = 0; i < 8; i++)
+		for (int i = 0; i < pinOnBox.length; i++)
 			if (a.getSource () == pinOnBox[i])
-				if (pinOnBox[i].getSelectedIndex () == 0)
-					signalBox[i].setEnabled (false);
-				else
-					signalBox[i].setEnabled (true);
+				signalBox[i].setEnabled (!signalBox[i].isEnabled ());
 	}
 
-	/**
-	 * Adds an action listener to the "Done" button.
-	 * 
-	 * @param l
-	 *            ActionListener
-	 */
+	public void setFilepathLabel (String s)
+	{
+		fileLabel.setText (h.format ("label", s));
+	}
+
+	public String getFilepathText ()
+	{
+		return h.get ("label").unformat (fileLabel.getText ());
+	}
+
+	public String getReadCountText ()
+	{
+		return readCountText.getText ();
+	}
+
+	public String getReadDelayText ()
+	{
+		return readDelayText.getText ();
+	}
+
+	public Integer[] getSignalTypeIndexes ()
+	{
+		Integer[] ret = new Integer[signalBox.length];
+
+		for (int i = 0; i < ret.length; i++)
+			if (pinOnBox[i].getSelectedIndex () == 1)
+				ret[i] = signalBox[i].getSelectedIndex ();
+			else
+				ret[i] = null;
+
+		return ret;
+	}
+
+	@Override
+	public void addFileButtonListener (ActionListener l)
+	{
+		fileButton.addActionListener (l);
+	}
+
+	@Override
 	public void addDoneButtonListener (ActionListener l)
 	{
 		doneButton.addActionListener (l);
 	}
 
-	/**
-	 * Adds an action listener to the "Advanced" button.
-	 * 
-	 * @param l
-	 *            ActionListener
-	 */
-	public void addGUIButtonListener (ActionListener l)
+	@Override
+	public void addAdvancedButtonListener (ActionListener l)
 	{
 		guiButton.addActionListener (l);
-	}
-
-	/**
-	 * Gets and returns the selected Logger Settings.
-	 * 
-	 * @return LogSettingsView.
-	 * @throws NumberFormatException
-	 *             If text areas contained non-numeric characters.
-	 */
-	public LogSettings getLogSettings () throws NumberFormatException
-	{
-		// Set read count.
-		Integer readCount;
-		if (readCountText.getText ().replaceAll ("[^\\d]", "")
-				.replaceAll ("\\s+", "").length () == 0)
-			readCount = null;
-		else
-			readCount = Integer.parseInt (readCountText.getText ()
-					.replaceAll ("[^\\d]", "").replaceAll ("\\s+", ""));
-
-		// Set read delay.
-		long readDelay;
-		readDelay = Long.parseLong (readDelayText.getText ()
-				.replaceAll ("[^\\d]", "").replaceAll ("\\s+", ""));
-
-		// Create datamask.
-		OMLSignal[] s = new OMLSignal[8];
-		for (int i = 0; i < 8; i++)
-		{
-			if (signalBox[i].isEnabled ())
-				s[i] = OMLView.SIGNAL_TYPES[signalBox[i].getSelectedIndex ()];
-			else
-				s[i] = null;
-		}
-		Datamask datamask = new Datamask (s);
-
-		// Set logpath.
-		String logpath = null;
-		if (fileCheckBox.isSelected ())
-			logpath = fileLabel.getText ();
-
-		return new LogSettings (datamask, readDelay, readCount, logpath);
 	}
 
 	/*
@@ -192,7 +177,8 @@ public class OMLLogSettingsView extends JFrame implements LogSettingsView,
 	 * 
 	 * @return JPanel.
 	 */
-	private JPanel createContentPane ()
+	@SuppressWarnings ("unchecked")
+	private JPanel createContentPane (int pinCount, String[] signalTypes)
 	{
 		JPanel mainPanel = new JPanel ();
 		mainPanel.setLayout (null);
@@ -228,23 +214,40 @@ public class OMLLogSettingsView extends JFrame implements LogSettingsView,
 		fileLabel.setEnabled (false);
 		topPanel.add (fileLabel);
 
+		// Set up mid panel.
 		JPanel midPanel = new JPanel ();
-		midPanel.setLayout (new GridLayout (3, 9));
-		midPanel.setSize (frameWidth - 15, midHeight - 10);
-		midPanel.setLocation (5, topHeight + 10);
+		midPanel.setLayout (new GridLayout (3, pinCount + 1));
 		midPanel.setBackground (Color.white);
-		mainPanel.add (midPanel);
+
+		// Set up scroll pane.
+		final JScrollPane scrollPane = new JScrollPane (midPanel);
+		scrollPane.setSize (frameWidth - 15, midHeight - 10);
+		scrollPane.setLocation (5, topHeight + 10);
+		scrollPane.setBackground (Color.white);
+		scrollPane
+				.setHorizontalScrollBarPolicy (ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		scrollPane
+				.setVerticalScrollBarPolicy (ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
+
+		// Set results panel size.
+		midPanel.setPreferredSize (new Dimension (40 + (pinCount * 70),
+				scrollPane.getHeight () - 100));
+		midPanel.revalidate ();
 
 		midPanel.add (new JLabel ("Channel:"));
-		for (int i = 0; i < 8; i++)
+
+		pinOnBox = new JComboBox[pinCount];
+		signalBox = new JComboBox[pinCount];
+
+		for (int i = 0; i < pinCount; i++)
 		{
-			JLabel chanLabel = new JLabel (OMLView.LABEL_START + "0x0" + i
-					+ OMLView.LABEL_END);
+			JLabel chanLabel = new JLabel (h.format ("label", (char) ((i/7) + 65) + "-0x"
+					+ String.format ("%02x", (i % 7) + 1 ).toUpperCase ()));
 			chanLabel.setHorizontalAlignment (JLabel.CENTER);
 			midPanel.add (chanLabel);
 		}
 		midPanel.add (new JLabel ("Active:"));
-		for (int i = 0; i < 8; i++)
+		for (int i = 0; i < pinCount; i++)
 		{
 			pinOnBox[i] = JComboBoxUtils.create (yesNo, 1);
 			pinOnBox[i].addActionListener (this);
@@ -253,9 +256,9 @@ public class OMLLogSettingsView extends JFrame implements LogSettingsView,
 		}
 
 		midPanel.add (new JLabel ("Type:"));
-		for (int i = 0; i < 8; i++)
+		for (int i = 0; i < pinCount; i++)
 		{
-			signalBox[i] = JComboBoxUtils.create (signalTypeNames, 0);
+			signalBox[i] = JComboBoxUtils.create (signalTypes, 0);
 			signalBox[i].setBackground (Color.white);
 			midPanel.add (signalBox[i]);
 		}
@@ -264,6 +267,7 @@ public class OMLLogSettingsView extends JFrame implements LogSettingsView,
 		btmPanel.setLocation (0, this.getHeight () - btmHeight);
 		btmPanel.setBackground (Color.white);
 
+		mainPanel.add (scrollPane);
 		mainPanel.add (btmPanel);
 		btmPanel.add (new JLabel ("Delay between reads (ms):"));
 
@@ -288,5 +292,4 @@ public class OMLLogSettingsView extends JFrame implements LogSettingsView,
 
 		return mainPanel;
 	}
-
 }

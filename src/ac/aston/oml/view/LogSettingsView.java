@@ -20,6 +20,8 @@ package ac.aston.oml.view;
 
 import java.awt.event.ActionListener;
 
+import jcummins.gui.HTMLFontset;
+
 /**
  * @author Chris Cummins
  *
@@ -27,16 +29,18 @@ import java.awt.event.ActionListener;
 public interface LogSettingsView
 {
 
-	public void createFrame ();
-	public void showFrame ();
-	public void hideFrame ();
-	public void closeFrame ();
+	public void init (HTMLFontset h, int pinCount, String[] signalTypes);
+	public void teardown ();
 	
-	public void setPinCount (int n);
-	public void setSignalOptions (Object[] o);
+	public void addFileButtonListener (ActionListener l);
+	public void addDoneButtonListener (ActionListener l);
+	public void addAdvancedButtonListener (ActionListener l);
 	
-	public void fileButtonListener (ActionListener l);
-	public void doneButtonListener (ActionListener l);
-	public void advancedButtonListener (ActionListener l);
+	public void setFilepathLabel (String s);
+	
+	public String getFilepathText ();
+	
+	public String getReadDelayText ();
+	public String getReadCountText ();
 	
 }

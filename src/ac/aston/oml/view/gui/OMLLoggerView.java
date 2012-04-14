@@ -29,25 +29,20 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
+import javax.swing.JScrollPane;
+import javax.swing.ScrollPaneConstants;
 
-import jcummins.gui.GUITools;
 import jcummins.gui.HTMLFontset;
-import jcummins.maths.MathsTools;
 
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.ValueAxis;
 import org.jfree.chart.plot.XYPlot;
-import org.jfree.data.time.TimeSeries;
 import org.jfree.data.time.TimeSeriesCollection;
-import org.jfree.data.time.TimeSeriesDataItem;
 
-import openmicrolabs.model.data.AppDetails;
-import openmicrolabs.model.data.GraphSettings;
-import openmicrolabs.model.data.LogSettings;
-import openmicrolabs.model.signals.OMLSignal;
-import openmicrolabs.view.LoggerView;
+import ac.aston.oml.model.data.AppDetails;
+import ac.aston.oml.view.LoggerView;
 
 /**
  * This extension of JFrame displays the data read during a logging session.
@@ -57,8 +52,6 @@ import openmicrolabs.view.LoggerView;
 public class OMLLoggerView extends JFrame implements LoggerView
 {
 	private static final long serialVersionUID = -4475975253216864808L;
-	private static final String graphTitle = AppDetails.name () + " "
-			+ AppDetails.version ();
 	private static final String graphXlabel = "Time (hh:mm:ss)";
 	private static final String graphYlabel = null;
 
@@ -70,55 +63,42 @@ public class OMLLoggerView extends JFrame implements LoggerView
 
 	private JLabel[] chanLabel;
 	private JLabel[] typeLabel;
-	private JLabel[] valueLabel;
+	private JLabel[] valLabel;
 	private JLabel[] minLabel;
 	private JLabel[] maxLabel;
 	private JLabel[] avgLabel;
+
+	private HTMLFontset h;
+	private JFreeChart snsChart;
 
 	private final JPanel btmPanel = new JPanel ();
 	private final JLabel footerLabel = new JLabel ("");
 	private JProgressBar progressBar;
 	private final JButton doneButton = new JButton ("Cancel");
 
-	private JFreeChart snsChart;
-	private TimeSeriesCollection dataset;
-	private HTMLFontset h;
-	private String[] signals;
+	private double graphMinY;
+	private double graphMaxY;
 
 	public OMLLoggerView ()
 	{
-		this.setTitle (AppDetails.name ()); //TODO
 		this.setSize (frameWidth, frameHeight);
 		this.setResizable (false);
 		this.setBackground (Color.white);
 		this.setDefaultCloseOperation (JFrame.EXIT_ON_CLOSE);
-		this.setContentPane (this.createContentPane ());
 		this.setIconImage (AppDetails.icon ());
+
 	}
 
 	@Override
-	public void init (HTMLFontset h, TimeSeriesCollection t, String[] signals)
+	public void init (HTMLFontset h, TimeSeriesCollection t, String graphTitle,
+			double graphMinY, double graphMaxY, double graphTimeRange,
+			String[] signals)
 	{
-		this.dataset = t;
-
-		int activeSignalCount = 0;
-		for (String s : signals)
-			if (s != null)
-				activeSignalCount++;
-
-		chanLabel = new JLabel[activeSignalCount];
-		typeLabel = new JLabel[activeSignalCount];
-		valueLabel = new JLabel[activeSignalCount];
-		minLabel = new JLabel[activeSignalCount];
-		maxLabel = new JLabel[activeSignalCount];
-		avgLabel = new JLabel[activeSignalCount];
-
-		for (int i = 0; i < chanLabel.length; i++)
-		{
-//			chanLabel[i] = new JLabel;
-		}
-		
-		this.setContentPane (createContentPane ());
+		this.h = h;
+		this.graphMinY = graphMinY;
+		this.graphMaxY = graphMaxY;
+		this.setContentPane (createContentPane (t, graphTitle, graphTimeRange,
+				signals));
 	}
 
 	@Override
@@ -128,31 +108,31 @@ public class OMLLoggerView extends JFrame implements LoggerView
 	}
 
 	@Override
-	public void setCurrentLabels (String[] s)
+	public void setValLabels (String[] s)
 	{
 		for (int i = 0; i < s.length; i++)
-			minLabel[i].setText (s[i]);
+			valLabel[i].setText (h.format ("label-bold", s[i]));
 	}
 
 	@Override
 	public void setMinLabels (String[] s)
 	{
 		for (int i = 0; i < s.length; i++)
-			minLabel[i].setText (s[i]);
+			minLabel[i].setText (h.format ("body", s[i]));
 	}
 
 	@Override
 	public void setMaxLabels (String[] s)
 	{
 		for (int i = 0; i < s.length; i++)
-			maxLabel[i].setText (s[i]);
+			maxLabel[i].setText (h.format ("body", s[i]));
 	}
 
 	@Override
 	public void setAvgLabels (String[] s)
 	{
 		for (int i = 0; i < s.length; i++)
-			avgLabel[i].setText (s[i]);
+			avgLabel[i].setText (h.format ("body", s[i]));
 	}
 
 	@Override
@@ -164,7 +144,7 @@ public class OMLLoggerView extends JFrame implements LoggerView
 	@Override
 	public void setSignalStrenghLabel (String s)
 	{
-		this.footerLabel.setText (s);
+		this.footerLabel.setText (h.format ("label", s));
 	}
 
 	@Override
@@ -179,8 +159,51 @@ public class OMLLoggerView extends JFrame implements LoggerView
 		this.doneButton.addActionListener (l);
 	}
 
-	private JPanel createContentPane ()
+	private JPanel createContentPane (TimeSeriesCollection t,
+			String graphTitle, double graphTimeRange, String[] signals)
 	{
+		chanLabel = new JLabel[signals.length];
+
+		int activeSignalCount = 0;
+		for (int i = 0; i < signals.length; i++)
+		{
+			chanLabel[i] = new JLabel (h.format ("label", (char) ((i / 7) + 65)
+					+ "-0x"
+					+ String.format ("%02x", (i % 7) + 1).toUpperCase ()));
+			chanLabel[i].setHorizontalAlignment (JLabel.CENTER);
+			if (signals[i] != null)
+				activeSignalCount++;
+			else
+				chanLabel[i].setEnabled (false);
+		}
+
+		typeLabel = new JLabel[activeSignalCount];
+		valLabel = new JLabel[activeSignalCount];
+		minLabel = new JLabel[activeSignalCount];
+		maxLabel = new JLabel[activeSignalCount];
+		avgLabel = new JLabel[activeSignalCount];
+
+		int index = 0;
+		for (int i = 0; i < signals.length; i++)
+			if (signals[i] != null)
+			{
+				typeLabel[index] = new JLabel (h.format ("body", signals[i]));
+				typeLabel[index].setHorizontalAlignment (JLabel.CENTER);
+				index++;
+			}
+
+		for (int i = 0; i < activeSignalCount; i++)
+		{
+			valLabel[i] = new JLabel ();
+			valLabel[i].setHorizontalAlignment (JLabel.CENTER);
+			minLabel[i] = new JLabel ();
+			minLabel[i].setHorizontalAlignment (JLabel.CENTER);
+			maxLabel[i] = new JLabel ();
+			maxLabel[i].setHorizontalAlignment (JLabel.CENTER);
+			avgLabel[i] = new JLabel ();
+			avgLabel[i].setHorizontalAlignment (JLabel.CENTER);
+		}
+
 		// Set up main panel.
 		JPanel mainPanel = new JPanel ();
 		mainPanel.setLayout (null);
@@ -188,32 +211,46 @@ public class OMLLoggerView extends JFrame implements LoggerView
 
 		// Create graph.
 		snsChart = ChartFactory.createTimeSeriesChart (graphTitle, graphXlabel,
-				graphYlabel, dataset, true, true, false);
+				graphYlabel, t, true, true, false);
 		final XYPlot plot = snsChart.getXYPlot ();
 		ValueAxis axis = plot.getDomainAxis ();
 		axis.setAutoRange (true);
-		axis.setFixedAutoRange (30000.0); //TODO:
+		axis.setFixedAutoRange (graphTimeRange);
 		axis = plot.getRangeAxis ();
-		axis.setRange (0.0, 1023.0);
+		axis.setRange (graphMinY, graphMaxY);
 
 		ChartPanel snsChartPanel = new ChartPanel (snsChart);
 		snsChartPanel.setPreferredSize (new Dimension (frameWidth - 20,
 				graphHeight - 10));
 
 		// Set up graph panel.
-		JPanel graphPanel = new JPanel ();
+		final JPanel graphPanel = new JPanel ();
 		graphPanel.setSize (frameWidth - 20, graphHeight);
 		graphPanel.setLocation (0, 0);
 		graphPanel.setBackground (Color.white);
 		graphPanel.add (snsChartPanel);
 
 		// Set up results panel.
-		JPanel resultsPanel = new JPanel ();
+		final JPanel resultsPanel = new JPanel ();
 		resultsPanel.setLayout (new GridLayout (6, 9));
-		resultsPanel
-				.setSize (frameWidth, frameHeight - btmHeight - graphHeight);
-		resultsPanel.setLocation (5, graphHeight + 5);
 		resultsPanel.setBackground (Color.white);
+
+		// Set up scroll pane.
+		final JScrollPane scrollPane = new JScrollPane (resultsPanel);
+		scrollPane.setSize (frameWidth - 20, frameHeight - btmHeight
+				- graphHeight + 8);
+		scrollPane.setLocation (5, graphHeight);
+		scrollPane.setBackground (Color.white);
+		scrollPane
+				.setHorizontalScrollBarPolicy (ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		scrollPane
+				.setVerticalScrollBarPolicy (ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
+
+		// Set results panel size.
+		resultsPanel.setPreferredSize (new Dimension (
+				40 + (signals.length * 70), frameHeight - btmHeight
+						- graphHeight - 120));
+		resultsPanel.revalidate ();
 
 		// Set up bottom panel.
 		btmPanel.setLayout (null);
@@ -221,92 +258,59 @@ public class OMLLoggerView extends JFrame implements LoggerView
 		btmPanel.setLocation (0, this.getHeight () - btmHeight);
 		btmPanel.setBackground (Color.white);
 
-		// Instantiate results panel objects.
-		for (int i = 0; i < signals.length; i++)
-		
-			typeLabel[j] = new JLabel (
-					l.datamask ().activeSignals ()[j].name ());
-			typeLabel[j].setHorizontalAlignment (JLabel.CENTER);
-			valueLabel[j] = new JLabel ("");
-			valueLabel[j].setHorizontalAlignment (JLabel.CENTER);
-			minLabel[j] = new JLabel ("");
-			minLabel[j].setHorizontalAlignment (JLabel.CENTER);
-			maxLabel[j] = new JLabel ("");
-			maxLabel[j].setHorizontalAlignment (JLabel.CENTER);
-			avgLabel[j] = new JLabel ("");
-			avgLabel[j].setHorizontalAlignment (JLabel.CENTER);
-		}
-
 		resultsPanel.add (new JLabel (""));
-		for (int i = 0; i < 8; i++)
-		{
-			chanLabel[i] = new JLabel (OMLView.LABEL_START + "0x0" + i
-					+ OMLView.LABEL_END);
-			chanLabel[i].setHorizontalAlignment (JLabel.CENTER);
-			if (!l.datamask ().pin (i))
-				chanLabel[i].setEnabled (false);
-			resultsPanel.add (chanLabel[i]);
-		}
+		for (JLabel l : chanLabel)
+			resultsPanel.add (l);
 
+		index = 0;
 		resultsPanel.add (new JLabel (""));
-		int index = 0;
-		for (int i = 0; i < 8; i++)
-		{
-			if (chanLabel[i].isEnabled ())
+		for (JLabel l : chanLabel)
+			if (l.isEnabled ())
 			{
 				resultsPanel.add (typeLabel[index]);
 				index++;
 			} else
 				resultsPanel.add (new JLabel (""));
-		}
 
 		resultsPanel.add (new JLabel (""));
 		index = 0;
-		for (int i = 0; i < 8; i++)
-		{
-			if (chanLabel[i].isEnabled ())
+		for (JLabel l : chanLabel)
+			if (l.isEnabled ())
 			{
-				resultsPanel.add (valueLabel[index]);
+				resultsPanel.add (valLabel[index]);
 				index++;
 			} else
 				resultsPanel.add (new JLabel (""));
-		}
 
 		resultsPanel.add (new JLabel ("Min:"));
 		index = 0;
-		for (int i = 0; i < 8; i++)
-		{
-			if (chanLabel[i].isEnabled ())
+		for (JLabel l : chanLabel)
+			if (l.isEnabled ())
 			{
 				resultsPanel.add (minLabel[index]);
 				index++;
 			} else
 				resultsPanel.add (new JLabel (""));
-		}
 
 		resultsPanel.add (new JLabel ("Max:"));
 		index = 0;
-		for (int i = 0; i < 8; i++)
-		{
-			if (chanLabel[i].isEnabled ())
+		for (JLabel l : chanLabel)
+			if (l.isEnabled ())
 			{
 				resultsPanel.add (maxLabel[index]);
 				index++;
 			} else
 				resultsPanel.add (new JLabel (""));
-		}
 
 		resultsPanel.add (new JLabel ("Avg:"));
 		index = 0;
-		for (int i = 0; i < 8; i++)
-		{
-			if (chanLabel[i].isEnabled ())
+		for (JLabel l : chanLabel)
+			if (l.isEnabled ())
 			{
 				resultsPanel.add (avgLabel[index]);
 				index++;
 			} else
 				resultsPanel.add (new JLabel (""));
-		}
 
 		// Instantiate bottom panel objects.
 		footerLabel.setSize (140, 30);
@@ -314,7 +318,7 @@ public class OMLLoggerView extends JFrame implements LoggerView
 		doneButton.setIcon (new ImageIcon ("img/22x22/stop.png"));
 		doneButton.setSize (100, 30);
 		doneButton.setLocation (frameWidth - 20 - doneButton.getWidth (), 15);
-		progressBar = new JProgressBar (0, l.readCount ());
+		progressBar = new JProgressBar ();
 		progressBar.setSize (frameWidth - 40 - doneButton.getWidth ()
 				- footerLabel.getWidth (), 20);
 		progressBar.setValue (0);
@@ -327,37 +331,27 @@ public class OMLLoggerView extends JFrame implements LoggerView
 
 		// Populate main panel.
 		mainPanel.add (graphPanel);
-		mainPanel.add (resultsPanel);
+		mainPanel.add (scrollPane);
 		mainPanel.add (btmPanel);
 
 		return mainPanel;
 	}
-
-	private void finishReading ()
-	{
-		// Set graph to full view of readings.
-		final XYPlot plot = snsChart.getXYPlot ();
-		ValueAxis axis = plot.getDomainAxis ();
-		axis.setAutoRange (true);
-		axis.setFixedAutoRange (l.readCount () * l.readDelay ());
-		axis = plot.getRangeAxis ();
-		axis.setRange (g.minY (), g.maxY ());
-
-		// Update title.
-		this.setTitle (AppDetails.name ());
-
-		// Update footerLabel.
-		footerLabel.setSize (doneButton.getLocation ().x, 30);
-		footerLabel.setText (OMLView.LABEL_START + "<b>"
-				+ dataset.getItemCount (0) + " readings complete." + "</b>"
-				+ OMLView.LABEL_END);
-		footerLabel.setHorizontalAlignment (JLabel.CENTER);
-
-		btmPanel.remove (progressBar);
-		btmPanel.repaint ();
-		doneButton.setText ("Done");
-		doneButton.setIcon (new ImageIcon ("img/22x22/play.png", AppDetails
-				.name ()));
-	}
-
+	/*
+	 * private void finishReading (double graphTimeRange) { // Set graph to full
+	 * view of readings. final XYPlot plot = snsChart.getXYPlot (); ValueAxis
+	 * axis = plot.getDomainAxis (); axis.setAutoRange (true);
+	 * axis.setFixedAutoRange (graphTimeRange); axis = plot.getRangeAxis ();
+	 * axis.setRange (g.minY (), g.maxY ());
+	 * 
+	 * this.setTitle (AppDetails.name ());
+	 * 
+	 * footerLabel.setSize (doneButton.getLocation ().x, 30);
+	 * footerLabel.setText (OMLView.LABEL_START + "<b>" + dataset.getItemCount
+	 * (0) + " readings complete." + "</b>" + OMLView.LABEL_END);
+	 * footerLabel.setHorizontalAlignment (JLabel.CENTER);
+	 * 
+	 * btmPanel.remove (progressBar); btmPanel.repaint (); doneButton.setText
+	 * ("Done"); doneButton.setIcon (new ImageIcon ("img/22x22/play.png",
+	 * AppDetails .name ())); }
+	 */
 }
