@@ -32,12 +32,14 @@ public interface LogSettingsView
 	public void init (HTMLFontset h, int pinCount, String[] signalTypes);
 	public void teardown ();
 	
+	public void setSlaveBoxOptions (Object[] o);
+	public void setFilepathLabel (String s);
+	
 	public void addFileButtonListener (ActionListener l);
 	public void addDoneButtonListener (ActionListener l);
 	public void addAdvancedButtonListener (ActionListener l);
 	
-	public void setFilepathLabel (String s);
-	
+	public int getSlaveBoxSelectedIndex ();
 	public String getFilepathText ();
 	
 	public String getReadDelayText ();

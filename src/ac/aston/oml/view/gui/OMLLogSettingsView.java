@@ -63,6 +63,9 @@ public class OMLLogSettingsView extends JFrame implements LogSettingsView,
 
 	private static final String[] yesNo = { "No", "Yes" };
 
+	private final JPanel midPanel = new JPanel ();
+	private JScrollPane scrollPane = new JScrollPane (midPanel);
+
 	private final JCheckBox fileCheckBox = new JCheckBox ("Log to file:");
 	private final JButton fileButton = new JButton (new ImageIcon (
 			"img/32x32/folder.png", AppDetails.name ()));
@@ -73,10 +76,12 @@ public class OMLLogSettingsView extends JFrame implements LogSettingsView,
 	private final JButton guiButton = new JButton ("Advanced");
 	private final JButton doneButton = new JButton ("Done");
 
+	private JComboBox<Object> slaveBox = new JComboBox<Object> ();
 	private JComboBox<Object>[] pinOnBox;
 	private JComboBox<Object>[] signalBox;
 
 	private HTMLFontset h;
+	private String[] signalTypes;
 
 	public OMLLogSettingsView ()
 	{
@@ -91,7 +96,9 @@ public class OMLLogSettingsView extends JFrame implements LogSettingsView,
 	{
 		this.setSize (frameWidth, frameHeight);
 		this.h = h;
-		this.setContentPane (createContentPane (pinCount, signalTypes));
+		this.signalTypes = signalTypes;
+		setContentPane (createContentPane (pinCount, signalTypes));
+		setPinCount (pinCount);
 	}
 
 	public void teardown ()
@@ -121,6 +128,11 @@ public class OMLLogSettingsView extends JFrame implements LogSettingsView,
 				signalBox[i].setEnabled (!signalBox[i].isEnabled ());
 	}
 
+	public void setSlaveBoxOptions (Object[] o)
+	{
+		JComboBoxUtils.updateContents (slaveBox, o, 0);
+	}
+
 	public void setFilepathLabel (String s)
 	{
 		fileLabel.setText (h.format ("label", s));
@@ -129,6 +141,11 @@ public class OMLLogSettingsView extends JFrame implements LogSettingsView,
 	public String getFilepathText ()
 	{
 		return h.get ("label").unformat (fileLabel.getText ());
+	}
+
+	public int getSlaveBoxSelectedIndex ()
+	{
+		return slaveBox.getSelectedIndex ();
 	}
 
 	public String getReadCountText ()
@@ -177,14 +194,13 @@ public class OMLLogSettingsView extends JFrame implements LogSettingsView,
 	 * 
 	 * @return JPanel.
 	 */
-	@SuppressWarnings ("unchecked")
 	private JPanel createContentPane (int pinCount, String[] signalTypes)
 	{
-		JPanel mainPanel = new JPanel ();
+		final JPanel mainPanel = new JPanel ();
 		mainPanel.setLayout (null);
 		mainPanel.setBackground (Color.white);
 
-		JPanel topPanel = new JPanel ();
+		final JPanel topPanel = new JPanel ();
 		topPanel.setLayout (null);
 		topPanel.setSize (frameWidth, topHeight);
 		topPanel.setLocation (0, 0);
@@ -215,12 +231,10 @@ public class OMLLogSettingsView extends JFrame implements LogSettingsView,
 		topPanel.add (fileLabel);
 
 		// Set up mid panel.
-		JPanel midPanel = new JPanel ();
 		midPanel.setLayout (new GridLayout (3, pinCount + 1));
 		midPanel.setBackground (Color.white);
 
 		// Set up scroll pane.
-		final JScrollPane scrollPane = new JScrollPane (midPanel);
 		scrollPane.setSize (frameWidth - 15, midHeight - 10);
 		scrollPane.setLocation (5, topHeight + 10);
 		scrollPane.setBackground (Color.white);
@@ -229,46 +243,13 @@ public class OMLLogSettingsView extends JFrame implements LogSettingsView,
 		scrollPane
 				.setVerticalScrollBarPolicy (ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
 
-		// Set results panel size.
-		midPanel.setPreferredSize (new Dimension (40 + (pinCount * 70),
-				scrollPane.getHeight () - 100));
-		midPanel.revalidate ();
-
-		midPanel.add (new JLabel ("Channel:"));
-
-		pinOnBox = new JComboBox[pinCount];
-		signalBox = new JComboBox[pinCount];
-
-		for (int i = 0; i < pinCount; i++)
-		{
-			JLabel chanLabel = new JLabel (h.format ("label", (char) ((i/7) + 65) + "-0x"
-					+ String.format ("%02x", (i % 7) + 1 ).toUpperCase ()));
-			chanLabel.setHorizontalAlignment (JLabel.CENTER);
-			midPanel.add (chanLabel);
-		}
-		midPanel.add (new JLabel ("Active:"));
-		for (int i = 0; i < pinCount; i++)
-		{
-			pinOnBox[i] = JComboBoxUtils.create (yesNo, 1);
-			pinOnBox[i].addActionListener (this);
-			pinOnBox[i].setBackground (Color.white);
-			midPanel.add (pinOnBox[i]);
-		}
-
-		midPanel.add (new JLabel ("Type:"));
-		for (int i = 0; i < pinCount; i++)
-		{
-			signalBox[i] = JComboBoxUtils.create (signalTypes, 0);
-			signalBox[i].setBackground (Color.white);
-			midPanel.add (signalBox[i]);
-		}
-		JPanel btmPanel = new JPanel ();
+		final JPanel btmPanel = new JPanel ();
 		btmPanel.setSize (frameWidth, btmHeight);
 		btmPanel.setLocation (0, this.getHeight () - btmHeight);
 		btmPanel.setBackground (Color.white);
 
-		mainPanel.add (scrollPane);
-		mainPanel.add (btmPanel);
+		btmPanel.add (slaveBox);
+
 		btmPanel.add (new JLabel ("Delay between reads (ms):"));
 
 		readDelayText.setText ("1000");
@@ -290,6 +271,51 @@ public class OMLLogSettingsView extends JFrame implements LogSettingsView,
 		doneButton.setBackground (Color.white);
 		btmPanel.add (doneButton);
 
+		mainPanel.add (scrollPane);
+		mainPanel.add (btmPanel);
+
 		return mainPanel;
+	}
+
+	@SuppressWarnings ("unchecked")
+	public void setPinCount (int pinCount)
+	{
+		// Set results panel size.
+		midPanel.setPreferredSize (new Dimension (40 + (pinCount * 70),
+				scrollPane.getHeight () - 100));
+		midPanel.revalidate ();
+
+		midPanel.add (new JLabel ("Channel:"));
+
+		pinOnBox = new JComboBox[pinCount];
+		signalBox = new JComboBox[pinCount];
+
+		for (int i = 0; i < pinCount; i++)
+		{
+			final JLabel chanLabel = new JLabel (h.format (
+					"label",
+					(char) ((i / 7) + 65)
+							+ "-0x"
+							+ String.format ("%02x", (i % 7) + 1)
+									.toUpperCase ()));
+			chanLabel.setHorizontalAlignment (JLabel.CENTER);
+			midPanel.add (chanLabel);
+		}
+		midPanel.add (new JLabel ("Active:"));
+		for (int i = 0; i < pinCount; i++)
+		{
+			pinOnBox[i] = JComboBoxUtils.create (yesNo, 1);
+			pinOnBox[i].addActionListener (this);
+			pinOnBox[i].setBackground (Color.white);
+			midPanel.add (pinOnBox[i]);
+		}
+
+		midPanel.add (new JLabel ("Type:"));
+		for (int i = 0; i < pinCount; i++)
+		{
+			signalBox[i] = JComboBoxUtils.create (signalTypes, 0);
+			signalBox[i].setBackground (Color.white);
+			midPanel.add (signalBox[i]);
+		}
 	}
 }
