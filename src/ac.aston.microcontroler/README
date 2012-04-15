@@ -1,0 +1,4 @@
+This directory contains the source code for the Open MicroLabs microcontroller
+program.
+
+Target microcontroller: AVR ATmega164PA.
