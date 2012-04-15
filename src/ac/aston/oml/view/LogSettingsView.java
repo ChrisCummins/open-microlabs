@@ -20,6 +20,8 @@ package ac.aston.oml.view;
 
 import java.awt.event.ActionListener;
 
+import javax.swing.JFrame;
+
 import jcummins.gui.HTMLFontset;
 
 /**
@@ -31,16 +33,21 @@ public interface LogSettingsView
 
 	public void init (HTMLFontset h, int pinCount, String[] signalTypes);
 	public void teardown ();
+	public JFrame fetchFrame ();
 	
+	public void setPincount (int p);
 	public void setSlaveBoxOptions (Object[] o);
 	public void setFilepathLabel (String s);
 	
 	public void addFileButtonListener (ActionListener l);
 	public void addDoneButtonListener (ActionListener l);
 	public void addAdvancedButtonListener (ActionListener l);
+	public void addSlaveOptionsListener (ActionListener l);
 	
 	public int getSlaveBoxSelectedIndex ();
 	public String getFilepathText ();
+	
+	public Integer[] getSignalTypeOptions ();
 	
 	public String getReadDelayText ();
 	public String getReadCountText ();

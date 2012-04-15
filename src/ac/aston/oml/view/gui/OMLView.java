@@ -18,13 +18,13 @@
 
 package ac.aston.oml.view.gui;
 
+import javax.swing.JOptionPane;
+
 import ac.aston.oml.view.AdvancedSettingsView;
 import ac.aston.oml.view.CommSettingsView;
 import ac.aston.oml.view.LogSettingsView;
 import ac.aston.oml.view.LoggerView;
 import ac.aston.oml.view.ViewGateway;
-import jcummins.gui.HTMLFont;
-import jcummins.gui.HTMLFontset;
 
 /**
  * This implementation of the ViewGateway interface is responsible for rendering
@@ -53,15 +53,19 @@ public class OMLView implements ViewGateway
 	@Override
 	public void showMessage (String msg)
 	{
-		// TODO Auto-generated method stub
-
+		JOptionPane.showMessageDialog (null, msg,
+				ac.aston.oml.model.AppDetails.name () + " "
+						+ ac.aston.oml.model.AppDetails.version (),
+				JOptionPane.PLAIN_MESSAGE);
 	}
 
 	@Override
-	public void showError (String ms)
+	public void showError (String msg)
 	{
-		// TODO Auto-generated method stub
-
+		JOptionPane.showMessageDialog (null, msg,
+				ac.aston.oml.model.AppDetails.name () + " "
+						+ ac.aston.oml.model.AppDetails.version (),
+				JOptionPane.ERROR_MESSAGE);
 	}
 
 	@Override
@@ -78,7 +82,7 @@ public class OMLView implements ViewGateway
 	}
 
 	@Override
-	public LogSettingsView os ()
+	public LogSettingsView ls ()
 	{
 		return ls;
 	}
@@ -93,18 +97,5 @@ public class OMLView implements ViewGateway
 	public LoggerView lv ()
 	{
 		return lv;
-	}
-
-	public static HTMLFontset font()
-	{
-		HTMLFontset h = new HTMLFontset ();
-		
-		HTMLFont label =  new HTMLFont (false, false, false, 3, "Helvetica", HTMLFont.COLOR_BLACK);
-		h.add ("label", label);
-		label.setBold ();
-		h.add ("label-bold", label);
-		h.add ("body", new HTMLFont (false, false, false, 2, "Helvetica", HTMLFont.COLOR_BLACK));
-		
-		return h;
 	}
 }

@@ -1,4 +1,4 @@
-/* Chris Cummins - 8 Apr 2012
+/* Chris Cummins - 15 Apr 2012
  *
  * This file is part of Open MicroLabs.
  *
@@ -16,46 +16,31 @@
  * along with Open MicroLabs.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package ac.aston.oml.model;
+package ac.aston.oml.controller;
 
-import ac.aston.oml.model.com.OMLComGateway;
-import ac.aston.oml.model.lm.OMLLoggerGateway;
-import ac.aston.oml.model.settings.OMLDefaultSettings;
-import ac.aston.oml.model.settings.OMLSettings;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import ac.aston.oml.view.ViewGateway;
 
 /**
- * This implementation of the Model interface performs the necessary roles of an
- * Open MicroLabs model.
- * 
  * @author Chris Cummins
  * 
  */
-public class OMLModel implements ModelGateway
+public class LogSettingsSlaveOptionsListener extends OMLController implements
+		ActionListener
 {
-	private final OMLComGateway c;
-	private final OMLLoggerGateway l;
-
-	public OMLModel ()
-	{
-		c = new OMLComGateway ();
-		l = new OMLLoggerGateway ();
-	}
-
-	@Override
-	public ComGateway c ()
-	{
-		return c;
-	}
-
-	@Override
-	public LoggerGateway l ()
-	{
-		return l;
-	}
-
-	public OMLSettings getOMLSettings ()
-	{
-		return OMLDefaultSettings.get ();
-	}
+	private final ViewGateway v;
 	
+	public LogSettingsSlaveOptionsListener (ViewGateway v)
+	{
+		this.v = v;
+	}
+
+	@Override
+	public void actionPerformed (ActionEvent e)
+	{
+		v.ls ().setPincount ((v.ls ().getSlaveBoxSelectedIndex () + 1) * 7);
+	}
+
 }

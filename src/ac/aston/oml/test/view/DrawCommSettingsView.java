@@ -47,7 +47,7 @@ public class DrawCommSettingsView
 		OMLSettings c = OMLTestSettings.getOMLSettings ();
 
 		final OMLCommSettingsView frame = new OMLCommSettingsView ();
-		frame.init (c.fontset ());
+		frame.init (c.fontset);
 
 		final String[] ports = DiscoverPorts.listToArray ();
 		if (ports.length < 1)
@@ -56,11 +56,11 @@ public class DrawCommSettingsView
 			frame.setComOptions (s);
 		} else
 			frame.setComOptions (ports);
-		frame.setBaudOptions (c.baudOptions (), 5);
-		frame.setDataOptions (c.databitOptions ()[0], 3);
-		frame.setStopOptions (c.stopbitOptions ()[0], 0);
-		frame.setParityOptions (c.parityOptions ()[0], 0);
-		frame.setFlowOptions (c.flowOptions ()[0], 0);
+		frame.setBaudOptions (c.baudOptions, 5);
+		frame.setDataOptions (c.databitOptions[0], 3);
+		frame.setStopOptions (c.stopbitOptions[0], 0);
+		frame.setParityOptions (c.parityOptions[0], 0);
+		frame.setFlowOptions (c.flowOptions[0], 0);
 
 		frame.setVisible (true);
 

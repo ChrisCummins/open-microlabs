@@ -32,7 +32,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.TitledBorder;
 
-import ac.aston.oml.model.data.AppDetails;
+import ac.aston.oml.model.AppDetails;
 import ac.aston.oml.view.CommSettingsView;
 
 import jcummins.gui.HTMLFontset;
@@ -80,7 +80,7 @@ public class OMLCommSettingsView extends JFrame implements CommSettingsView
 		this.setTitle (AppDetails.name ());
 		this.setSize (frameWidth, frameHeight);
 		this.setResizable (false);
-		this.setDefaultCloseOperation (JFrame.DO_NOTHING_ON_CLOSE);
+		this.setDefaultCloseOperation (JFrame.EXIT_ON_CLOSE);
 		this.setIconImage (AppDetails.icon ());
 		this.setBackground (Color.white);
 	}
@@ -96,6 +96,11 @@ public class OMLCommSettingsView extends JFrame implements CommSettingsView
 	public void teardown ()
 	{
 		this.dispose ();
+	}
+	
+	public JFrame fetchFrame ()
+	{
+		return this;
 	}
 
 	public void addRefreshPortsButtonListener (ActionListener l)

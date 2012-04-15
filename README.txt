@@ -1,22 +1,7 @@
-Acknowledgements
-================
-Kummins Library is a library of native Java functions. Copyright 2012 by
-Chris Cummins <chrisc.101@gmail.com>. Kummins Library is free software: you can
-redistribute it and/or modify it under the terms of the GNU General Public
-License as published by the Free Software Foundation, either version 3 of the
-License, or (at your option) any later version.
-
-RXTX License v 2.1 - LGPL v 2.1 + Linking Over Controlled Interface.
-RXTX is a native interface to serial ports in java.
-Copyright 1997-2007 by Trent Jarvi tjarvi@qbang.org and others who
-actually wrote it.  See individual source files for more information.
-
-RXTX binary builds provided as a courtesy of Cloudhopper, Inc.
-Please see http://rxtx.cloudhopper.net/ for more information.
-
-PNG Icon files courtesy of: Jonas Rask Design
-These icons are free to use in both commercial products as well as personal
-use. http://jonasraskdesign.com jonasrask@gmail.com
+Open MicroLabs is free and open source software for logging analogue signals
+to a computer by using a microcontroller and a serial connection. It began
+development as part of an assignment for Undergraduate studies at Aston
+University, UK.
 
 INSTALL DIRECTIONS
 ==================
@@ -47,3 +32,23 @@ Linux
 	sudo cp RXTXcomm.jar $JAVA_HOME/jre/lib/ext/
 	sudo cp librxtxSerial.so $JAVA_HOME/jre/lib/i386/
 	sudo cp librxtxParallel.so $JAVA_HOME/jre/lib/i386/
+	
+Acknowledgements
+================
+The JCummins Library is a library of native Java functions. Copyright 2012 by
+Chris Cummins <chrisc.101@gmail.com>. The JCummins Library is free software: you
+can redistribute it and/or modify it under the terms of the GNU General Public
+License as published by the Free Software Foundation, either version 3 of the
+License, or (at your option) any later version.
+
+RXTX License v 2.1 - LGPL v 2.1 + Linking Over Controlled Interface.
+RXTX is a native interface to serial ports in java.
+Copyright 1997-2007 by Trent Jarvi tjarvi@qbang.org and others who
+actually wrote it.  See individual source files for more information.
+
+RXTX binary builds provided as a courtesy of Cloudhopper, Inc.
+Please see http://rxtx.cloudhopper.net/ for more information.
+
+PNG Icon files courtesy of: Jonas Rask Design
+These icons are free to use in both commercial products as well as personal
+use. http://jonasraskdesign.com jonasrask@gmail.com

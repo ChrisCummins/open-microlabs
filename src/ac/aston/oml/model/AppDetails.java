@@ -16,7 +16,7 @@
  * along with Open MicroLabs.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package ac.aston.oml.model.data;
+package ac.aston.oml.model;
 
 import java.awt.Color;
 import java.awt.Graphics;

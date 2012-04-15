@@ -16,7 +16,7 @@
  * along with Open MicroLabs.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package ac.aston.oml.model;
+package ac.aston.oml.model.com;
 
 import java.util.LinkedList;
 import java.util.Observable;

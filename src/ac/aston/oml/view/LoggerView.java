@@ -20,6 +20,8 @@ package ac.aston.oml.view;
 
 import java.awt.event.ActionListener;
 
+import javax.swing.JFrame;
+
 import jcummins.gui.HTMLFontset;
 
 import org.jfree.data.time.TimeSeriesCollection;
@@ -36,6 +38,7 @@ public interface LoggerView
 			String[] signals);
 
 	public void teardown ();
+	public JFrame fetchFrame ();
 
 	public void setValLabels (String[] s);
 

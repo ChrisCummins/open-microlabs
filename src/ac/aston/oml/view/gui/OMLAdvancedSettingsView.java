@@ -34,7 +34,7 @@ import javax.swing.JTextArea;
 import jcummins.gui.HTMLFontset;
 import jcummins.gui.JComboBoxUtils;
 
-import ac.aston.oml.model.data.AppDetails;
+import ac.aston.oml.model.AppDetails;
 import ac.aston.oml.view.AdvancedSettingsView;
 
 /**
@@ -79,6 +79,11 @@ public class OMLAdvancedSettingsView extends JFrame implements
 	public void teardown ()
 	{
 		this.dispose ();
+	}
+	
+	public JFrame fetchFrame ()
+	{
+		return this;
 	}
 
 	@Override

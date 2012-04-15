@@ -16,7 +16,7 @@
  * along with Open MicroLabs.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package ac.aston.oml.model;
+package ac.aston.oml.model.com;
 
 import gnu.io.NoSuchPortException;
 import gnu.io.PortInUseException;
@@ -24,8 +24,7 @@ import gnu.io.UnsupportedCommOperationException;
 
 import java.io.IOException;
 
-import ac.aston.oml.model.data.AppDetails;
-import ac.aston.oml.model.data.CommSettings;
+import ac.aston.oml.model.AppDetails;
 
 import jcummins.serial.SerialComm;
 

@@ -18,7 +18,7 @@
 
 package ac.aston.oml.controller;
 
-import ac.aston.oml.model.Model;
+import ac.aston.oml.model.ModelGateway;
 import ac.aston.oml.view.ViewGateway;
 
 /**
@@ -38,6 +38,6 @@ public interface Controller
 	 * @param v
 	 *            ViewGateway to be used.
 	 */
-	public void init (Model m, ViewGateway v);
+	public void init (ModelGateway m, ViewGateway v);
 
 }

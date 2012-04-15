@@ -16,11 +16,11 @@
  * along with Open MicroLabs.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package ac.aston.oml.model.data;
+package ac.aston.oml.model.com;
 
 import java.util.ArrayList;
 
-import ac.aston.oml.model.signals.OMLSignal;
+import ac.aston.oml.model.com.signals.OMLSignal;
 
 
 /**
@@ -59,6 +59,19 @@ public class Datamask
 	public OMLSignal[] signals ()
 	{
 		return SIGNALS;
+	}
+	
+	public String[] signalsToString ()
+	{
+		String[] s = new String[SIGNALS.length];
+		
+		for (int i = 0; i < s.length; i++)
+			if (SIGNALS[i] != null)
+				s[i] = SIGNALS[i].name ();
+			else
+				s[i] = null;
+		
+		return s;
 	}
 
 	/**

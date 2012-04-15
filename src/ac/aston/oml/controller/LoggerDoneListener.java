@@ -21,51 +21,47 @@ package ac.aston.oml.controller;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import ac.aston.oml.model.Model;
-import ac.aston.oml.model.data.LogSettings;
+import ac.aston.oml.model.ModelGateway;
 import ac.aston.oml.view.ViewGateway;
 
 
 /**
  * This implementation of the ActionListener interface is responsible for
- * getting log settings from the view and setting those to the model.
- * Additionally, it will interpret any exceptions thrown by the model and feed
- * those back to the view for the user.
+ * receiving logging cancel requests form the user and so updating the view and
+ * model accordingly.
  * 
  * @author Chris Cummins
  * 
  */
-public class LoggingStartListener extends OMLController implements
+public class LoggerDoneListener extends OMLController implements
 		ActionListener
 {
-	
-	private final Model m;
+	private final ModelGateway m;
 	private final ViewGateway v;
 	
-	public LoggingStartListener (Model m, ViewGateway v)
+	public LoggerDoneListener (ModelGateway m, ViewGateway v)
 	{
 		this.m = m;
 		this.v = v;
 	}
 
 	@Override
-	public void actionPerformed (ActionEvent arg0)
+	public void actionPerformed (ActionEvent e)
+	{	
+		if (m.l ().isLogging ())
+			if (v.showYesNoPrompt ("Readings in progress!\nAre you sure you "
+					+ "would like to exit?"))
+				returnToLogSettings ();
+			else
+				return;
+		else
+			returnToLogSettings ();
+	}
+
+	private void returnToLogSettings ()
 	{
-		try
-		{
-			LogSettings l = v.getLogSettings ();
-			m.setLogSettings (l);
-			m.startLogging ();
-			v.loggingStarted (l, m.getData ());
-			m.addNewDataListener (new NewDataListener (v));
-			v.addCancelLoggingListener (new LoggingDoneListener (m, v));
-		} catch (NumberFormatException e)
-		{
-			v.showError ("Text areas must contain positive integers only!");
-		} catch (IllegalArgumentException e1)
-		{
-			v.showError (e1.getMessage ());
-		}
+		v.lv ().teardown ();
+		v.ls ().fetchFrame ().setVisible (true);
 	}
 
 }

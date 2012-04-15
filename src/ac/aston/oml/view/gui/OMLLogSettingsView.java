@@ -36,7 +36,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.ScrollPaneConstants;
 
-import ac.aston.oml.model.data.AppDetails;
+import ac.aston.oml.model.AppDetails;
 import ac.aston.oml.view.LogSettingsView;
 
 import jcummins.gui.HTMLFontset;
@@ -98,12 +98,17 @@ public class OMLLogSettingsView extends JFrame implements LogSettingsView,
 		this.h = h;
 		this.signalTypes = signalTypes;
 		setContentPane (createContentPane (pinCount, signalTypes));
-		setPinCount (pinCount);
+		setPincount (pinCount);
 	}
 
 	public void teardown ()
 	{
 		this.dispose ();
+	}
+
+	public JFrame fetchFrame ()
+	{
+		return this;
 	}
 
 	/**
@@ -158,7 +163,7 @@ public class OMLLogSettingsView extends JFrame implements LogSettingsView,
 		return readDelayText.getText ();
 	}
 
-	public Integer[] getSignalTypeIndexes ()
+	public Integer[] getSignalTypeOptions ()
 	{
 		Integer[] ret = new Integer[signalBox.length];
 
@@ -167,7 +172,6 @@ public class OMLLogSettingsView extends JFrame implements LogSettingsView,
 				ret[i] = signalBox[i].getSelectedIndex ();
 			else
 				ret[i] = null;
-
 		return ret;
 	}
 
@@ -187,6 +191,11 @@ public class OMLLogSettingsView extends JFrame implements LogSettingsView,
 	public void addAdvancedButtonListener (ActionListener l)
 	{
 		guiButton.addActionListener (l);
+	}
+
+	public void addSlaveOptionsListener (ActionListener l)
+	{
+		slaveBox.addActionListener (l);
 	}
 
 	/*
@@ -278,19 +287,22 @@ public class OMLLogSettingsView extends JFrame implements LogSettingsView,
 	}
 
 	@SuppressWarnings ("unchecked")
-	public void setPinCount (int pinCount)
+	public void setPincount (int p)
 	{
+		midPanel.removeAll ();
+		midPanel.setLayout (new GridLayout (3, p + 1));
+		
 		// Set results panel size.
-		midPanel.setPreferredSize (new Dimension (40 + (pinCount * 70),
-				scrollPane.getHeight () - 100));
+		midPanel.setPreferredSize (new Dimension (40 + (p * 70), scrollPane
+				.getHeight () - 100));
 		midPanel.revalidate ();
 
 		midPanel.add (new JLabel ("Channel:"));
 
-		pinOnBox = new JComboBox[pinCount];
-		signalBox = new JComboBox[pinCount];
+		pinOnBox = new JComboBox[p];
+		signalBox = new JComboBox[p];
 
-		for (int i = 0; i < pinCount; i++)
+		for (int i = 0; i < p; i++)
 		{
 			final JLabel chanLabel = new JLabel (h.format (
 					"label",
@@ -302,7 +314,7 @@ public class OMLLogSettingsView extends JFrame implements LogSettingsView,
 			midPanel.add (chanLabel);
 		}
 		midPanel.add (new JLabel ("Active:"));
-		for (int i = 0; i < pinCount; i++)
+		for (int i = 0; i < p; i++)
 		{
 			pinOnBox[i] = JComboBoxUtils.create (yesNo, 1);
 			pinOnBox[i].addActionListener (this);
@@ -311,7 +323,7 @@ public class OMLLogSettingsView extends JFrame implements LogSettingsView,
 		}
 
 		midPanel.add (new JLabel ("Type:"));
-		for (int i = 0; i < pinCount; i++)
+		for (int i = 0; i < p; i++)
 		{
 			signalBox[i] = JComboBoxUtils.create (signalTypes, 0);
 			signalBox[i].setBackground (Color.white);

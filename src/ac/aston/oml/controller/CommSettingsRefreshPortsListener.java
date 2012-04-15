@@ -1,4 +1,4 @@
-/* Chris Cummins - 8 Apr 2012
+/* Chris Cummins - 14 Apr 2012
  *
  * This file is part of Open MicroLabs.
  *
@@ -18,35 +18,34 @@
 
 package ac.aston.oml.controller;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-import org.jfree.data.general.SeriesChangeEvent;
-import org.jfree.data.general.SeriesChangeListener;
-
+import ac.aston.oml.model.ModelGateway;
 import ac.aston.oml.view.ViewGateway;
 
 /**
- * This implementation of the SeriesChangeListener interface is responsible for
- * handling new data notifications from the model and updating the view
- * accordingly.
- * 
  * @author Chris Cummins
  * 
  */
-public class NewDataListener extends OMLController implements
-		SeriesChangeListener
+public class CommSettingsRefreshPortsListener extends OMLController implements
+		ActionListener
 {
 
+	private final ModelGateway m;
 	private final ViewGateway v;
-	
-	public NewDataListener (ViewGateway v)
+
+	public CommSettingsRefreshPortsListener (ModelGateway m, ViewGateway v)
 	{
+		this.m = m;
 		this.v = v;
 	}
 
 	@Override
-	public void seriesChanged (SeriesChangeEvent event)
+	public void actionPerformed (ActionEvent arg0)
 	{
-		v.updateViews ();
+		m.c ().refreshCommPorts ();
+		v.cs ().setComOptions (m.c ().getCommPorts ()[0]);
 	}
 
 }

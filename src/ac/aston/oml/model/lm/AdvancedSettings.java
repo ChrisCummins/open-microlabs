@@ -16,7 +16,7 @@
  * along with Open MicroLabs.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package ac.aston.oml.model.data;
+package ac.aston.oml.model.lm;
 
 /**
  * This class contains the settings required by the SerialLogger GUI.
@@ -24,7 +24,7 @@ package ac.aston.oml.model.data;
  * @author Chris Cummins
  * 
  */
-public class GraphSettings
+public class AdvancedSettings
 {
 
 	private Double timeRange;
@@ -44,7 +44,7 @@ public class GraphSettings
 	 * @throws IllegalArgument
 	 *             Exception If any of the values are out of range.
 	 */
-	public GraphSettings (Double timeRange, double minY, double maxY)
+	public AdvancedSettings (Double timeRange, double minY, double maxY)
 	{
 		if (minY < 0 || maxY < 0)
 			throw new IllegalArgumentException (

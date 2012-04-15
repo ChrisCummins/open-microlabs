@@ -21,25 +21,27 @@ package ac.aston.oml.controller;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import ac.aston.oml.model.Model;
-import ac.aston.oml.view.ViewGateway;
+import jcummins.gui.GUITools;
 
+import ac.aston.oml.model.ModelGateway;
+import ac.aston.oml.model.settings.OMLSettings;
+import ac.aston.oml.view.ViewGateway;
 
 /**
  * This implementation of the ActionListener interface is responsible for
- * receiving logging cancel requests form the user and so updating the view and
- * model accordingly.
+ * receiving show GUISettings requests from the user and so updating the view
+ * accordingly.
  * 
  * @author Chris Cummins
  * 
  */
-public class LoggingDoneListener extends OMLController implements
+public class AdvancedSettingsShowListener extends OMLController implements
 		ActionListener
 {
-	private final Model m;
+	private final ModelGateway m;
 	private final ViewGateway v;
-	
-	public LoggingDoneListener (Model m, ViewGateway v)
+
+	public AdvancedSettingsShowListener (ModelGateway m, ViewGateway v)
 	{
 		this.m = m;
 		this.v = v;
@@ -48,14 +50,17 @@ public class LoggingDoneListener extends OMLController implements
 	@Override
 	public void actionPerformed (ActionEvent e)
 	{
-		if (m.isLogging ())
-			if (v.showYesNoPrompt ("Readings in progress!\nAre you sure you "
-					+ "would like to exit?"))
-				v.returnFromLogScreen ();
-			else
-				return;
-		else
-			v.returnFromLogScreen ();
+		final OMLSettings c = m.getOMLSettings ();
+
+		v.as ().init (c.fontset);
+		
+		v.as ().setMinYText ("0.0");
+		v.as ().setMaxYText ("1023.0");
+		v.as ().setTimeRangeOptions (c.graphTimeRangeOptions[0],
+				c.graphTimeRangeOptionsSelected);
+
+		GUITools.centreFrame (v.as ().fetchFrame ());
+		v.as ().fetchFrame ().setVisible (true);
 	}
 
 }

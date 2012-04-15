@@ -20,6 +20,8 @@ package ac.aston.oml.view;
 
 import java.awt.event.ActionListener;
 
+import javax.swing.JFrame;
+
 import jcummins.gui.HTMLFontset;
 
 /**
@@ -30,8 +32,8 @@ public interface CommSettingsView
 {
 
 	public void init (HTMLFontset h);
-
 	public void teardown ();
+	public JFrame fetchFrame ();
 
 	public void setComOptions (Object[] o);
 

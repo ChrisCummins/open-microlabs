@@ -16,7 +16,7 @@
  * along with Open MicroLabs.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package ac.aston.oml.model.signals;
+package ac.aston.oml.model.com.signals;
 
 /**
  * This interface represents the raw result from a microcontroller AD

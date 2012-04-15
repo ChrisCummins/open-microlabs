@@ -23,7 +23,6 @@ import ac.aston.oml.test.OMLTestSettings;
 import ac.aston.oml.view.gui.OMLLogSettingsView;
 import jcummins.gui.GUITools;
 
-
 /**
  * Testing class for OMLCommSettingsView.
  * 
@@ -46,12 +45,14 @@ public class DrawLogSettingsView
 		final String[] s = { "1 Microcontroller", "2 Microcontrollers" };
 
 		final OMLLogSettingsView frame = new OMLLogSettingsView ();
-		frame.init (c.fontset (), 14, OMLTestSettings.signalTypes);
+		frame.init (c.fontset, 14, OMLTestSettings.signalTypes);
 		frame.setSlaveBoxOptions (s);
-		
+
 		frame.setFilepathLabel ("C:\\test");
-		System.out.println(frame.getFilepathText ());
+		System.out.println (frame.getFilepathText ());
 		
+		frame.setPincount (21);
+
 		GUITools.centreFrame (frame);
 		frame.setVisible (true);
 	}

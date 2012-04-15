@@ -41,7 +41,7 @@ import org.jfree.chart.axis.ValueAxis;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.data.time.TimeSeriesCollection;
 
-import ac.aston.oml.model.data.AppDetails;
+import ac.aston.oml.model.AppDetails;
 import ac.aston.oml.view.LoggerView;
 
 /**
@@ -107,11 +107,19 @@ public class OMLLoggerView extends JFrame implements LoggerView
 		this.dispose ();
 	}
 
+	public JFrame fetchFrame ()
+	{
+		return this;
+	}
+
 	@Override
 	public void setValLabels (String[] s)
 	{
 		for (int i = 0; i < s.length; i++)
-			valLabel[i].setText (h.format ("label-bold", s[i]));
+			if (s[i] != null)
+				valLabel[i].setText (h.format ("label-bold", s[i]));
+			else
+				valLabel[i].setText (h.format ("label-bold", "!!!"));
 	}
 
 	@Override

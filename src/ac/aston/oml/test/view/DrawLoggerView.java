@@ -46,9 +46,9 @@ public class DrawLoggerView
 		GUITools.setNativeLookAndFeel ();
 
 		final OMLLoggerView frame = new OMLLoggerView ();
-		frame.init (c.fontset (), OMLTestSettings.getTimeSeriesCollection (),
+		frame.init (c.fontset, OMLTestSettings.getTimeSeriesCollection (),
 				"[Graph title]", 0.0, 1023.0, 30000.0, OMLTestSettings.signals);
-		
+
 		String[] tmp = new String[OMLTestSettings.activeSignalCount];
 		for (int i = 0; i < tmp.length; i++)
 			tmp[i] = "[?]";
@@ -58,11 +58,11 @@ public class DrawLoggerView
 		frame.setMaxLabels (tmp);
 		frame.setAvgLabels (tmp);
 		frame.setReadingsLabel ("<?>");
-		
+
 		frame.setVisible (true);
 		frame.repaint ();
 		GUITools.centreFrame (frame);
-		
+
 	}
 
 }

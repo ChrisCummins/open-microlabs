@@ -34,7 +34,7 @@ public interface ViewGateway
 	public boolean showYesNoPrompt (String msg);
 	
 	public CommSettingsView cs ();
-	public LogSettingsView os ();
+	public LogSettingsView ls ();
 	public AdvancedSettingsView as ();
 	public LoggerView lv ();
 

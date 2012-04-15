@@ -1,4 +1,4 @@
-/* Chris Cummins - 8 Apr 2012
+/* Chris Cummins - 15 Apr 2012
  *
  * This file is part of Open MicroLabs.
  *
@@ -21,30 +21,30 @@ package ac.aston.oml.controller;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import ac.aston.oml.model.ModelGateway;
 import ac.aston.oml.view.ViewGateway;
 
-
 /**
- * This implementation of the ActionListener interface is responsible for
- * receiving show GUISettings requests from the user and so updating the view
- * accordingly.
- * 
  * @author Chris Cummins
- * 
+ *
  */
-public class GraphSettingsShowListener extends OMLController implements ActionListener
+public class LogSettingsFileListener extends OMLController implements
+ActionListener
 {
+
+	private final ModelGateway m;
 	private final ViewGateway v;
-	
-	public GraphSettingsShowListener (ViewGateway v)
+
+	public LogSettingsFileListener (ModelGateway m, ViewGateway v)
 	{
+		this.m = m;
 		this.v = v;
 	}
 
 	@Override
-	public void actionPerformed (ActionEvent e)
+	public void actionPerformed (ActionEvent arg0)
 	{
-		v.showGraphSettings ();
+		// TODO Auto-generated method stub
 	}
-
+	
 }

@@ -16,37 +16,27 @@
  * along with Open MicroLabs.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package ac.aston.oml.controller;
+package ac.aston.oml.model;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
-import ac.aston.oml.view.ViewGateway;
+import ac.aston.oml.model.settings.OMLSettings;
 
 
 /**
- * This implementation of the ActionListener interface is responsible for
- * getting GUI settings from the GUISettingsView class and setting those to the
- * view. Additionally, it will interpret any exceptions thrown and feed those
- * back to the view for the user.
+ * This interface specifies the required behaviour of a model class for the Open
+ * MicroLabs software. It handles data flow to and from the controller and is
+ * responsible for serial communications with the microcontroller along with
+ * receiving, interpreting and storing the read data.
  * 
  * @author Chris Cummins
  * 
  */
-public class GraphSettingsDoneListenner extends OMLController implements
-		ActionListener
+public interface ModelGateway
 {
-	private final ViewGateway v;
+
+	public ComGateway c ();
 	
-	public GraphSettingsDoneListenner (ViewGateway v)
-	{
-		this.v = v;
-	}
-
-	@Override
-	public void actionPerformed (ActionEvent e)
-	{
-		v.graphSettingsComplete ();
-	}
-
+	public LoggerGateway l ();
+	
+	public OMLSettings getOMLSettings ();
+	
 }

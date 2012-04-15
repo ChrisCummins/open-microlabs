@@ -20,6 +20,8 @@ package ac.aston.oml.view;
 
 import java.awt.event.ActionListener;
 
+import javax.swing.JFrame;
+
 import jcummins.gui.HTMLFontset;
 
 /**
@@ -31,6 +33,7 @@ public interface AdvancedSettingsView
 	
 	public void init (HTMLFontset h);
 	public void teardown ();
+	public JFrame fetchFrame ();
 	
 	public void setMinYText (String s);
 	public void setMaxYText (String s);

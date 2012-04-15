@@ -18,8 +18,7 @@
 
 package ac.aston.oml.model.settings;
 
-import jcummins.gui.CStyle;
-import jcummins.gui.HTMLFont;
+import ac.aston.oml.model.com.signals.OMLSignal;
 import jcummins.gui.HTMLFontset;
 
 /**
@@ -28,78 +27,49 @@ import jcummins.gui.HTMLFontset;
  */
 public class OMLSettings
 {
-	private final CStyle style;
-	private final Object[] baudOptions;
-	private final Object[][] databitOptions;
-	private final Object[][] stopbitOptions;
-	private final Object[][] parityOptions;
-	private final Object[][] flowOptions;
+	public final HTMLFontset fontset;
+	public final Object[] baudOptions;
+	public final int baudOptionsSelected;
+	public final Object[][] databitOptions;
+	public final int databitOptionsSelected;
+	public final Object[][] stopbitOptions;
+	public final int stopbitOptionsSelected;
+	public final Object[][] parityOptions;
+	public final int parityOptionsSelected;
+	public final Object[][] flowOptions;
+	public final int flowOptionsSelected;
 
-	public OMLSettings (CStyle s, Object[] baudOptions, Object[][] databitOptions,
-			Object[][] stopbitOptions, Object[][] parityOptions,
-			Object[][] flowOptions)
-	{
-		this.style = s;
-		this.baudOptions = baudOptions;
-		this.databitOptions = databitOptions;
-		this.stopbitOptions = stopbitOptions;
-		this.parityOptions = parityOptions;
-		this.flowOptions = flowOptions;
-	}
-
-	public CStyle style ()
-	{
-		return style;
-	}
-
-	public HTMLFont font (String label)
-	{
-		return style.font (label);
-	}
+	public final Object[][] graphTimeRangeOptions;
+	public final int graphTimeRangeOptionsSelected;
 	
-	public HTMLFontset fontset ()
-	{
-		return style.fontset ();
-	}
+	public final String[] signalTypeOptions;
+	public final OMLSignal[] signalTypes;
 
-	/**
-	 * @return the baudOptions
-	 */
-	public Object[] baudOptions ()
+	public OMLSettings (HTMLFontset fontset, Object[] baudOptions,
+			int baudOptionsSelected, Object[][] databitOptions,
+			int databitOptionsSelected, Object[][] stopbitOptions,
+			int stopbitOptionsSelected, Object[][] parityOptions,
+			int parityOptionsSelected, Object[][] flowOptions,
+			int flowOptionsSelected, Object[][] graphTimeRangeOptions,
+			int graphTimeRangeOptionsSelected, String[] signalTypeOptions, OMLSignal[] signalTypes)
 	{
-		return baudOptions;
-	}
+		this.fontset = fontset;
+		this.baudOptions = baudOptions;
+		this.baudOptionsSelected = baudOptionsSelected;
+		this.databitOptions = databitOptions;
+		this.databitOptionsSelected = databitOptionsSelected;
+		this.stopbitOptions = stopbitOptions;
+		this.stopbitOptionsSelected = stopbitOptionsSelected;
+		this.parityOptions = parityOptions;
+		this.parityOptionsSelected = parityOptionsSelected;
+		this.flowOptions = flowOptions;
+		this.flowOptionsSelected = flowOptionsSelected;
 
-	/**
-	 * @return the databitOptions
-	 */
-	public Object[][] databitOptions ()
-	{
-		return databitOptions;
-	}
-
-	/**
-	 * @return the stopbitOptions
-	 */
-	public Object[][] stopbitOptions ()
-	{
-		return stopbitOptions;
-	}
-
-	/**
-	 * @return the parityOptions
-	 */
-	public Object[][] parityOptions ()
-	{
-		return parityOptions;
-	}
-
-	/**
-	 * @return the flowOptions
-	 */
-	public Object[][] flowOptions ()
-	{
-		return flowOptions;
+		this.graphTimeRangeOptions = graphTimeRangeOptions;
+		this.graphTimeRangeOptionsSelected = graphTimeRangeOptionsSelected;
+		
+		this.signalTypeOptions = signalTypeOptions;
+		this.signalTypes = signalTypes;
 	}
 
 }
