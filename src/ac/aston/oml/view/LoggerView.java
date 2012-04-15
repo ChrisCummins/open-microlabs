@@ -40,6 +40,8 @@ public interface LoggerView
 	public void teardown ();
 	public JFrame fetchFrame ();
 
+	public void setViewLoggingCompleted (double graphTimeRange);
+	
 	public void setValLabels (String[] s);
 
 	public void setMinLabels (String[] s);
@@ -52,7 +54,7 @@ public interface LoggerView
 
 	public void setSignalStrenghLabel (String s);
 
-	public void setProgressBar (int progress);
+	public void setProgressBar (int current, int max);
 
 	public void addDoneButtonListener (ActionListener l);
 

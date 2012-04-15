@@ -16,7 +16,7 @@
  * along with Open MicroLabs.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package ac.aston.oml.model.lm;
+package ac.aston.oml.model.logger;
 
 /**
  * This class contains the settings required by the SerialLogger GUI.
@@ -24,8 +24,7 @@ package ac.aston.oml.model.lm;
  * @author Chris Cummins
  * 
  */
-public class AdvancedSettings
-{
+public class AdvancedSettings {
 
 	private Double timeRange;
 	private final double minY;
@@ -44,13 +43,12 @@ public class AdvancedSettings
 	 * @throws IllegalArgument
 	 *             Exception If any of the values are out of range.
 	 */
-	public AdvancedSettings (Double timeRange, double minY, double maxY)
-	{
+	public AdvancedSettings(Double timeRange, double minY, double maxY) {
 		if (minY < 0 || maxY < 0)
-			throw new IllegalArgumentException (
+			throw new IllegalArgumentException(
 					"Y axis arguments too low! Acceptable range: [0, 1023.0]");
 		if (minY > 1023.0 || maxY > 1023.0)
-			throw new IllegalArgumentException (
+			throw new IllegalArgumentException(
 					"Y axis arguments too high! Acceptable range: [0, 1023.0]");
 		this.timeRange = timeRange;
 		this.minY = minY;
@@ -63,13 +61,11 @@ public class AdvancedSettings
 	 * 
 	 * @return Double.
 	 */
-	public Double timeRange ()
-	{
+	public Double timeRange() {
 		return timeRange;
 	}
-	
-	public void timeRange (Double timeRange)
-	{
+
+	public void timeRange(Double timeRange) {
 		this.timeRange = timeRange;
 	}
 
@@ -78,8 +74,7 @@ public class AdvancedSettings
 	 * 
 	 * @return Double.
 	 */
-	public double minY ()
-	{
+	public double minY() {
 		return minY;
 	}
 
@@ -88,8 +83,7 @@ public class AdvancedSettings
 	 * 
 	 * @return Double.
 	 */
-	public double maxY ()
-	{
+	public double maxY() {
 		return maxY;
 	}
 

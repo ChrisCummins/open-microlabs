@@ -16,11 +16,12 @@
  * along with Open MicroLabs.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package ac.aston.oml.controller;
+package ac.aston.oml.controller.listeners;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import ac.aston.oml.controller.OMLController;
 import ac.aston.oml.view.ViewGateway;
 
 /**

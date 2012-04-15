@@ -16,7 +16,7 @@
  * along with Open MicroLabs.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package ac.aston.oml.model.lm;
+package ac.aston.oml.model.logger;
 
 import ac.aston.oml.model.com.Datamask;
 

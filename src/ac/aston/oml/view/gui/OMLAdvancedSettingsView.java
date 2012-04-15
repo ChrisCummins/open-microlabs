@@ -34,7 +34,7 @@ import javax.swing.JTextArea;
 import jcummins.gui.HTMLFontset;
 import jcummins.gui.JComboBoxUtils;
 
-import ac.aston.oml.model.AppDetails;
+import ac.aston.oml.include.AppDetails;
 import ac.aston.oml.view.AdvancedSettingsView;
 
 /**

@@ -1,4 +1,4 @@
-/* Chris Cummins - 15 Apr 2012
+/* Chris Cummins - 8 Apr 2012
  *
  * This file is part of Open MicroLabs.
  *
@@ -16,35 +16,53 @@
  * along with Open MicroLabs.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package ac.aston.oml.controller;
+package ac.aston.oml.controller.listeners;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import ac.aston.oml.controller.OMLController;
 import ac.aston.oml.model.ModelGateway;
 import ac.aston.oml.view.ViewGateway;
 
-/**
- * @author Chris Cummins
- *
- */
-public class LogSettingsFileListener extends OMLController implements
-ActionListener
-{
 
+/**
+ * This implementation of the ActionListener interface is responsible for
+ * receiving logging cancel requests form the user and so updating the view and
+ * model accordingly.
+ * 
+ * @author Chris Cummins
+ * 
+ */
+public class LoggerDoneListener extends OMLController implements
+		ActionListener
+{
 	private final ModelGateway m;
 	private final ViewGateway v;
-
-	public LogSettingsFileListener (ModelGateway m, ViewGateway v)
+	
+	public LoggerDoneListener (ModelGateway m, ViewGateway v)
 	{
 		this.m = m;
 		this.v = v;
 	}
 
 	@Override
-	public void actionPerformed (ActionEvent arg0)
-	{
-		// TODO Auto-generated method stub
+	public void actionPerformed (ActionEvent e)
+	{	
+		if (m.logger ().isLogging ())
+			if (v.showYesNoPrompt ("Readings in progress!\nAre you sure you "
+					+ "would like to exit?"))
+				returnToLogSettings ();
+			else
+				return;
+		else
+			returnToLogSettings ();
 	}
-	
+
+	private void returnToLogSettings ()
+	{
+		v.lv ().teardown ();
+		v.ls ().fetchFrame ().setVisible (true);
+	}
+
 }

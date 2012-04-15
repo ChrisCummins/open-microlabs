@@ -32,7 +32,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.TitledBorder;
 
-import ac.aston.oml.model.AppDetails;
+import ac.aston.oml.include.AppDetails;
 import ac.aston.oml.view.CommSettingsView;
 
 import jcummins.gui.HTMLFontset;

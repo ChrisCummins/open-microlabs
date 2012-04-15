@@ -16,30 +16,31 @@
  * along with Open MicroLabs.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package ac.aston.oml.controller;
+package ac.aston.oml.controller.listeners;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import ac.aston.oml.model.ModelGateway;
+import ac.aston.oml.model.logger.AdvancedSettings;
 import ac.aston.oml.view.ViewGateway;
-
 
 /**
  * This implementation of the ActionListener interface is responsible for
- * receiving logging cancel requests form the user and so updating the view and
- * model accordingly.
+ * getting GUI settings from the GUISettingsView class and setting those to the
+ * view. Additionally, it will interpret any exceptions thrown and feed those
+ * back to the view for the user.
  * 
  * @author Chris Cummins
  * 
  */
-public class LoggerDoneListener extends OMLController implements
+public class AdvancedSettingsDoneListenner implements
 		ActionListener
 {
 	private final ModelGateway m;
 	private final ViewGateway v;
-	
-	public LoggerDoneListener (ModelGateway m, ViewGateway v)
+
+	public AdvancedSettingsDoneListenner (ModelGateway m, ViewGateway v)
 	{
 		this.m = m;
 		this.v = v;
@@ -47,21 +48,33 @@ public class LoggerDoneListener extends OMLController implements
 
 	@Override
 	public void actionPerformed (ActionEvent e)
-	{	
-		if (m.l ().isLogging ())
-			if (v.showYesNoPrompt ("Readings in progress!\nAre you sure you "
-					+ "would like to exit?"))
-				returnToLogSettings ();
-			else
-				return;
-		else
-			returnToLogSettings ();
-	}
-
-	private void returnToLogSettings ()
 	{
-		v.lv ().teardown ();
-		v.ls ().fetchFrame ().setVisible (true);
+		Double minY;
+		Double maxY;
+
+		try
+		{
+			minY = Double.parseDouble (v.as ().getMinYText ());
+			maxY = Double.parseDouble (v.as ().getMaxYText ());
+		} catch (NumberFormatException e1)
+		{
+			v.showError ("Y axis values must be a decimal value!");
+			return;
+		}
+
+		if (maxY < minY)
+		{
+			v.showError ("Maximum Y value should be greater than minimum!");
+			return;
+		}
+
+		Double graphTimeRange = (Double) m.getOMLSettings ().graphTimeRangeOptions[1][v
+				.as ().getTimeRangeSelectedIndex ()];
+
+		final AdvancedSettings a = new AdvancedSettings (graphTimeRange, minY,
+				maxY);
+		m.logger ().setAdvancedSettings (a);
+		v.as ().teardown ();
 	}
 
 }

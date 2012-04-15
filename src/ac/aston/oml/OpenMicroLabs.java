@@ -30,21 +30,25 @@ import jcummins.gui.GUITools;
  * @author Chris Cummins
  * 
  */
-public class OpenMicroLabs
-{
+public class OpenMicroLabs {
 
-	/**
-	 * Instantiates a Controller.
-	 * 
-	 * @param args
-	 *            none.
-	 */
-	public static void main (String[] args)
-	{
-		GUITools.setNativeLookAndFeel ();
-		
-		OMLController c = new OMLController ();
-		c.init (new OMLModel (), new OMLView ());
-	}
+    /**
+     * Hide constructor of utility class.
+     */
+    protected OpenMicroLabs() {
+    }
+
+    /**
+     * Instantiates a Controller.
+     * 
+     * @param args
+     *            none.
+     */
+    public static void main(final String[] args) {
+        GUITools.setNativeLookAndFeel();
+
+        OMLController c = new OMLController();
+        c.init(new OMLModel(), new OMLView());
+    }
 
 }

@@ -24,7 +24,7 @@ import gnu.io.UnsupportedCommOperationException;
 
 import java.io.IOException;
 
-import ac.aston.oml.model.AppDetails;
+import ac.aston.oml.include.AppDetails;
 
 import jcummins.serial.SerialComm;
 

@@ -20,6 +20,7 @@ package ac.aston.oml.view.gui;
 
 import javax.swing.JOptionPane;
 
+import ac.aston.oml.include.AppDetails;
 import ac.aston.oml.view.AdvancedSettingsView;
 import ac.aston.oml.view.CommSettingsView;
 import ac.aston.oml.view.LogSettingsView;
@@ -54,8 +55,8 @@ public class OMLView implements ViewGateway
 	public void showMessage (String msg)
 	{
 		JOptionPane.showMessageDialog (null, msg,
-				ac.aston.oml.model.AppDetails.name () + " "
-						+ ac.aston.oml.model.AppDetails.version (),
+				ac.aston.oml.include.AppDetails.name () + " "
+						+ AppDetails.version (),
 				JOptionPane.PLAIN_MESSAGE);
 	}
 
@@ -63,8 +64,8 @@ public class OMLView implements ViewGateway
 	public void showError (String msg)
 	{
 		JOptionPane.showMessageDialog (null, msg,
-				ac.aston.oml.model.AppDetails.name () + " "
-						+ ac.aston.oml.model.AppDetails.version (),
+				ac.aston.oml.include.AppDetails.name () + " "
+						+ AppDetails.version (),
 				JOptionPane.ERROR_MESSAGE);
 	}
 

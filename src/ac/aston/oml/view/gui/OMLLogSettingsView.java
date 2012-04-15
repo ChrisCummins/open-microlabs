@@ -36,7 +36,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.ScrollPaneConstants;
 
-import ac.aston.oml.model.AppDetails;
+import ac.aston.oml.include.AppDetails;
 import ac.aston.oml.view.LogSettingsView;
 
 import jcummins.gui.HTMLFontset;

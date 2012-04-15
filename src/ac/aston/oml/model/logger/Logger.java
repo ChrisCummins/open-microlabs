@@ -16,7 +16,7 @@
  * along with Open MicroLabs.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package ac.aston.oml.model.lm;
+package ac.aston.oml.model.logger;
 
 import java.util.Observable;
 import java.util.Observer;
@@ -123,7 +123,7 @@ public class Logger implements Observer
 	 * 
 	 * @param l
 	 *            SeriesChangeListener.
-	 * @see ac.aston.oml.controller.LoggerNewDataListener#seriesChanged(org.jfree.data.general.SeriesChangeEvent)
+	 * @see ac.aston.oml.controller.listeners.LoggerNewDataListener#seriesChanged(org.jfree.data.general.SeriesChangeEvent)
 	 */
 	public void addNewDataListener (SeriesChangeListener l)
 	{

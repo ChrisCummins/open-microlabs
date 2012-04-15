@@ -19,23 +19,56 @@
 package ac.aston.oml.view;
 
 /**
- * This interface specifies the required behaviour of the ViewGateway portion of the
- * Open MicroLabs MCV architecture. It is responsible for obtaining information
- * from the user via graphic interactions as well as providing a graphical
- * feedback of the Model data.
+ * This interface specifies the required behaviour of the ViewGateway portion of
+ * the Open MicroLabs MCV architecture. It is responsible for obtaining
+ * information from the user via graphic interactions as well as providing a
+ * graphical feedback of the Model data.
  * 
  * @author Chris Cummins
  * 
  */
-public interface ViewGateway
-{
-	public void showMessage (String msg);
-	public void showError (String ms);
-	public boolean showYesNoPrompt (String msg);
-	
-	public CommSettingsView cs ();
-	public LogSettingsView ls ();
-	public AdvancedSettingsView as ();
-	public LoggerView lv ();
+public interface ViewGateway {
+    /**
+     * 
+     * @param msg
+     */
+    void showMessage(String msg);
+
+    /**
+     * 
+     * @param ms
+     */
+    void showError(String ms);
+
+    /**
+     * 
+     * @param msg
+     * @return
+     */
+    boolean showYesNoPrompt(String msg);
+
+    /**
+     * 
+     * @return
+     */
+    CommSettingsView cs();
+
+    /**
+     * 
+     * @return
+     */
+    LogSettingsView ls();
+
+    /**
+     * 
+     * @return
+     */
+    AdvancedSettingsView as();
+
+    /**
+     * 
+     * @return
+     */
+    LoggerView lv();
 
 }

@@ -18,6 +18,15 @@
 
 package ac.aston.oml.controller;
 
+import ac.aston.oml.controller.listeners.AdvancedSettingsDoneListenner;
+import ac.aston.oml.controller.listeners.AdvancedSettingsShowListener;
+import ac.aston.oml.controller.listeners.CommSettingsDoneListener;
+import ac.aston.oml.controller.listeners.CommSettingsRefreshPortsListener;
+import ac.aston.oml.controller.listeners.CommSettingsTestListener;
+import ac.aston.oml.controller.listeners.LogSettingsDoneListener;
+import ac.aston.oml.controller.listeners.LogSettingsFileListener;
+import ac.aston.oml.controller.listeners.LogSettingsSlaveOptionsListener;
+import ac.aston.oml.controller.listeners.LoggerDoneListener;
 import ac.aston.oml.model.ModelGateway;
 import ac.aston.oml.model.settings.OMLSettings;
 import ac.aston.oml.view.ViewGateway;
@@ -73,11 +82,11 @@ public class OMLController implements Controller
 	private void renderCommSettingsView ()
 	{
 		final OMLSettings c = m.getOMLSettings ();
-		m.c ().refreshCommPorts ();
+		m.com ().refreshCommPorts ();
 
 		v.cs ().init (m.getOMLSettings ().fontset);
 		v.cs ().setBaudOptions (c.baudOptions, c.baudOptionsSelected);
-		v.cs ().setComOptions (m.c ().getCommPorts ()[0]);
+		v.cs ().setComOptions (m.com ().getCommPorts ()[0]);
 		v.cs ().setDataOptions (c.databitOptions[0], c.databitOptionsSelected);
 		v.cs ().setStopOptions (c.stopbitOptions[0], c.stopbitOptionsSelected);
 		v.cs ().setParityOptions (c.parityOptions[0], c.parityOptionsSelected);

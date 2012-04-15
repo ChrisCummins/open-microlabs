@@ -16,16 +16,13 @@
  * along with Open MicroLabs.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package ac.aston.oml.controller;
-
-import gnu.io.NoSuchPortException;
-import gnu.io.PortInUseException;
-import gnu.io.UnsupportedCommOperationException;
+package ac.aston.oml.controller.listeners;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.IOException;
 
+import ac.aston.oml.controller.CommExceptionResponse;
+import ac.aston.oml.controller.OMLController;
 import ac.aston.oml.model.ModelGateway;
 import ac.aston.oml.model.com.CommSettings;
 import ac.aston.oml.model.settings.OMLSettings;
@@ -53,7 +50,7 @@ public class CommSettingsTestListener extends OMLController implements
 	{
 		final OMLSettings c = m.getOMLSettings ();
 
-		final String portName = (String) m.c ().getCommPorts ()[1][v.cs ()
+		final String portName = (String) m.com ().getCommPorts ()[1][v.cs ()
 				.getSelectedComOption ()];
 		final int baudrate = (int) c.baudOptions[v.cs ()
 				.getSelectedBaudOption ()];
@@ -71,28 +68,15 @@ public class CommSettingsTestListener extends OMLController implements
 		
 		try
 		{
-			m.c ().setCommSettings (com);
-			if (m.c ().commTest ())
+			m.com ().setCommSettings (com);
+			if (m.com ().commTest ())
 				v.showMessage ("Test succeeded!");
 			else
 				v.showError ("Test failed on " + portName
 						+ "! No response from microcontroller.");
-		} catch (NoSuchPortException e)
+		} catch (Throwable t)
 		{
-			v.showError ("Unable to connect to com port, " + portName
-					+ " does not exist!");
-		} catch (PortInUseException e)
-		{
-			v.showError ("Unable to connect to com port, " + portName
-					+ " already in use!");
-		} catch (UnsupportedCommOperationException e)
-		{
-			v.showError ("Unable to connect to com port, " + portName
-					+ " does not support this type of operation!");
-		} catch (IOException e)
-		{
-			v.showError ("Unable to connect to com port, " + portName
-					+ " access denied!");
+			CommExceptionResponse.catchException (v, portName, t);
 		}
 
 	}

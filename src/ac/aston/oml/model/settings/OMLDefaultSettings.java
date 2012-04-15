@@ -66,12 +66,15 @@ public class OMLDefaultSettings
 				HTMLFont.COLOR_BLACK);
 		HTMLFont labelBold = new HTMLFont (true, false, false, 3, "Verdana",
 				HTMLFont.COLOR_BLACK);
+		HTMLFont labelRed = new HTMLFont (true, false, false, 3, "Verdana",
+				HTMLFont.COLOR_RED);
 		HTMLFont body = new HTMLFont (false, false, false, 3, "Arial",
 				HTMLFont.COLOR_BLACK);
 
 		HTMLFontset h = new HTMLFontset ();
 		h.add ("label", label);
 		h.add ("label-bold", labelBold);
+		h.add("label-red", labelRed);
 		h.add ("body", body);
 
 		return new OMLSettings (h, baudOptions, 5, databitOptions, 3,

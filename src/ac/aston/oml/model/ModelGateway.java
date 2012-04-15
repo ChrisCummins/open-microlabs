@@ -33,9 +33,9 @@ import ac.aston.oml.model.settings.OMLSettings;
 public interface ModelGateway
 {
 
-	public ComGateway c ();
+	public ComGateway com ();
 	
-	public LoggerGateway l ();
+	public LoggerGateway logger ();
 	
 	public OMLSettings getOMLSettings ();
 	

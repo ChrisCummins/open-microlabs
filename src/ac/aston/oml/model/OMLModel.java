@@ -19,7 +19,7 @@
 package ac.aston.oml.model;
 
 import ac.aston.oml.model.com.OMLComGateway;
-import ac.aston.oml.model.lm.OMLLoggerGateway;
+import ac.aston.oml.model.logger.OMLLoggerGateway;
 import ac.aston.oml.model.settings.OMLDefaultSettings;
 import ac.aston.oml.model.settings.OMLSettings;
 
@@ -42,13 +42,13 @@ public class OMLModel implements ModelGateway
 	}
 
 	@Override
-	public ComGateway c ()
+	public ComGateway com ()
 	{
 		return c;
 	}
 
 	@Override
-	public LoggerGateway l ()
+	public LoggerGateway logger ()
 	{
 		return l;
 	}

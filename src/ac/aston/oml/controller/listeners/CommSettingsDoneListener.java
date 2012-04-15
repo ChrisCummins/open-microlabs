@@ -16,19 +16,16 @@
  * along with Open MicroLabs.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package ac.aston.oml.controller;
-
-import gnu.io.NoSuchPortException;
-import gnu.io.PortInUseException;
-import gnu.io.UnsupportedCommOperationException;
+package ac.aston.oml.controller.listeners;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
-import java.io.IOException;
 
 import jcummins.gui.GUITools;
 
+import ac.aston.oml.controller.CommExceptionResponse;
+import ac.aston.oml.controller.OMLController;
 import ac.aston.oml.model.ModelGateway;
 import ac.aston.oml.model.com.CommSettings;
 import ac.aston.oml.model.settings.OMLSettings;
@@ -63,7 +60,7 @@ public class CommSettingsDoneListener extends OMLController implements
 	{
 		c = m.getOMLSettings ();
 
-		final String portName = (String) m.c ().getCommPorts ()[1][v.cs ()
+		final String portName = (String) m.com ().getCommPorts ()[1][v.cs ()
 				.getSelectedComOption ()];
 		final int baudrate = (int) c.baudOptions[v.cs ()
 				.getSelectedBaudOption ()];
@@ -81,38 +78,28 @@ public class CommSettingsDoneListener extends OMLController implements
 
 		try
 		{
-			m.c ().setCommSettings (com);
-			m.c ().commConnect ();
+			m.com ().setCommSettings (com);
+			m.com ().commConnect ();
 			v.cs ().teardown ();
 			renderLogSettings ();
-		} catch (NoSuchPortException e)
+		} catch (Throwable t)
 		{
-			v.showError ("Unable to connect to com port, " + portName
-					+ " does not exist!");
-		} catch (PortInUseException e)
-		{
-			v.showError ("Unable to connect to com port, " + portName
-					+ " already in use!");
-		} catch (UnsupportedCommOperationException e)
-		{
-			v.showError ("Unable to connect to com port, " + portName
-					+ " does not support this type of operation!");
-		} catch (IOException e)
-		{
-			v.showError ("Unable to connect to com port, " + portName
-					+ " access denied!");
+			CommExceptionResponse.catchException (v, portName, t);
 		}
 	}
 
 	private void renderLogSettings ()
 	{
-		final String[] s = { "1 Microcontroller", "2 Microcontrollers", "3 Microcontrollers", "4 Microcontrollers", "5 Microcontrollers" };
-		
+		final String[] s = { "1 Microcontroller", "2 Microcontrollers",
+				"3 Microcontrollers", "4 Microcontrollers",
+				"5 Microcontrollers" };
+
 		v.ls ().init (c.fontset, 7, c.signalTypeOptions);
-		
-		v.ls ().setFilepathLabel (System.getProperty ("user.dir") + File.separator + "log.dat");
+
+		v.ls ().setFilepathLabel (
+				System.getProperty ("user.dir") + File.separator + "log.dat");
 		v.ls ().setSlaveBoxOptions (s);
-		
+
 		GUITools.centreFrame (v.ls ().fetchFrame ());
 		v.ls ().fetchFrame ().setVisible (true);
 	}

@@ -58,7 +58,7 @@ public class OMLComGateway implements ComGateway
 	public void commConnect () throws NoSuchPortException, PortInUseException,
 			UnsupportedCommOperationException, IOException
 	{
-		serialReader.connect (ac.aston.oml.model.AppDetails.name ());
+		serialReader.connect (ac.aston.oml.include.AppDetails.name ());
 	}
 
 	@Override

@@ -21,8 +21,8 @@ package ac.aston.oml.model;
 import org.jfree.data.general.SeriesChangeListener;
 import org.jfree.data.time.TimeSeriesCollection;
 
-import ac.aston.oml.model.lm.AdvancedSettings;
-import ac.aston.oml.model.lm.LogSettings;
+import ac.aston.oml.model.logger.AdvancedSettings;
+import ac.aston.oml.model.logger.LogSettings;
 
 public interface LoggerGateway
 {
@@ -46,7 +46,7 @@ public interface LoggerGateway
 	 * 
 	 * @param l
 	 *            LogSettingsView.
-	 * @see ac.aston.oml.model.lm.LogSettings#LogSettings()
+	 * @see ac.aston.oml.model.logger.LogSettings#LogSettings()
 	 */
 	public void setLogSettings (LogSettings l, ComGateway c);
 
@@ -67,7 +67,7 @@ public interface LoggerGateway
 	 * Returns the LogSettingsView.
 	 * 
 	 * @return LogSettingsView currently in use.
-	 * @see ac.aston.oml.model.lm.LogSettings#LogSettings()
+	 * @see ac.aston.oml.model.logger.LogSettings#LogSettings()
 	 */
 	public LogSettings getLogSettings ();
 	

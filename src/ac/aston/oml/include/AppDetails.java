@@ -16,7 +16,7 @@
  * along with Open MicroLabs.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package ac.aston.oml.model;
+package ac.aston.oml.include;
 
 import java.awt.Color;
 import java.awt.Graphics;
@@ -33,7 +33,7 @@ import java.awt.image.BufferedImage;
 public abstract class AppDetails
 {
 	private static final String NAME = "Open MicroLabs";
-	private static final String VERSION = "v0.4 Beta";
+	private static final String VERSION = "v0.5 Beta";
 	private static final String AUTHOR = "Chris Cummins";
 	private static final String DATA_DELIMITER = ", ";
 	private static final String DATA_EOL = "\r";

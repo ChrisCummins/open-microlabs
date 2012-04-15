@@ -16,12 +16,12 @@
  * along with Open MicroLabs.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package ac.aston.oml.model.lm;
+package ac.aston.oml.model.logger;
 
 import java.io.IOException;
 import java.util.Observable;
 
-import ac.aston.oml.model.AppDetails;
+import ac.aston.oml.include.AppDetails;
 import ac.aston.oml.model.com.SerialReader;
 
 

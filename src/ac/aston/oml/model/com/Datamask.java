@@ -22,7 +22,6 @@ import java.util.ArrayList;
 
 import ac.aston.oml.model.com.signals.OMLSignal;
 
-
 /**
  * This class contains a representation of the active ports on the slave
  * microcontroller along with the data types that they represent.
@@ -30,8 +29,7 @@ import ac.aston.oml.model.com.signals.OMLSignal;
  * @author Chris Cummins
  * 
  */
-public class Datamask
-{
+public class Datamask {
 	private final OMLSignal[] SIGNALS;
 	private final OMLSignal[] ACTIVESIGNALS;
 	private final char CHAR;
@@ -43,11 +41,10 @@ public class Datamask
 	 *            An array of signal types, one representing each pin.
 	 *            <code>null</code> if the pin is not active.
 	 */
-	public Datamask (OMLSignal[] signals)
-	{
+	public Datamask(OMLSignal[] signals) {
 		this.SIGNALS = signals;
-		this.ACTIVESIGNALS = getActiveSignals ();
-		this.CHAR = getChar ();
+		this.ACTIVESIGNALS = getActiveSignals();
+		this.CHAR = getChar();
 	}
 
 	/**
@@ -56,21 +53,19 @@ public class Datamask
 	 * 
 	 * @return Array of Signals, with <code>null</code> entries.
 	 */
-	public OMLSignal[] signals ()
-	{
+	public OMLSignal[] signals() {
 		return SIGNALS;
 	}
-	
-	public String[] signalsToString ()
-	{
+
+	public String[] signalsToString() {
 		String[] s = new String[SIGNALS.length];
-		
+
 		for (int i = 0; i < s.length; i++)
 			if (SIGNALS[i] != null)
-				s[i] = SIGNALS[i].name ();
+				s[i] = SIGNALS[i].name();
 			else
 				s[i] = null;
-		
+
 		return s;
 	}
 
@@ -81,8 +76,7 @@ public class Datamask
 	 * 
 	 * @return Array of Signals.
 	 */
-	public OMLSignal[] activeSignals ()
-	{
+	public OMLSignal[] activeSignals() {
 		return ACTIVESIGNALS;
 	}
 
@@ -94,8 +88,7 @@ public class Datamask
 	 *            Pin index to check.
 	 * @return <code>true</code> or <code>false</code>.
 	 */
-	public boolean pin (int n)
-	{
+	public boolean pin(int n) {
 		if (SIGNALS[n] != null)
 			return true;
 		else
@@ -110,8 +103,7 @@ public class Datamask
 	 *            Pin index to check.
 	 * @return OMLSignal.
 	 */
-	public OMLSignal signal (int n)
-	{
+	public OMLSignal signal(int n) {
 		return SIGNALS[n];
 	}
 
@@ -121,8 +113,7 @@ public class Datamask
 	 * 
 	 * @return character.
 	 */
-	public char asciiChar ()
-	{
+	public char asciiChar() {
 		return CHAR;
 	}
 
@@ -131,14 +122,13 @@ public class Datamask
 	 * 
 	 * @return Array of Signals.
 	 */
-	private OMLSignal[] getActiveSignals ()
-	{
-		ArrayList<OMLSignal> activeSignals = new ArrayList<OMLSignal> ();
+	private OMLSignal[] getActiveSignals() {
+		ArrayList<OMLSignal> activeSignals = new ArrayList<OMLSignal>();
 		for (OMLSignal signal : SIGNALS)
 			if (signal != null)
-				activeSignals.add (signal);
-		OMLSignal[] array = new OMLSignal[activeSignals.size ()];
-		activeSignals.toArray (array);
+				activeSignals.add(signal);
+		OMLSignal[] array = new OMLSignal[activeSignals.size()];
+		activeSignals.toArray(array);
 
 		return array;
 	}
@@ -148,8 +138,7 @@ public class Datamask
 	 * 
 	 * @return Ascii char.
 	 */
-	private char getChar ()
-	{
+	private char getChar() {
 		String binary = "";
 		for (OMLSignal signal : SIGNALS)
 			if (signal != null)
@@ -157,7 +146,9 @@ public class Datamask
 			else
 				binary += "0";
 
-		return (char) Integer.parseInt (binary, 2);
+		// TODO: Proper char creation.
+
+		return (char) Integer.parseInt(binary + "0", 2);
 	}
 
 }
