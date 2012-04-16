@@ -25,12 +25,16 @@ import ac.aston.oml.view.gui.OMLLoggerView;
 import jcummins.gui.GUITools;
 
 /**
- * Testing class for .
+ * Testing class for OMLLoggerView.
  * 
  * @author Chris Cummins
- * @see ac.aston.oml.view.gui.OMLLogSettingsView
+ * 
  */
-public class DrawLoggerView {
+public abstract class DrawLoggerView {
+
+	private static final double MIN_Y = 0.0;
+	private static final double MAX_Y = 1023.0;
+	private static final double GRAPH_RANGE = 30000;
 
 	/**
 	 * Renders a OMLLoggerView frame.
@@ -38,18 +42,20 @@ public class DrawLoggerView {
 	 * @param args
 	 *            None.
 	 */
-	public static void main(String[] args) {
+	public static void main(final String[] args) {
 		final OMLSettings c = OMLTestSettings.getOMLSettings();
 
 		GUITools.setNativeLookAndFeel();
 
 		final OMLLoggerView frame = new OMLLoggerView();
 		frame.init(c.getFontset(), OMLTestSettings.getTimeSeriesCollection(),
-				"[Graph title]", 0.0, 1023.0, 30000.0, OMLTestSettings.SIGNALS);
+				"[Graph title]", MIN_Y, MAX_Y, GRAPH_RANGE,
+				OMLTestSettings.SIGNALS);
 
 		String[] tmp = new String[OMLTestSettings.ACTIVE_SIGNAL_COUNT];
-		for (int i = 0; i < tmp.length; i++)
+		for (int i = 0; i < tmp.length; i++) {
 			tmp[i] = "[?]";
+		}
 
 		frame.setValLabels(tmp);
 		frame.setMinLabels(tmp);

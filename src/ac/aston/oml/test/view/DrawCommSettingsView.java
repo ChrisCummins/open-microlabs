@@ -28,10 +28,9 @@ import jcummins.serial.DiscoverPorts;
  * Testing class for OMLCommSettingsView.
  * 
  * @author Chris Cummins
- * @see ac.aston.oml.view.gui.OMLCommSettingsView
  * 
  */
-public class DrawCommSettingsView {
+public abstract class DrawCommSettingsView {
 
 	/**
 	 * Renders a OMLCommSettingsView frame.
@@ -39,7 +38,7 @@ public class DrawCommSettingsView {
 	 * @param args
 	 *            None.
 	 */
-	public static void main(String[] args) {
+	public static void main(final String[] args) {
 		GUITools.setNativeLookAndFeel();
 
 		OMLSettings c = OMLTestSettings.getOMLSettings();
@@ -51,13 +50,18 @@ public class DrawCommSettingsView {
 		if (ports.length < 1) {
 			String[] s = { "None" };
 			frame.setComOptions(s);
-		} else
+		} else {
 			frame.setComOptions(ports);
-		frame.setBaudOptions(c.getBaudOptions(), 5);
-		frame.setDataOptions(c.getDatabitOptions()[0], 3);
-		frame.setStopOptions(c.getStopbitOptions()[0], 0);
-		frame.setParityOptions(c.getParityOptions()[0], 0);
-		frame.setFlowOptions(c.getFlowOptions()[0], 0);
+		}
+
+		frame.setBaudOptions(c.getBaudOptions(), c.getBaudOptionsSelected());
+		frame.setDataOptions(c.getDatabitOptions()[0],
+				c.getDatabitOptionsSelected());
+		frame.setStopOptions(c.getStopbitOptions()[0],
+				c.getStopbitOptionsSelected());
+		frame.setParityOptions(c.getParityOptions()[0],
+				c.getParityOptionsSelected());
+		frame.setFlowOptions(c.getFlowOptions()[0], c.getFlowOptionsSelected());
 
 		frame.setVisible(true);
 

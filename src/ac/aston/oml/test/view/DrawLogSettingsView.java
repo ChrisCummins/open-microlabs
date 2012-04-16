@@ -29,7 +29,9 @@ import jcummins.gui.GUITools;
  * @author Chris Cummins
  * @see ac.aston.oml.view.gui.OMLLogSettingsView
  */
-public class DrawLogSettingsView {
+public abstract class DrawLogSettingsView {
+
+	private static final int PIN_COUNT = 14;
 
 	/**
 	 * Renders a OMLCommSettingsView frame.
@@ -37,19 +39,19 @@ public class DrawLogSettingsView {
 	 * @param args
 	 *            None.
 	 */
-	public static void main(String[] args) {
+	public static void main(final String[] args) {
 		GUITools.setNativeLookAndFeel();
 		final OMLSettings c = OMLTestSettings.getOMLSettings();
 		final String[] s = { "1 Microcontroller", "2 Microcontrollers" };
 
 		final OMLLogSettingsView frame = new OMLLogSettingsView();
-		frame.init(c.getFontset(), 14, OMLTestSettings.SIGNAL_TYPES);
+		frame.init(c.getFontset(), PIN_COUNT, OMLTestSettings.SIGNAL_TYPES);
 		frame.setSlaveBoxOptions(s);
 
 		frame.setFilepathLabel("C:\\test");
 		System.out.println(frame.getFilepathText());
 
-		frame.setPincount(21);
+		frame.setPincount(PIN_COUNT * 2);
 
 		GUITools.centreFrame(frame);
 		frame.setVisible(true);
