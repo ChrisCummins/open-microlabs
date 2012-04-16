@@ -30,32 +30,27 @@ import ac.aston.oml.model.settings.OMLSettings;
  * @author Chris Cummins
  * 
  */
-public class OMLModel implements ModelGateway
-{
+public class OMLModel implements ModelGateway {
 	private final OMLComGateway c;
 	private final OMLLoggerGateway l;
 
-	public OMLModel ()
-	{
-		c = new OMLComGateway ();
-		l = new OMLLoggerGateway ();
+	public OMLModel() {
+		c = new OMLComGateway();
+		l = new OMLLoggerGateway();
 	}
 
 	@Override
-	public ComGateway com ()
-	{
+	public ComGateway com() {
 		return c;
 	}
 
 	@Override
-	public LoggerGateway logger ()
-	{
+	public LoggerGateway logger() {
 		return l;
 	}
 
-	public OMLSettings getOMLSettings ()
-	{
-		return OMLDefaultSettings.get ();
+	public OMLSettings getOMLSettings() {
+		return OMLDefaultSettings.get();
 	}
-	
+
 }

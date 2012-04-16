@@ -21,31 +21,35 @@ package ac.aston.oml.controller.listeners;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.JFileChooser;
+
 import ac.aston.oml.controller.OMLController;
-import ac.aston.oml.model.ModelGateway;
 import ac.aston.oml.view.ViewGateway;
 
 /**
  * @author Chris Cummins
- *
+ * 
  */
 public class LogSettingsFileListener extends OMLController implements
-ActionListener
-{
+		ActionListener {
 
-	private final ModelGateway m;
 	private final ViewGateway v;
 
-	public LogSettingsFileListener (ModelGateway m, ViewGateway v)
-	{
-		this.m = m;
+	public LogSettingsFileListener(ViewGateway v) {
 		this.v = v;
 	}
 
 	@Override
-	public void actionPerformed (ActionEvent arg0)
-	{
-		// TODO Auto-generated method stub
+	public void actionPerformed(ActionEvent arg0) {
+		final JFileChooser fileChooser = new JFileChooser();
+		if (fileChooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION)
+			if (fileChooser.getSelectedFile().exists()) {
+				boolean b = v
+						.showYesNoPrompt("File exists, replace existing file?");
+				if (b)
+					v.ls().setFilepathLabel(
+							fileChooser.getSelectedFile().getAbsolutePath());
+			}
 	}
-	
+
 }

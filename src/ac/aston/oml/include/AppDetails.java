@@ -30,8 +30,7 @@ import java.awt.image.BufferedImage;
  * @author Chris Cummins
  * 
  */
-public abstract class AppDetails
-{
+public abstract class AppDetails {
 	private static final String NAME = "Open MicroLabs";
 	private static final String VERSION = "v0.5 Beta";
 	private static final String AUTHOR = "Chris Cummins";
@@ -45,8 +44,7 @@ public abstract class AppDetails
 	 * 
 	 * @return Name string.
 	 */
-	public static final String name ()
-	{
+	public static final String name() {
 		return NAME;
 	}
 
@@ -55,8 +53,7 @@ public abstract class AppDetails
 	 * 
 	 * @return Version string.
 	 */
-	public static final String version ()
-	{
+	public static final String version() {
 		return VERSION;
 	}
 
@@ -65,8 +62,7 @@ public abstract class AppDetails
 	 * 
 	 * @return Author string.
 	 */
-	public static final String author ()
-	{
+	public static final String author() {
 		return AUTHOR;
 	}
 
@@ -75,13 +71,11 @@ public abstract class AppDetails
 	 * 
 	 * @return Delimiter string.
 	 */
-	public static final String datDelimiter ()
-	{
+	public static final String datDelimiter() {
 		return DATA_DELIMITER;
 	}
-	
-	public static final String datEOL ()
-	{
+
+	public static final String datEOL() {
 		return DATA_EOL;
 	}
 
@@ -91,8 +85,7 @@ public abstract class AppDetails
 	 * 
 	 * @return Delimiter string.
 	 */
-	public static final String serialDelimiter ()
-	{
+	public static final String serialDelimiter() {
 		return SERIAL_DELIMITER;
 	}
 
@@ -101,19 +94,17 @@ public abstract class AppDetails
 	 * 
 	 * @return Program logo image.
 	 */
-	public static final Image icon ()
-	{
-		BufferedImage bi = new BufferedImage (16, 16,
-				BufferedImage.TYPE_INT_RGB);
-		Graphics g = bi.getGraphics ();
-		g.setColor (Color.black);
-		g.fillRect (0, 0, 15, 15);
-		g.setColor (Color.red);
-		g.fillOval (0, 0, 15, 15);
-		g.setColor (Color.black);
-		g.fillOval (5, 4, 6, 8);
-		g.fillRect (6, 7, 10, 3);
-		g.dispose ();
+	public static final Image icon() {
+		BufferedImage bi = new BufferedImage(16, 16, BufferedImage.TYPE_INT_RGB);
+		Graphics g = bi.getGraphics();
+		g.setColor(Color.black);
+		g.fillRect(0, 0, 15, 15);
+		g.setColor(Color.red);
+		g.fillOval(0, 0, 15, 15);
+		g.setColor(Color.black);
+		g.fillOval(5, 4, 6, 8);
+		g.fillRect(6, 7, 10, 3);
+		g.dispose();
 
 		return bi;
 	}
@@ -125,8 +116,7 @@ public abstract class AppDetails
 	 * 
 	 * @return long sleep time per channel.
 	 */
-	public static final long sleepTime ()
-	{
+	public static final long sleepTime() {
 		return SLEEP_TIME;
 	}
 

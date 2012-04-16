@@ -33,50 +33,44 @@ import ac.aston.oml.view.ViewGateway;
  * 
  */
 public class CommSettingsTestListener extends OMLController implements
-		ActionListener
-{
+		ActionListener {
 
 	private final ModelGateway m;
 	private final ViewGateway v;
 
-	public CommSettingsTestListener (ModelGateway m, ViewGateway v)
-	{
+	public CommSettingsTestListener(ModelGateway m, ViewGateway v) {
 		this.m = m;
 		this.v = v;
 	}
 
 	@Override
-	public void actionPerformed (ActionEvent arg0)
-	{
-		final OMLSettings c = m.getOMLSettings ();
+	public void actionPerformed(ActionEvent arg0) {
+		final OMLSettings c = m.getOMLSettings();
 
-		final String portName = (String) m.com ().getCommPorts ()[1][v.cs ()
-				.getSelectedComOption ()];
-		final int baudrate = (int) c.baudOptions[v.cs ()
-				.getSelectedBaudOption ()];
-		final int databits = (int) c.databitOptions[1][v.cs ()
-				.getSelectedDataOption ()];
-		final int stopbits = (int) c.stopbitOptions[1][v.cs ()
-				.getSelectedStopOption ()];
-		final int paritybits = (int) c.parityOptions[1][v.cs ()
-				.getSelectedParityOption ()];
-		final int flowbits = (int) c.flowOptions[1][v.cs ()
-				.getSelectedFlowOption ()];
+		final String portName = (String) m.com().getCommPorts()[1][v.cs()
+				.getSelectedComOption()];
+		final int baudrate = (int) c.baudOptions[v.cs().getSelectedBaudOption()];
+		final int databits = (int) c.databitOptions[1][v.cs()
+				.getSelectedDataOption()];
+		final int stopbits = (int) c.stopbitOptions[1][v.cs()
+				.getSelectedStopOption()];
+		final int paritybits = (int) c.parityOptions[1][v.cs()
+				.getSelectedParityOption()];
+		final int flowbits = (int) c.flowOptions[1][v.cs()
+				.getSelectedFlowOption()];
 
-		final CommSettings com = new CommSettings (portName, baudrate,
-				databits, stopbits, paritybits, flowbits);
-		
-		try
-		{
-			m.com ().setCommSettings (com);
-			if (m.com ().commTest ())
-				v.showMessage ("Test succeeded!");
+		final CommSettings com = new CommSettings(portName, baudrate, databits,
+				stopbits, paritybits, flowbits);
+
+		try {
+			m.com().setCommSettings(com);
+			if (m.com().commTest())
+				v.showMessage("Test succeeded!");
 			else
-				v.showError ("Test failed on " + portName
+				v.showError("Test failed on " + portName
 						+ "! No response from microcontroller.");
-		} catch (Throwable t)
-		{
-			CommExceptionResponse.catchException (v, portName, t);
+		} catch (Throwable t) {
+			CommExceptionResponse.catchException(v, portName, t);
 		}
 
 	}

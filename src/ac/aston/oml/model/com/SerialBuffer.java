@@ -26,44 +26,36 @@ import java.util.Observer;
  * @author Chris Cummins
  * 
  */
-public class SerialBuffer extends Observable implements Observer, Runnable
-{
+public class SerialBuffer extends Observable implements Observer, Runnable {
 
-	private LinkedList<Double[]> queue = new LinkedList<Double[]> ();
+	private LinkedList<Double[]> queue = new LinkedList<Double[]>();
 	private Double[] msg;
 
 	@Override
-	public void run ()
-	{
-		while (true)
-		{
-			msg = get ();
-			setChanged ();
-			notifyObservers (msg);
+	public void run() {
+		while (true) {
+			msg = get();
+			setChanged();
+			notifyObservers(msg);
 		}
 	}
 
 	@Override
-	public void update (Observable arg0, Object arg1)
-	{
-		put ((Double[]) arg1);
+	public void update(Observable arg0, Object arg1) {
+		put((Double[]) arg1);
 	}
 
-	private void put (Double[] d)
-	{
-		queue.add (d);
+	private void put(Double[] d) {
+		queue.add(d);
 	}
 
-	private Double[] get ()
-	{
-		while (queue.isEmpty ())
-			try
-			{
-				Thread.sleep (1);
-			} catch (InterruptedException e)
-			{
+	private Double[] get() {
+		while (queue.isEmpty())
+			try {
+				Thread.sleep(1);
+			} catch (InterruptedException e) {
 				// Don't care.
 			}
-		return queue.removeFirst ();
+		return queue.removeFirst();
 	}
 }

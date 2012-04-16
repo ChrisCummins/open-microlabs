@@ -41,67 +41,60 @@ import ac.aston.oml.view.ViewGateway;
  * 
  */
 public class CommSettingsDoneListener extends OMLController implements
-		ActionListener
-{
+		ActionListener {
 
 	private final ModelGateway m;
 	private final ViewGateway v;
 
 	private OMLSettings c;
 
-	public CommSettingsDoneListener (ModelGateway m, ViewGateway v)
-	{
+	public CommSettingsDoneListener(ModelGateway m, ViewGateway v) {
 		this.m = m;
 		this.v = v;
 	}
 
 	@Override
-	public void actionPerformed (ActionEvent arg0)
-	{
-		c = m.getOMLSettings ();
+	public void actionPerformed(ActionEvent arg0) {
+		c = m.getOMLSettings();
 
-		final String portName = (String) m.com ().getCommPorts ()[1][v.cs ()
-				.getSelectedComOption ()];
-		final int baudrate = (int) c.baudOptions[v.cs ()
-				.getSelectedBaudOption ()];
-		final int databits = (int) c.databitOptions[1][v.cs ()
-				.getSelectedDataOption ()];
-		final int stopbits = (int) c.stopbitOptions[1][v.cs ()
-				.getSelectedStopOption ()];
-		final int paritybits = (int) c.parityOptions[1][v.cs ()
-				.getSelectedParityOption ()];
-		final int flowbits = (int) c.flowOptions[1][v.cs ()
-				.getSelectedFlowOption ()];
+		final String portName = (String) m.com().getCommPorts()[1][v.cs()
+				.getSelectedComOption()];
+		final int baudrate = (int) c.baudOptions[v.cs().getSelectedBaudOption()];
+		final int databits = (int) c.databitOptions[1][v.cs()
+				.getSelectedDataOption()];
+		final int stopbits = (int) c.stopbitOptions[1][v.cs()
+				.getSelectedStopOption()];
+		final int paritybits = (int) c.parityOptions[1][v.cs()
+				.getSelectedParityOption()];
+		final int flowbits = (int) c.flowOptions[1][v.cs()
+				.getSelectedFlowOption()];
 
-		final CommSettings com = new CommSettings (portName, baudrate,
-				databits, stopbits, paritybits, flowbits);
+		final CommSettings com = new CommSettings(portName, baudrate, databits,
+				stopbits, paritybits, flowbits);
 
-		try
-		{
-			m.com ().setCommSettings (com);
-			m.com ().commConnect ();
-			v.cs ().teardown ();
-			renderLogSettings ();
-		} catch (Throwable t)
-		{
-			CommExceptionResponse.catchException (v, portName, t);
+		try {
+			m.com().setCommSettings(com);
+			m.com().commConnect();
+			v.cs().teardown();
+			renderLogSettings();
+		} catch (Throwable t) {
+			CommExceptionResponse.catchException(v, portName, t);
 		}
 	}
 
-	private void renderLogSettings ()
-	{
+	private void renderLogSettings() {
 		final String[] s = { "1 Microcontroller", "2 Microcontrollers",
 				"3 Microcontrollers", "4 Microcontrollers",
 				"5 Microcontrollers" };
 
-		v.ls ().init (c.fontset, 7, c.signalTypeOptions);
+		v.ls().init(c.fontset, 7, c.signalTypeOptions);
 
-		v.ls ().setFilepathLabel (
-				System.getProperty ("user.dir") + File.separator + "log.dat");
-		v.ls ().setSlaveBoxOptions (s);
+		v.ls().setFilepathLabel(
+				System.getProperty("user.dir") + File.separator + "log.dat");
+		v.ls().setSlaveBoxOptions(s);
 
-		GUITools.centreFrame (v.ls ().fetchFrame ());
-		v.ls ().fetchFrame ().setVisible (true);
+		GUITools.centreFrame(v.ls().fetchFrame());
+		v.ls().fetchFrame().setVisible(true);
 	}
 
 }

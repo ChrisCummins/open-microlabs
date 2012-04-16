@@ -29,29 +29,27 @@ import ac.aston.oml.view.gui.OMLAdvancedSettingsView;
  * 
  * @author Chris Cummins
  */
-public class DrawAdvancedSettingsView
-{
+public class DrawAdvancedSettingsView {
 
 	/**
 	 * @param args
 	 */
-	public static void main (String[] args)
-	{
-		GUITools.setNativeLookAndFeel ();
+	public static void main(String[] args) {
+		GUITools.setNativeLookAndFeel();
 
-		final OMLSettings c = OMLTestSettings.getOMLSettings ();
-		final String[] s = { "1.0 second", "2.5 seconds", "5 seconds", "10 seconds",
-				"30 seconds", "1 minute", "5 minutes", "Full" };
+		final OMLSettings c = OMLTestSettings.getOMLSettings();
+		final String[] s = { "1.0 second", "2.5 seconds", "5 seconds",
+				"10 seconds", "30 seconds", "1 minute", "5 minutes", "Full" };
 
-		final OMLAdvancedSettingsView frame = new OMLAdvancedSettingsView ();
-		frame.init (c.fontset);
-		frame.setMinYText ("0.0");
-		frame.setMaxYText ("1023.0");
-		frame.setTimeRangeOptions (s, 3);
+		final OMLAdvancedSettingsView frame = new OMLAdvancedSettingsView();
+		frame.init(c.fontset);
+		frame.setMinYText("0.0");
+		frame.setMaxYText("1023.0");
+		frame.setTimeRangeOptions(s, 3);
 
-		GUITools.centreFrame (frame);
+		GUITools.centreFrame(frame);
 
-		frame.setVisible (true);
+		frame.setVisible(true);
 	}
 
 }

@@ -30,35 +30,26 @@ import ac.aston.oml.view.ViewGateway;
  * @author Chris Cummins
  * 
  */
-public class CommExceptionResponse
-{
+public class CommExceptionResponse {
 
-	public static void catchException (ViewGateway v, String portName,
-			Throwable e)
-	{
-		if (portName == "-NONE-")
-		{
-			v.showError ("No com port selected!");
-		}
-		else if (e instanceof NoSuchPortException)
-		{
-			v.showError ("Unable to connect to com port, " + portName
+	public static void catchException(ViewGateway v, String portName,
+			Throwable e) {
+		if (portName == "-NONE-") {
+			v.showError("No com port selected!");
+		} else if (e instanceof NoSuchPortException) {
+			v.showError("Unable to connect to com port, " + portName
 					+ " does not exist!");
-		} else if (e instanceof PortInUseException)
-		{
-			v.showError ("Unable to connect to com port, " + portName
+		} else if (e instanceof PortInUseException) {
+			v.showError("Unable to connect to com port, " + portName
 					+ " already in use!");
-		} else if (e instanceof UnsupportedCommOperationException)
-		{
-			v.showError ("Unable to connect to com port, " + portName
+		} else if (e instanceof UnsupportedCommOperationException) {
+			v.showError("Unable to connect to com port, " + portName
 					+ " does not support this type of operation!");
-		} else if (e instanceof IOException)
-		{
-			v.showError ("Unable to connect to com port, " + portName
+		} else if (e instanceof IOException) {
+			v.showError("Unable to connect to com port, " + portName
 					+ " access denied!");
-		} else
-		{
-			v.showError ("Connection failed, unkown error!");
+		} else {
+			v.showError("Connection failed, unkown error!");
 		}
 	}
 }

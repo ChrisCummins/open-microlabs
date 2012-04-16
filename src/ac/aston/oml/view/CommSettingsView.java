@@ -28,41 +28,42 @@ import jcummins.gui.HTMLFontset;
  * @author Chris Cummins
  * 
  */
-public interface CommSettingsView
-{
+public interface CommSettingsView {
 
-	public void init (HTMLFontset h);
-	public void teardown ();
-	public JFrame fetchFrame ();
+	public void init(HTMLFontset h);
 
-	public void setComOptions (Object[] o);
+	public void teardown();
 
-	public void setBaudOptions (Object[] o, int index);
+	public JFrame fetchFrame();
 
-	public void setDataOptions (Object[] o, int index);
+	public void setComOptions(Object[] o);
 
-	public void setStopOptions (Object[] o, int index);
+	public void setBaudOptions(Object[] o, int index);
 
-	public void setParityOptions (Object[] o, int index);
+	public void setDataOptions(Object[] o, int index);
 
-	public void setFlowOptions (Object[] o, int index);
+	public void setStopOptions(Object[] o, int index);
 
-	public int getSelectedComOption ();
+	public void setParityOptions(Object[] o, int index);
 
-	public int getSelectedBaudOption ();
+	public void setFlowOptions(Object[] o, int index);
 
-	public int getSelectedDataOption ();
+	public int getSelectedComOption();
 
-	public int getSelectedStopOption ();
+	public int getSelectedBaudOption();
 
-	public int getSelectedParityOption ();
+	public int getSelectedDataOption();
 
-	public int getSelectedFlowOption ();
+	public int getSelectedStopOption();
 
-	public void addRefreshButtonListener (ActionListener l);
+	public int getSelectedParityOption();
 
-	public void addDoneButtonListener (ActionListener l);
+	public int getSelectedFlowOption();
 
-	public void addTestButtonListener (ActionListener l);
+	public void addRefreshButtonListener(ActionListener l);
+
+	public void addDoneButtonListener(ActionListener l);
+
+	public void addTestButtonListener(ActionListener l);
 
 }

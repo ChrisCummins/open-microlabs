@@ -28,8 +28,7 @@ import ac.aston.oml.view.ViewGateway;
  * @author Chris Cummins
  * 
  */
-public interface Controller
-{
+public interface Controller {
 	/**
 	 * Initialise the Open MicroLabs program.
 	 * 
@@ -38,6 +37,6 @@ public interface Controller
 	 * @param v
 	 *            ViewGateway to be used.
 	 */
-	public void init (ModelGateway m, ViewGateway v);
+	public void init(ModelGateway m, ViewGateway v);
 
 }

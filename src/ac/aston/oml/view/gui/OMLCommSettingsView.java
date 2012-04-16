@@ -39,7 +39,6 @@ import jcummins.gui.HTMLFontset;
 import jcummins.gui.JComboBoxUtils;
 import jcummins.misc.GetSystemProperties;
 
-
 /**
  * This extension of JFrame draws a frame that can be used to set the comm
  * settings for serial communications with the microcontroller.
@@ -47,8 +46,7 @@ import jcummins.misc.GetSystemProperties;
  * @author Chris Cummins
  * 
  */
-public class OMLCommSettingsView extends JFrame implements CommSettingsView
-{
+public class OMLCommSettingsView extends JFrame implements CommSettingsView {
 	/** Serial UID. */
 	private static final long serialVersionUID = -7903183494493646804L;
 
@@ -61,93 +59,81 @@ public class OMLCommSettingsView extends JFrame implements CommSettingsView
 
 	private HTMLFontset h;
 
-	private final JLabel comPortCountLabel = new JLabel ();
-	private JComboBox<Object> comBox = new JComboBox<Object> ();
-	private JComboBox<Object> baudBox = new JComboBox<Object> ();
-	private JComboBox<Object> dataBox = new JComboBox<Object> ();
-	private JComboBox<Object> stopBox = new JComboBox<Object> ();
-	private JComboBox<Object> parityBox = new JComboBox<Object> ();
-	private JComboBox<Object> flowBox = new JComboBox<Object> ();
-	private final JButton comRefreshButton = new JButton ();
-	private final JButton testButton = new JButton ("Test");
-	private final JButton doneButton = new JButton ("Done");
+	private final JLabel comPortCountLabel = new JLabel();
+	private JComboBox<Object> comBox = new JComboBox<Object>();
+	private JComboBox<Object> baudBox = new JComboBox<Object>();
+	private JComboBox<Object> dataBox = new JComboBox<Object>();
+	private JComboBox<Object> stopBox = new JComboBox<Object>();
+	private JComboBox<Object> parityBox = new JComboBox<Object>();
+	private JComboBox<Object> flowBox = new JComboBox<Object>();
+	private final JButton comRefreshButton = new JButton();
+	private final JButton testButton = new JButton("Test");
+	private final JButton doneButton = new JButton("Done");
 
 	/**
 	 * Creates a OMLCommSettingsView frame and sets content pane.
 	 */
-	public OMLCommSettingsView ()
-	{
-		this.setTitle (AppDetails.name ());
-		this.setSize (frameWidth, frameHeight);
-		this.setResizable (false);
-		this.setDefaultCloseOperation (JFrame.EXIT_ON_CLOSE);
-		this.setIconImage (AppDetails.icon ());
-		this.setBackground (Color.white);
+	public OMLCommSettingsView() {
+		this.setTitle(AppDetails.name());
+		this.setSize(frameWidth, frameHeight);
+		this.setResizable(false);
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.setIconImage(AppDetails.icon());
+		this.setBackground(Color.white);
 	}
 
 	@Override
-	public void init (HTMLFontset h)
-	{
+	public void init(HTMLFontset h) {
 		this.h = h;
-		this.setContentPane (createContentPane ());
+		this.setContentPane(createContentPane());
 	}
 
 	@Override
-	public void teardown ()
-	{
-		this.dispose ();
+	public void teardown() {
+		this.dispose();
 	}
-	
-	public JFrame fetchFrame ()
-	{
+
+	public JFrame fetchFrame() {
 		return this;
 	}
 
-	public void addRefreshPortsButtonListener (ActionListener l)
-	{
-		comRefreshButton.addActionListener (l);
+	public void addRefreshPortsButtonListener(ActionListener l) {
+		comRefreshButton.addActionListener(l);
 	}
 
 	@Override
-	public void setComOptions (Object[] o)
-	{
-		JComboBoxUtils.updateContents (comBox, o);
+	public void setComOptions(Object[] o) {
+		JComboBoxUtils.updateContents(comBox, o);
 	}
 
 	@Override
-	public void setBaudOptions (Object[] is, int index)
-	{
-		JComboBoxUtils.updateContents (baudBox, is, index);
+	public void setBaudOptions(Object[] is, int index) {
+		JComboBoxUtils.updateContents(baudBox, is, index);
 	}
 
 	@Override
-	public void setDataOptions (Object[] o, int index)
-	{
-		JComboBoxUtils.updateContents (dataBox, o, index);
+	public void setDataOptions(Object[] o, int index) {
+		JComboBoxUtils.updateContents(dataBox, o, index);
 	}
 
 	@Override
-	public void setStopOptions (Object[] o, int index)
-	{
-		JComboBoxUtils.updateContents (stopBox, o, index);
+	public void setStopOptions(Object[] o, int index) {
+		JComboBoxUtils.updateContents(stopBox, o, index);
 	}
 
 	@Override
-	public void setParityOptions (Object[] o, int index)
-	{
-		JComboBoxUtils.updateContents (parityBox, o, index);
+	public void setParityOptions(Object[] o, int index) {
+		JComboBoxUtils.updateContents(parityBox, o, index);
 	}
 
 	@Override
-	public void setFlowOptions (Object[] o, int index)
-	{
-		JComboBoxUtils.updateContents (flowBox, o, index);
+	public void setFlowOptions(Object[] o, int index) {
+		JComboBoxUtils.updateContents(flowBox, o, index);
 	}
 
 	@Override
-	public void addRefreshButtonListener (ActionListener l)
-	{
-		comRefreshButton.addActionListener (l);
+	public void addRefreshButtonListener(ActionListener l) {
+		comRefreshButton.addActionListener(l);
 	}
 
 	/**
@@ -156,9 +142,8 @@ public class OMLCommSettingsView extends JFrame implements CommSettingsView
 	 * @param l
 	 *            ActionListener
 	 */
-	public void addDoneButtonListener (ActionListener l)
-	{
-		doneButton.addActionListener (l);
+	public void addDoneButtonListener(ActionListener l) {
+		doneButton.addActionListener(l);
 	}
 
 	/**
@@ -167,9 +152,8 @@ public class OMLCommSettingsView extends JFrame implements CommSettingsView
 	 * @param l
 	 *            ActionListener
 	 */
-	public void addTestButtonListener (ActionListener l)
-	{
-		testButton.addActionListener (l);
+	public void addTestButtonListener(ActionListener l) {
+		testButton.addActionListener(l);
 	}
 
 	/*
@@ -177,170 +161,166 @@ public class OMLCommSettingsView extends JFrame implements CommSettingsView
 	 * 
 	 * @return Content pane.
 	 */
-	private JPanel createContentPane ()
-	{
+	private JPanel createContentPane() {
 		// PANEL OBJECTS -------------------------------------------------------
 		TitledBorder borderTop = BorderFactory
-				.createTitledBorder ("System Settings");
-		borderTop.setTitleJustification (TitledBorder.CENTER);
+				.createTitledBorder("System Settings");
+		borderTop.setTitleJustification(TitledBorder.CENTER);
 
 		TitledBorder borderMid = BorderFactory
-				.createTitledBorder ("Microcontroller Settings");
-		borderMid.setTitleJustification (TitledBorder.CENTER);
+				.createTitledBorder("Microcontroller Settings");
+		borderMid.setTitleJustification(TitledBorder.CENTER);
 
 		// MAIN ----------------------------------------------------------------
-		JPanel mainPanel = new JPanel ();
-		mainPanel.setLayout (null);
-		mainPanel.setLocation (0, 0);
-		mainPanel.setSize (frameWidth - 20, frameHeight - 20);
-		mainPanel.setBackground (Color.white);
+		JPanel mainPanel = new JPanel();
+		mainPanel.setLayout(null);
+		mainPanel.setLocation(0, 0);
+		mainPanel.setSize(frameWidth - 20, frameHeight - 20);
+		mainPanel.setBackground(Color.white);
 
 		// TOP -----------------------------------------------------------------
-		JPanel topPanel = new JPanel ();
-		topPanel.setLayout (new GridLayout (4, 2, 10, 5));
-		topPanel.setLocation (5, 5);
-		topPanel.setSize (frameWidth - 15, topHeight);
-		topPanel.setBorder (borderTop);
-		topPanel.setBackground (Color.white);
-		mainPanel.add (topPanel);
+		JPanel topPanel = new JPanel();
+		topPanel.setLayout(new GridLayout(4, 2, 10, 5));
+		topPanel.setLocation(5, 5);
+		topPanel.setSize(frameWidth - 15, topHeight);
+		topPanel.setBorder(borderTop);
+		topPanel.setBackground(Color.white);
+		mainPanel.add(topPanel);
 
-		topPanel.add (new JLabel (h.format ("label", "Operating System:")));
-		topPanel.add (new JLabel (h.format ("label", GetSystemProperties.os ()), new ImageIcon (
-				"img/12x12/Desktop 2.png", AppDetails.name ()), JLabel.LEFT));
-		topPanel.add (new JLabel (h.format ("label", "OS Version:")));
-		topPanel.add (new JLabel (h.format ("label", GetSystemProperties.osVersion ()), new ImageIcon (
-				"img/12x12/advanced.png", AppDetails.name ()), JLabel.LEFT));
-		topPanel.add (new JLabel (h.format ("label", "System Architecture:")));
-		topPanel.add (new JLabel (h.format ("label", GetSystemProperties.osArch ()), new ImageIcon (
-				"img/12x12/64 bit.png", AppDetails.name ()), JLabel.LEFT));
-		topPanel.add (new JLabel (h.format ("label", "Com Ports:")));
-		topPanel.add (comPortCountLabel);
+		topPanel.add(new JLabel(h.format("label", "Operating System:")));
+		topPanel.add(new JLabel(h.format("label", GetSystemProperties.os()),
+				new ImageIcon("img/12x12/Desktop 2.png", AppDetails.name()),
+				JLabel.LEFT));
+		topPanel.add(new JLabel(h.format("label", "OS Version:")));
+		topPanel.add(new JLabel(h.format("label",
+				GetSystemProperties.osVersion()), new ImageIcon(
+				"img/12x12/advanced.png", AppDetails.name()), JLabel.LEFT));
+		topPanel.add(new JLabel(h.format("label", "System Architecture:")));
+		topPanel.add(new JLabel(
+				h.format("label", GetSystemProperties.osArch()), new ImageIcon(
+						"img/12x12/64 bit.png", AppDetails.name()), JLabel.LEFT));
+		topPanel.add(new JLabel(h.format("label", "Com Ports:")));
+		topPanel.add(comPortCountLabel);
 
 		// MID -----------------------------------------------------------------
-		JPanel midPanel = new JPanel ();
-		midPanel.setLayout (new GridLayout (6, 2, 20, 5));
-		midPanel.setLocation (5, topHeight + 5);
-		midPanel.setSize (frameWidth - 15, midHeight);
-		midPanel.setBorder (borderMid);
-		midPanel.setBackground (Color.white);
-		mainPanel.add (midPanel);
+		JPanel midPanel = new JPanel();
+		midPanel.setLayout(new GridLayout(6, 2, 20, 5));
+		midPanel.setLocation(5, topHeight + 5);
+		midPanel.setSize(frameWidth - 15, midHeight);
+		midPanel.setBorder(borderMid);
+		midPanel.setBackground(Color.white);
+		mainPanel.add(midPanel);
 
-		JLabel midComLabel = new JLabel (h.format ("label", "Com Port:"));
-		midComLabel.setHorizontalAlignment (JLabel.LEFT);
-		midPanel.add (midComLabel);
+		JLabel midComLabel = new JLabel(h.format("label", "Com Port:"));
+		midComLabel.setHorizontalAlignment(JLabel.LEFT);
+		midPanel.add(midComLabel);
 
-		JPanel midComPanel = new JPanel ();
-		midComPanel.setLayout (new BorderLayout ());
-		midComPanel.setBackground (Color.white);
+		JPanel midComPanel = new JPanel();
+		midComPanel.setLayout(new BorderLayout());
+		midComPanel.setBackground(Color.white);
 
-		comBox.setBackground (Color.white);
-		midComPanel.add (comBox, BorderLayout.WEST);
-		comRefreshButton.setIcon (new ImageIcon ("img/12x12/refresh.png", this
-				.getTitle ()));
-		comRefreshButton.setBackground (Color.white);
-		midComPanel.add (comRefreshButton, BorderLayout.EAST);
+		comBox.setBackground(Color.white);
+		midComPanel.add(comBox, BorderLayout.WEST);
+		comRefreshButton.setIcon(new ImageIcon("img/12x12/refresh.png", this
+				.getTitle()));
+		comRefreshButton.setBackground(Color.white);
+		midComPanel.add(comRefreshButton, BorderLayout.EAST);
 
-		midPanel.add (midComPanel);
+		midPanel.add(midComPanel);
 
-		JLabel midBaudLabel = new JLabel (h.format ("label", "Baud Rate:"));
-		midBaudLabel.setHorizontalAlignment (JLabel.LEFT);
-		midPanel.add (midBaudLabel);
+		JLabel midBaudLabel = new JLabel(h.format("label", "Baud Rate:"));
+		midBaudLabel.setHorizontalAlignment(JLabel.LEFT);
+		midPanel.add(midBaudLabel);
 
-		baudBox.setBackground (Color.white);
-		midPanel.add (baudBox);
+		baudBox.setBackground(Color.white);
+		midPanel.add(baudBox);
 
-		JLabel midDataLabel = new JLabel (h.format ("label", "Data Bits:"));
-		midDataLabel.setHorizontalAlignment (JLabel.LEFT);
-		midPanel.add (midDataLabel);
+		JLabel midDataLabel = new JLabel(h.format("label", "Data Bits:"));
+		midDataLabel.setHorizontalAlignment(JLabel.LEFT);
+		midPanel.add(midDataLabel);
 
-		dataBox.setBackground (Color.white);
-		midPanel.add (dataBox);
+		dataBox.setBackground(Color.white);
+		midPanel.add(dataBox);
 
-		JLabel midStopLabel = new JLabel (h.format ("label", "Stop Bits:"));
-		midStopLabel.setHorizontalAlignment (JLabel.LEFT);
-		midPanel.add (midStopLabel);
+		JLabel midStopLabel = new JLabel(h.format("label", "Stop Bits:"));
+		midStopLabel.setHorizontalAlignment(JLabel.LEFT);
+		midPanel.add(midStopLabel);
 
-		stopBox.setBackground (Color.white);
-		midPanel.add (stopBox);
+		stopBox.setBackground(Color.white);
+		midPanel.add(stopBox);
 
-		JLabel midParityLabel = new JLabel (h.format ("label", "Parity:"));
-		midParityLabel.setHorizontalAlignment (JLabel.LEFT);
-		midPanel.add (midParityLabel);
+		JLabel midParityLabel = new JLabel(h.format("label", "Parity:"));
+		midParityLabel.setHorizontalAlignment(JLabel.LEFT);
+		midPanel.add(midParityLabel);
 
-		parityBox.setBackground (Color.white);
-		midPanel.add (parityBox);
+		parityBox.setBackground(Color.white);
+		midPanel.add(parityBox);
 
-		JLabel midFlowLabel = new JLabel (h.format ("label", "Flow Control"));
-		midFlowLabel.setHorizontalAlignment (JLabel.LEFT);
-		midPanel.add (midFlowLabel);
+		JLabel midFlowLabel = new JLabel(h.format("label", "Flow Control"));
+		midFlowLabel.setHorizontalAlignment(JLabel.LEFT);
+		midPanel.add(midFlowLabel);
 
-		flowBox.setBackground (Color.white);
-		midPanel.add (flowBox);
+		flowBox.setBackground(Color.white);
+		midPanel.add(flowBox);
 
 		// BOTTOM --------------------------------------------------------------
-		JPanel btmPanel = new JPanel ();
-		btmPanel.setLayout (null);
-		btmPanel.setLocation (5, midPanel.getLocation ().y + midHeight);
-		btmPanel.setSize (frameWidth - 15, btmHeight - 10);
-		btmPanel.setBackground (Color.white);
-		mainPanel.add (btmPanel);
+		JPanel btmPanel = new JPanel();
+		btmPanel.setLayout(null);
+		btmPanel.setLocation(5, midPanel.getLocation().y + midHeight);
+		btmPanel.setSize(frameWidth - 15, btmHeight - 10);
+		btmPanel.setBackground(Color.white);
+		mainPanel.add(btmPanel);
 
-		testButton.setToolTipText ("Test microcontroller with these settings");
-		testButton.setIcon (new ImageIcon ("img/22x22/plus.png", AppDetails
-				.name ()));
-		testButton.setLocation (5, 5);
-		testButton.setSize ((btmPanel.getSize ().width / 2) - 10,
-				btmPanel.getSize ().height - 10);
-		testButton.setBackground (Color.white);
-		btmPanel.add (testButton);
+		testButton.setToolTipText("Test microcontroller with these settings");
+		testButton.setIcon(new ImageIcon("img/22x22/plus.png", AppDetails
+				.name()));
+		testButton.setLocation(5, 5);
+		testButton.setSize((btmPanel.getSize().width / 2) - 10,
+				btmPanel.getSize().height - 10);
+		testButton.setBackground(Color.white);
+		btmPanel.add(testButton);
 
-		doneButton.setToolTipText ("Continue with these settings.");
-		doneButton.setIcon (new ImageIcon ("img/22x22/play.png", AppDetails
-				.name ()));
-		doneButton.setLocation (
-				(testButton.getLocation ().x + testButton.getWidth ()) + 10, 5);
-		doneButton.setSize ((btmPanel.getSize ().width / 2) - 10,
-				btmPanel.getSize ().height - 10);
-		doneButton.setBackground (Color.white);
-		btmPanel.add (doneButton);
+		doneButton.setToolTipText("Continue with these settings.");
+		doneButton.setIcon(new ImageIcon("img/22x22/play.png", AppDetails
+				.name()));
+		doneButton.setLocation(
+				(testButton.getLocation().x + testButton.getWidth()) + 10, 5);
+		doneButton.setSize((btmPanel.getSize().width / 2) - 10,
+				btmPanel.getSize().height - 10);
+		doneButton.setBackground(Color.white);
+		btmPanel.add(doneButton);
 
 		return mainPanel;
 	}
 
 	@Override
-	public int getSelectedComOption ()
-	{
-		return comBox.getSelectedIndex ();
+	public int getSelectedComOption() {
+		return comBox.getSelectedIndex();
 	}
 
 	@Override
-	public int getSelectedBaudOption ()
-	{
-		return baudBox.getSelectedIndex ();
+	public int getSelectedBaudOption() {
+		return baudBox.getSelectedIndex();
 	}
 
 	@Override
-	public int getSelectedDataOption ()
-	{
-		return dataBox.getSelectedIndex ();
+	public int getSelectedDataOption() {
+		return dataBox.getSelectedIndex();
 	}
 
 	@Override
-	public int getSelectedStopOption ()
-	{
-		return stopBox.getSelectedIndex ();
+	public int getSelectedStopOption() {
+		return stopBox.getSelectedIndex();
 	}
 
 	@Override
-	public int getSelectedParityOption ()
-	{
-		return parityBox.getSelectedIndex ();
+	public int getSelectedParityOption() {
+		return parityBox.getSelectedIndex();
 	}
 
 	@Override
-	public int getSelectedFlowOption ()
-	{
-		return flowBox.getSelectedIndex ();
+	public int getSelectedFlowOption() {
+		return flowBox.getSelectedIndex();
 	}
 
 }

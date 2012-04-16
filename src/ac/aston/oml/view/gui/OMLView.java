@@ -35,68 +35,67 @@ import ac.aston.oml.view.ViewGateway;
  * @author Chris Cummins
  * 
  */
-public class OMLView implements ViewGateway
-{
+public class OMLView implements ViewGateway {
 
 	private final OMLCommSettingsView cs;
 	private final OMLLogSettingsView ls;
 	private final OMLAdvancedSettingsView as;
 	private final OMLLoggerView lv;
 
-	public OMLView ()
-	{
-		this.cs = new OMLCommSettingsView ();
-		this.ls = new OMLLogSettingsView ();
-		this.as = new OMLAdvancedSettingsView ();
-		this.lv = new OMLLoggerView ();
+	public OMLView() {
+		this.cs = new OMLCommSettingsView();
+		this.ls = new OMLLogSettingsView();
+		this.as = new OMLAdvancedSettingsView();
+		this.lv = new OMLLoggerView();
 	}
 
 	@Override
-	public void showMessage (String msg)
-	{
-		JOptionPane.showMessageDialog (null, msg,
-				ac.aston.oml.include.AppDetails.name () + " "
-						+ AppDetails.version (),
-				JOptionPane.PLAIN_MESSAGE);
+	public void showMessage(String msg) {
+		JOptionPane.showMessageDialog(
+				null,
+				msg,
+				ac.aston.oml.include.AppDetails.name() + " "
+						+ AppDetails.version(), JOptionPane.PLAIN_MESSAGE);
 	}
 
 	@Override
-	public void showError (String msg)
-	{
-		JOptionPane.showMessageDialog (null, msg,
-				ac.aston.oml.include.AppDetails.name () + " "
-						+ AppDetails.version (),
-				JOptionPane.ERROR_MESSAGE);
+	public void showError(String msg) {
+		JOptionPane.showMessageDialog(
+				null,
+				msg,
+				ac.aston.oml.include.AppDetails.name() + " "
+						+ AppDetails.version(), JOptionPane.ERROR_MESSAGE);
 	}
 
 	@Override
-	public boolean showYesNoPrompt (String msg)
-	{
-		// TODO Auto-generated method stub
-		return false;
+	public boolean showYesNoPrompt(String msg) {
+		String[] options = { "Yes", "No" };
+		final int n = JOptionPane.showOptionDialog(null, msg, AppDetails.name()
+				+ " " + AppDetails.version(), JOptionPane.YES_NO_OPTION,
+				JOptionPane.QUESTION_MESSAGE, null, options, 0);
+		if (n == 0)
+			return true;
+		else
+			return false;
 	}
 
 	@Override
-	public CommSettingsView cs ()
-	{
+	public CommSettingsView cs() {
 		return cs;
 	}
 
 	@Override
-	public LogSettingsView ls ()
-	{
+	public LogSettingsView ls() {
 		return ls;
 	}
 
 	@Override
-	public AdvancedSettingsView as ()
-	{
+	public AdvancedSettingsView as() {
 		return as;
 	}
 
 	@Override
-	public LoggerView lv ()
-	{
+	public LoggerView lv() {
 		return lv;
 	}
 }

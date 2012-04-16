@@ -28,47 +28,47 @@ package ac.aston.oml.view;
  * 
  */
 public interface ViewGateway {
-    /**
-     * 
-     * @param msg
-     */
-    void showMessage(String msg);
+	/**
+	 * 
+	 * @param msg
+	 */
+	void showMessage(String msg);
 
-    /**
-     * 
-     * @param ms
-     */
-    void showError(String ms);
+	/**
+	 * 
+	 * @param ms
+	 */
+	void showError(String ms);
 
-    /**
-     * 
-     * @param msg
-     * @return
-     */
-    boolean showYesNoPrompt(String msg);
+	/**
+	 * 
+	 * @param msg
+	 * @return
+	 */
+	boolean showYesNoPrompt(String msg);
 
-    /**
-     * 
-     * @return
-     */
-    CommSettingsView cs();
+	/**
+	 * 
+	 * @return
+	 */
+	CommSettingsView cs();
 
-    /**
-     * 
-     * @return
-     */
-    LogSettingsView ls();
+	/**
+	 * 
+	 * @return
+	 */
+	LogSettingsView ls();
 
-    /**
-     * 
-     * @return
-     */
-    AdvancedSettingsView as();
+	/**
+	 * 
+	 * @return
+	 */
+	AdvancedSettingsView as();
 
-    /**
-     * 
-     * @return
-     */
-    LoggerView lv();
+	/**
+	 * 
+	 * @return
+	 */
+	LoggerView lv();
 
 }

@@ -25,8 +25,7 @@ package ac.aston.oml.model.com;
  * @author Chris Cummins
  * 
  */
-public class CommSettings
-{
+public class CommSettings {
 
 	private final String PORTNAME;
 	private final int BAUDRATE;
@@ -53,9 +52,8 @@ public class CommSettings
 	 * @see jcummins.serial.SerialComm#SerialComm(String, int, int, int, int,
 	 *      int)
 	 */
-	public CommSettings (String portName, int baudRate, int dataBits,
-			int stopBits, int parity, int flowControl)
-	{
+	public CommSettings(String portName, int baudRate, int dataBits,
+			int stopBits, int parity, int flowControl) {
 		this.PORTNAME = portName;
 		this.BAUDRATE = baudRate;
 		this.DATABITS = dataBits;
@@ -69,8 +67,7 @@ public class CommSettings
 	 * 
 	 * @return String.
 	 */
-	public String portName ()
-	{
+	public String portName() {
 		return PORTNAME;
 	}
 
@@ -79,8 +76,7 @@ public class CommSettings
 	 * 
 	 * @return Int.
 	 */
-	public int baudRate ()
-	{
+	public int baudRate() {
 		return BAUDRATE;
 	}
 
@@ -89,8 +85,7 @@ public class CommSettings
 	 * 
 	 * @return Int.
 	 */
-	public int dataBits ()
-	{
+	public int dataBits() {
 		return DATABITS;
 	}
 
@@ -99,8 +94,7 @@ public class CommSettings
 	 * 
 	 * @return Int.
 	 */
-	public int stopBits ()
-	{
+	public int stopBits() {
 		return STOPBITS;
 	}
 
@@ -109,8 +103,7 @@ public class CommSettings
 	 * 
 	 * @return Int.
 	 */
-	public int parity ()
-	{
+	public int parity() {
 		return PARITY;
 	}
 
@@ -119,8 +112,7 @@ public class CommSettings
 	 * 
 	 * @return Int.
 	 */
-	public int flowControl ()
-	{
+	public int flowControl() {
 		return FLOWCONTROL;
 	}
 

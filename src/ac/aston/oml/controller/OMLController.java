@@ -40,60 +40,54 @@ import jcummins.gui.GUITools;
  * @author Chris Cummins
  * 
  */
-public class OMLController implements Controller
-{
+public class OMLController implements Controller {
 	protected ModelGateway m;
 	protected ViewGateway v;
 
 	@Override
-	public void init (ModelGateway m, ViewGateway v)
-	{
+	public void init(ModelGateway m, ViewGateway v) {
 		this.m = m;
 		this.v = v;
 
-		attachListeners ();
+		attachListeners();
 
-		renderCommSettingsView ();
+		renderCommSettingsView();
 	}
 
-	private void attachListeners ()
-	{
-		v.cs ().addRefreshButtonListener (
-				new CommSettingsRefreshPortsListener (m, v));
-		v.cs ().addTestButtonListener (new CommSettingsTestListener (m, v));
-		v.cs ().addDoneButtonListener (new CommSettingsDoneListener (m, v));
+	private void attachListeners() {
+		v.cs().addRefreshButtonListener(
+				new CommSettingsRefreshPortsListener(m, v));
+		v.cs().addTestButtonListener(new CommSettingsTestListener(m, v));
+		v.cs().addDoneButtonListener(new CommSettingsDoneListener(m, v));
 
-		v.ls ().addFileButtonListener (new LogSettingsFileListener (m, v));
-		v.ls ().addAdvancedButtonListener (
-				new AdvancedSettingsShowListener (m, v));
-		v.ls ().addDoneButtonListener (new LogSettingsDoneListener (m, v));
-		v.ls ().addSlaveOptionsListener (
-				new LogSettingsSlaveOptionsListener (v));
+		v.ls().addFileButtonListener(new LogSettingsFileListener(v));
+		v.ls()
+				.addAdvancedButtonListener(
+						new AdvancedSettingsShowListener(m, v));
+		v.ls().addDoneButtonListener(new LogSettingsDoneListener(m, v));
+		v.ls().addSlaveOptionsListener(new LogSettingsSlaveOptionsListener(v));
 
-		v.lv ().addDoneButtonListener (new LoggerDoneListener (m, v));
+		v.lv().addDoneButtonListener(new LoggerDoneListener(m, v));
 
-		v.as ()
-				.addDoneButtonListener (
-						new AdvancedSettingsDoneListenner (m, v));
+		v.as().addDoneButtonListener(new AdvancedSettingsDoneListenner(m, v));
 
 		// m.addNewDataListener (new ModelNewDataListener (v));
 	}
 
-	private void renderCommSettingsView ()
-	{
-		final OMLSettings c = m.getOMLSettings ();
-		m.com ().refreshCommPorts ();
+	private void renderCommSettingsView() {
+		final OMLSettings c = m.getOMLSettings();
+		m.com().refreshCommPorts();
 
-		v.cs ().init (m.getOMLSettings ().fontset);
-		v.cs ().setBaudOptions (c.baudOptions, c.baudOptionsSelected);
-		v.cs ().setComOptions (m.com ().getCommPorts ()[0]);
-		v.cs ().setDataOptions (c.databitOptions[0], c.databitOptionsSelected);
-		v.cs ().setStopOptions (c.stopbitOptions[0], c.stopbitOptionsSelected);
-		v.cs ().setParityOptions (c.parityOptions[0], c.parityOptionsSelected);
-		v.cs ().setFlowOptions (c.flowOptions[0], c.flowOptionsSelected);
+		v.cs().init(m.getOMLSettings().fontset);
+		v.cs().setBaudOptions(c.baudOptions, c.baudOptionsSelected);
+		v.cs().setComOptions(m.com().getCommPorts()[0]);
+		v.cs().setDataOptions(c.databitOptions[0], c.databitOptionsSelected);
+		v.cs().setStopOptions(c.stopbitOptions[0], c.stopbitOptionsSelected);
+		v.cs().setParityOptions(c.parityOptions[0], c.parityOptionsSelected);
+		v.cs().setFlowOptions(c.flowOptions[0], c.flowOptionsSelected);
 
-		GUITools.centreFrame (v.cs ().fetchFrame ());
-		v.cs ().fetchFrame ().setVisible (true);
+		GUITools.centreFrame(v.cs().fetchFrame());
+		v.cs().fetchFrame().setVisible(true);
 	}
 
 }

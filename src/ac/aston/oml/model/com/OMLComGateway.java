@@ -32,8 +32,7 @@ import ac.aston.oml.model.ComGateway;
  * @author Chris Cummins
  * 
  */
-public class OMLComGateway implements ComGateway
-{
+public class OMLComGateway implements ComGateway {
 
 	private SerialReader serialReader;
 	private Object[][] o;
@@ -48,29 +47,24 @@ public class OMLComGateway implements ComGateway
 	 * 
 	 */
 	@Override
-	public boolean commTest () throws NoSuchPortException, PortInUseException,
-			UnsupportedCommOperationException, IOException
-	{
-		return serialReader.testConnection ();
+	public boolean commTest() throws NoSuchPortException, PortInUseException,
+			UnsupportedCommOperationException, IOException {
+		return serialReader.testConnection();
 	}
 
 	@Override
-	public void commConnect () throws NoSuchPortException, PortInUseException,
-			UnsupportedCommOperationException, IOException
-	{
-		serialReader.connect (ac.aston.oml.include.AppDetails.name ());
+	public void commConnect() throws NoSuchPortException, PortInUseException,
+			UnsupportedCommOperationException, IOException {
+		serialReader.connect(ac.aston.oml.include.AppDetails.name());
 	}
 
 	@Override
-	public void refreshCommPorts ()
-	{
-		if (DiscoverPorts.size () > 0)
-		{
-			o = new Object[2][DiscoverPorts.size ()];
-			o[0] = DiscoverPorts.listToArray ();
-			o[1] = DiscoverPorts.listNamesToArray ();
-		} else
-		{
+	public void refreshCommPorts() {
+		if (DiscoverPorts.size() > 0) {
+			o = new Object[2][DiscoverPorts.size()];
+			o[0] = DiscoverPorts.listToArray();
+			o[1] = DiscoverPorts.listNamesToArray();
+		} else {
 			o = new Object[2][1];
 			o[0][0] = "-NONE-";
 			o[1][0] = "-NONE-";
@@ -78,30 +72,25 @@ public class OMLComGateway implements ComGateway
 	}
 
 	@Override
-	public void setCommSettings (CommSettings c)
-	{
-		serialReader = new SerialReader (c);
+	public void setCommSettings(CommSettings c) {
+		serialReader = new SerialReader(c);
 	}
 
-	public void setSerialReader (SerialReader r)
-	{
+	public void setSerialReader(SerialReader r) {
 		this.serialReader = r;
 	}
-	
+
 	@Override
-	public Object[][] getCommPorts ()
-	{
+	public Object[][] getCommPorts() {
 		return o;
 	}
 
 	@Override
-	public CommSettings getCommSettings ()
-	{
+	public CommSettings getCommSettings() {
 		return null;
 	}
-	
-	public SerialReader getSerialReader ()
-	{
+
+	public SerialReader getSerialReader() {
 		return serialReader;
 	}
 }

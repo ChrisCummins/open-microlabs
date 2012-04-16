@@ -30,23 +30,20 @@ import ac.aston.oml.view.ViewGateway;
  * 
  */
 public class CommSettingsRefreshPortsListener extends OMLController implements
-		ActionListener
-{
+		ActionListener {
 
 	private final ModelGateway m;
 	private final ViewGateway v;
 
-	public CommSettingsRefreshPortsListener (ModelGateway m, ViewGateway v)
-	{
+	public CommSettingsRefreshPortsListener(ModelGateway m, ViewGateway v) {
 		this.m = m;
 		this.v = v;
 	}
 
 	@Override
-	public void actionPerformed (ActionEvent arg0)
-	{
-		m.com ().refreshCommPorts ();
-		v.cs ().setComOptions (m.com ().getCommPorts ()[0]);
+	public void actionPerformed(ActionEvent arg0) {
+		m.com().refreshCommPorts();
+		v.cs().setComOptions(m.com().getCommPorts()[0]);
 	}
 
 }

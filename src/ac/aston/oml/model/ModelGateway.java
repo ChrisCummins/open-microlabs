@@ -20,7 +20,6 @@ package ac.aston.oml.model;
 
 import ac.aston.oml.model.settings.OMLSettings;
 
-
 /**
  * This interface specifies the required behaviour of a model class for the Open
  * MicroLabs software. It handles data flow to and from the controller and is
@@ -30,13 +29,12 @@ import ac.aston.oml.model.settings.OMLSettings;
  * @author Chris Cummins
  * 
  */
-public interface ModelGateway
-{
+public interface ModelGateway {
 
-	public ComGateway com ();
-	
-	public LoggerGateway logger ();
-	
-	public OMLSettings getOMLSettings ();
-	
+	public ComGateway com();
+
+	public LoggerGateway logger();
+
+	public OMLSettings getOMLSettings();
+
 }

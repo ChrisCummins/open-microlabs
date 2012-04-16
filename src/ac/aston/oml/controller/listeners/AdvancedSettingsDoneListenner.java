@@ -34,47 +34,40 @@ import ac.aston.oml.view.ViewGateway;
  * @author Chris Cummins
  * 
  */
-public class AdvancedSettingsDoneListenner implements
-		ActionListener
-{
+public class AdvancedSettingsDoneListenner implements ActionListener {
 	private final ModelGateway m;
 	private final ViewGateway v;
 
-	public AdvancedSettingsDoneListenner (ModelGateway m, ViewGateway v)
-	{
+	public AdvancedSettingsDoneListenner(ModelGateway m, ViewGateway v) {
 		this.m = m;
 		this.v = v;
 	}
 
 	@Override
-	public void actionPerformed (ActionEvent e)
-	{
+	public void actionPerformed(ActionEvent e) {
 		Double minY;
 		Double maxY;
 
-		try
-		{
-			minY = Double.parseDouble (v.as ().getMinYText ());
-			maxY = Double.parseDouble (v.as ().getMaxYText ());
-		} catch (NumberFormatException e1)
-		{
-			v.showError ("Y axis values must be a decimal value!");
+		try {
+			minY = Double.parseDouble(v.as().getMinYText());
+			maxY = Double.parseDouble(v.as().getMaxYText());
+		} catch (NumberFormatException e1) {
+			v.showError("Y axis values must be a decimal value!");
 			return;
 		}
 
-		if (maxY < minY)
-		{
-			v.showError ("Maximum Y value should be greater than minimum!");
+		if (maxY < minY) {
+			v.showError("Maximum Y value should be greater than minimum!");
 			return;
 		}
 
-		Double graphTimeRange = (Double) m.getOMLSettings ().graphTimeRangeOptions[1][v
-				.as ().getTimeRangeSelectedIndex ()];
+		Double graphTimeRange = (Double) m.getOMLSettings().graphTimeRangeOptions[1][v
+				.as().getTimeRangeSelectedIndex()];
 
-		final AdvancedSettings a = new AdvancedSettings (graphTimeRange, minY,
+		final AdvancedSettings a = new AdvancedSettings(graphTimeRange, minY,
 				maxY);
-		m.logger ().setAdvancedSettings (a);
-		v.as ().teardown ();
+		m.logger().setAdvancedSettings(a);
+		v.as().teardown();
 	}
 
 }

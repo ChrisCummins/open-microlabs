@@ -45,121 +45,106 @@ import ac.aston.oml.view.AdvancedSettingsView;
  * 
  */
 public class OMLAdvancedSettingsView extends JFrame implements
-		AdvancedSettingsView
-{
+		AdvancedSettingsView {
 	private static final long serialVersionUID = -1475245631891524654L;
 	private static final int frameWidth = 260;
 	private static final int frameHeight = 150;
 
 	private HTMLFontset h;
-	
-	private final JComboBox<Object> timeRangeBox = new JComboBox<Object> ();
+
+	private final JComboBox<Object> timeRangeBox = new JComboBox<Object>();
 	private final JTextArea minYText = new JTextArea(1, 8);
-	private final JTextArea maxYText = new JTextArea (1, 8);
-	private final JButton doneButton = new JButton ("Done");
+	private final JTextArea maxYText = new JTextArea(1, 8);
+	private final JButton doneButton = new JButton("Done");
 
-	public OMLAdvancedSettingsView ()
-	{
-		this.setTitle (AppDetails.name ());
-		this.setSize (frameWidth, frameHeight);
-		this.setResizable (false);
-		this.setDefaultCloseOperation (JFrame.EXIT_ON_CLOSE);
-		this.setIconImage (AppDetails.icon ());
-		this.setBackground (Color.white);
+	public OMLAdvancedSettingsView() {
+		this.setTitle(AppDetails.name());
+		this.setSize(frameWidth, frameHeight);
+		this.setResizable(false);
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.setIconImage(AppDetails.icon());
+		this.setBackground(Color.white);
 	}
 
 	@Override
-	public void init (HTMLFontset h)
-	{
+	public void init(HTMLFontset h) {
 		this.h = h;
-		this.setContentPane (createContentPane ());
+		this.setContentPane(createContentPane());
 	}
 
 	@Override
-	public void teardown ()
-	{
-		this.dispose ();
+	public void teardown() {
+		this.dispose();
 	}
-	
-	public JFrame fetchFrame ()
-	{
+
+	public JFrame fetchFrame() {
 		return this;
 	}
 
 	@Override
-	public void setTimeRangeOptions (Object[] o, int selectedIndex)
-	{
-		JComboBoxUtils.updateContents (timeRangeBox, o, selectedIndex);
+	public void setTimeRangeOptions(Object[] o, int selectedIndex) {
+		JComboBoxUtils.updateContents(timeRangeBox, o, selectedIndex);
 	}
-	
-	public void setMinYText (String s)
-	{
-		minYText.setText (s);
+
+	public void setMinYText(String s) {
+		minYText.setText(s);
 	}
-	
-	public void setMaxYText (String s)
-	{
-		maxYText.setText (s);
+
+	public void setMaxYText(String s) {
+		maxYText.setText(s);
 	}
 
 	@Override
-	public void addDoneButtonListener (ActionListener l)
-	{
-		doneButton.addActionListener (l);
+	public void addDoneButtonListener(ActionListener l) {
+		doneButton.addActionListener(l);
 	}
 
 	@Override
-	public int getTimeRangeSelectedIndex ()
-	{
-		return timeRangeBox.getSelectedIndex ();
+	public int getTimeRangeSelectedIndex() {
+		return timeRangeBox.getSelectedIndex();
 	}
 
 	@Override
-	public String getMinYText ()
-	{
-		return minYText.getText ();
+	public String getMinYText() {
+		return minYText.getText();
 	}
 
 	@Override
-	public String getMaxYText ()
-	{
-		return maxYText.getText ();
+	public String getMaxYText() {
+		return maxYText.getText();
 	}
 
-	private JPanel createContentPane ()
-	{
-		final JPanel contentPanel = new JPanel ();
-		final GridLayout g = new GridLayout (4, 1);
-		g.setVgap (5);
-		contentPanel.setLayout (g);
-		contentPanel.setSize (frameWidth, frameHeight);
-		
-		final JPanel minYPanel = new JPanel ();
-		minYPanel.setLayout (new GridLayout (1, 2));
-		minYPanel.add (new JLabel (h.format ("label", "Min Y vale:")));
-		minYText.setBorder (BorderFactory
-			.createLineBorder (Color.black));
-		minYPanel.add (minYText);
-		
-		final JPanel maxYPanel = new JPanel ();
-		maxYPanel.setLayout (new GridLayout (1, 2));
-		maxYPanel.add (new JLabel (h.format ("label", "Max Y vale:")));
-		maxYText.setBorder (BorderFactory
-				.createLineBorder (Color.black));
-		maxYPanel.add (maxYText);
-		
-		final JPanel timeRangePanel = new JPanel ();
-		timeRangePanel.setLayout (new GridLayout (1, 2));
-		timeRangePanel.add (new JLabel (h.format ("label", "Graph Time Range:")));
-		timeRangePanel.add (timeRangeBox);
-		
-		doneButton.setIcon (new ImageIcon ("img/22x22/play.png", AppDetails
-				.name ()));
-		
-		contentPanel.add (minYPanel);
-		contentPanel.add (maxYPanel);
-		contentPanel.add (timeRangePanel);
-		contentPanel.add (doneButton);
+	private JPanel createContentPane() {
+		final JPanel contentPanel = new JPanel();
+		final GridLayout g = new GridLayout(4, 1);
+		g.setVgap(5);
+		contentPanel.setLayout(g);
+		contentPanel.setSize(frameWidth, frameHeight);
+
+		final JPanel minYPanel = new JPanel();
+		minYPanel.setLayout(new GridLayout(1, 2));
+		minYPanel.add(new JLabel(h.format("label", "Min Y vale:")));
+		minYText.setBorder(BorderFactory.createLineBorder(Color.black));
+		minYPanel.add(minYText);
+
+		final JPanel maxYPanel = new JPanel();
+		maxYPanel.setLayout(new GridLayout(1, 2));
+		maxYPanel.add(new JLabel(h.format("label", "Max Y vale:")));
+		maxYText.setBorder(BorderFactory.createLineBorder(Color.black));
+		maxYPanel.add(maxYText);
+
+		final JPanel timeRangePanel = new JPanel();
+		timeRangePanel.setLayout(new GridLayout(1, 2));
+		timeRangePanel.add(new JLabel(h.format("label", "Graph Time Range:")));
+		timeRangePanel.add(timeRangeBox);
+
+		doneButton.setIcon(new ImageIcon("img/22x22/play.png", AppDetails
+				.name()));
+
+		contentPanel.add(minYPanel);
+		contentPanel.add(maxYPanel);
+		contentPanel.add(timeRangePanel);
+		contentPanel.add(doneButton);
 
 		return contentPanel;
 	}

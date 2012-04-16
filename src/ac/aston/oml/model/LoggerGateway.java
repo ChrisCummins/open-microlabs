@@ -24,8 +24,7 @@ import org.jfree.data.time.TimeSeriesCollection;
 import ac.aston.oml.model.logger.AdvancedSettings;
 import ac.aston.oml.model.logger.LogSettings;
 
-public interface LoggerGateway
-{
+public interface LoggerGateway {
 
 	/**
 	 * Starts a logging session. setLogSettings() must have been called
@@ -33,13 +32,13 @@ public interface LoggerGateway
 	 * 
 	 * @see ModelGateway#startLogging()
 	 */
-	public void startLogging ();
+	public void startLogging();
 
 	/**
 	 * Stops a running logging session prematurely and prevents any more
 	 * readings from being made.
 	 */
-	public void stopLogging ();
+	public void stopLogging();
 
 	/**
 	 * Set the settings for a logging session.
@@ -48,10 +47,10 @@ public interface LoggerGateway
 	 *            LogSettingsView.
 	 * @see ac.aston.oml.model.logger.LogSettings#LogSettings()
 	 */
-	public void setLogSettings (LogSettings l, ComGateway c);
+	public void setLogSettings(LogSettings l, ComGateway c);
 
-	public void setAdvancedSettings (AdvancedSettings a);
-	
+	public void setAdvancedSettings(AdvancedSettings a);
+
 	/**
 	 * Adds a series change listener to the microcontroller data model,
 	 * therefore enabling new data to be read.
@@ -59,9 +58,9 @@ public interface LoggerGateway
 	 * @param l
 	 *            SeriesChangeListener.
 	 */
-	public void addNewDataListener (SeriesChangeListener l);
+	public void addNewDataListener(SeriesChangeListener l);
 
-	public boolean isLogging ();
+	public boolean isLogging();
 
 	/**
 	 * Returns the LogSettingsView.
@@ -69,15 +68,15 @@ public interface LoggerGateway
 	 * @return LogSettingsView currently in use.
 	 * @see ac.aston.oml.model.logger.LogSettings#LogSettings()
 	 */
-	public LogSettings getLogSettings ();
-	
-	public AdvancedSettings getAdvancedSettings ();
+	public LogSettings getLogSettings();
+
+	public AdvancedSettings getAdvancedSettings();
 
 	/**
 	 * Returns the current data which has been read from the microcontroller.
 	 * 
 	 * @return TimeSeriesCollection
 	 */
-	public TimeSeriesCollection getData ();
+	public TimeSeriesCollection getData();
 
 }

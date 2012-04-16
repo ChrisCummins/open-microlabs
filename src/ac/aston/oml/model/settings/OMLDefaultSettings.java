@@ -28,8 +28,7 @@ import gnu.io.SerialPort;
  * @author Chris Cummins
  * 
  */
-public class OMLDefaultSettings
-{
+public class OMLDefaultSettings {
 
 	private static final Object[] baudOptions = { 1200, 2400, 4800, 9600,
 			19200, 38400 };
@@ -56,28 +55,28 @@ public class OMLDefaultSettings
 			{ "1 second", "2.5 seconds", "5 seconds", "10 seconds",
 					"30 seconds", "60 seconds", "10 minutes" },
 			{ 1000.0, 2500.0, 5000.0, 10000.0, 30000.0, 60000.0, 600000 } };
-	
+
 	private static final String[] signalTypeOptions = { "Raw", "Voltage" };
-	private static final OMLSignal[] signalTypes = { new OMLSignal (), new OMLVoltage () };
+	private static final OMLSignal[] signalTypes = { new OMLSignal(),
+			new OMLVoltage() };
 
-	public static OMLSettings get ()
-	{
-		HTMLFont label = new HTMLFont (false, false, false, 3, "Verdana",
+	public static OMLSettings get() {
+		HTMLFont label = new HTMLFont(false, false, false, 3, "Verdana",
 				HTMLFont.COLOR_BLACK);
-		HTMLFont labelBold = new HTMLFont (true, false, false, 3, "Verdana",
+		HTMLFont labelBold = new HTMLFont(true, false, false, 3, "Verdana",
 				HTMLFont.COLOR_BLACK);
-		HTMLFont labelRed = new HTMLFont (true, false, false, 3, "Verdana",
+		HTMLFont labelRed = new HTMLFont(true, false, false, 3, "Verdana",
 				HTMLFont.COLOR_RED);
-		HTMLFont body = new HTMLFont (false, false, false, 3, "Arial",
+		HTMLFont body = new HTMLFont(false, false, false, 3, "Arial",
 				HTMLFont.COLOR_BLACK);
 
-		HTMLFontset h = new HTMLFontset ();
-		h.add ("label", label);
-		h.add ("label-bold", labelBold);
+		HTMLFontset h = new HTMLFontset();
+		h.add("label", label);
+		h.add("label-bold", labelBold);
 		h.add("label-red", labelRed);
-		h.add ("body", body);
+		h.add("body", body);
 
-		return new OMLSettings (h, baudOptions, 5, databitOptions, 3,
+		return new OMLSettings(h, baudOptions, 5, databitOptions, 3,
 				stopbitOptions, 0, parityOptions, 0, flowcontrolOptions, 0,
 				graphTimeRangeOptions, 3, signalTypeOptions, signalTypes);
 	}

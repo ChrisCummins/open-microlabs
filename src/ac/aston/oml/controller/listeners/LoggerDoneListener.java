@@ -25,7 +25,6 @@ import ac.aston.oml.controller.OMLController;
 import ac.aston.oml.model.ModelGateway;
 import ac.aston.oml.view.ViewGateway;
 
-
 /**
  * This implementation of the ActionListener interface is responsible for
  * receiving logging cancel requests form the user and so updating the view and
@@ -34,35 +33,30 @@ import ac.aston.oml.view.ViewGateway;
  * @author Chris Cummins
  * 
  */
-public class LoggerDoneListener extends OMLController implements
-		ActionListener
-{
+public class LoggerDoneListener extends OMLController implements ActionListener {
 	private final ModelGateway m;
 	private final ViewGateway v;
-	
-	public LoggerDoneListener (ModelGateway m, ViewGateway v)
-	{
+
+	public LoggerDoneListener(ModelGateway m, ViewGateway v) {
 		this.m = m;
 		this.v = v;
 	}
 
 	@Override
-	public void actionPerformed (ActionEvent e)
-	{	
-		if (m.logger ().isLogging ())
-			if (v.showYesNoPrompt ("Readings in progress!\nAre you sure you "
+	public void actionPerformed(ActionEvent e) {
+		if (m.logger().isLogging())
+			if (v.showYesNoPrompt("Readings in progress!\nAre you sure you "
 					+ "would like to exit?"))
-				returnToLogSettings ();
+				returnToLogSettings();
 			else
 				return;
 		else
-			returnToLogSettings ();
+			returnToLogSettings();
 	}
 
-	private void returnToLogSettings ()
-	{
-		v.lv ().teardown ();
-		v.ls ().fetchFrame ().setVisible (true);
+	private void returnToLogSettings() {
+		v.lv().teardown();
+		v.ls().fetchFrame().setVisible(true);
 	}
 
 }

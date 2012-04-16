@@ -21,7 +21,6 @@ package ac.aston.oml.model.logger;
 import java.util.Observable;
 import java.util.Observer;
 
-
 import org.jfree.data.general.SeriesChangeListener;
 import org.jfree.data.time.Millisecond;
 import org.jfree.data.time.TimeSeries;
@@ -38,15 +37,14 @@ import ac.aston.oml.model.com.signals.OMLSignal;
  * @author Chris Cummins
  * 
  */
-public class Logger implements Observer
-{
+public class Logger implements Observer {
 
 	private final SerialLogger serialLogger;
 	private final Thread serialLoggerThread;
-	
+
 	private SerialBuffer serialBuffer;
 	private Thread serialBufferThread;
-	
+
 	private final TimeSeries[] series;
 	private final TimeSeriesCollection seriesCollection;
 
@@ -58,28 +56,27 @@ public class Logger implements Observer
 	 * 
 	 * @param serialLogger
 	 */
-	public Logger (SerialLogger serialLogger)
-	{
+	public Logger(SerialLogger serialLogger) {
 		this.serialLogger = serialLogger;
 		this.serialBuffer = new SerialBuffer();
 
-		this.serialLogger.addObserver (serialBuffer);
-		this.serialBuffer.addObserver (this);
-		
+		this.serialLogger.addObserver(serialBuffer);
+		this.serialBuffer.addObserver(this);
+
 		this.serialLoggerThread = new Thread(serialLogger);
 		this.serialBufferThread = new Thread(serialBuffer);
 
-		this.series = new TimeSeries[serialLogger.getLogSettings ().datamask ()
-				.activeSignals ().length];
+		this.series = new TimeSeries[serialLogger.getLogSettings().datamask()
+				.activeSignals().length];
 
-		this.seriesCollection = new TimeSeriesCollection ();
+		this.seriesCollection = new TimeSeriesCollection();
 
 		int index = 0;
-		for (OMLSignal signal : serialLogger.getLogSettings ().datamask ().signals ())
-			if (signal != null)
-			{
-				series[index] = new TimeSeries ("0x0" + index);
-				seriesCollection.addSeries (series[index]);
+		for (OMLSignal signal : serialLogger.getLogSettings().datamask()
+				.signals())
+			if (signal != null) {
+				series[index] = new TimeSeries("0x0" + index);
+				seriesCollection.addSeries(series[index]);
 				index++;
 			}
 	}
@@ -87,34 +84,29 @@ public class Logger implements Observer
 	/**
 	 * Starts a logging session.
 	 */
-	public void startLogging ()
-	{
-		serialLoggerThread.start ();
-		serialBufferThread.start ();
+	public void startLogging() {
+		serialLoggerThread.start();
+		serialBufferThread.start();
 	}
 
 	/**
 	 * Stops a logging session.
 	 */
-	public void stopLogging ()
-	{
-		serialLoggerThread.interrupt ();
-		serialBufferThread.interrupt ();
-	}
-	
-	public boolean isLogging ()
-	{
-		return serialLoggerThread.isAlive ();
+	public void stopLogging() {
+		serialLoggerThread.interrupt();
+		serialBufferThread.interrupt();
 	}
 
-	
+	public boolean isLogging() {
+		return serialLoggerThread.isAlive();
+	}
+
 	@Override
-	public void update (Observable arg0, Object arg1)
-	{
-		//TODO: SeriesException handling
+	public void update(Observable arg0, Object arg1) {
+		// TODO: SeriesException handling
 		Double[] d = (Double[]) arg1;
 		for (int i = 0; i < series.length; i++)
-			series[i].add (new Millisecond (), d[i]);
+			series[i].add(new Millisecond(), d[i]);
 	}
 
 	/**
@@ -125,17 +117,16 @@ public class Logger implements Observer
 	 *            SeriesChangeListener.
 	 * @see ac.aston.oml.controller.listeners.LoggerNewDataListener#seriesChanged(org.jfree.data.general.SeriesChangeEvent)
 	 */
-	public void addNewDataListener (SeriesChangeListener l)
-	{
-		series[series.length - 1].addChangeListener (l);
+	public void addNewDataListener(SeriesChangeListener l) {
+		series[series.length - 1].addChangeListener(l);
 	}
 
 	/**
 	 * Returns the TimeSeriesCollection containing all recorded data.
+	 * 
 	 * @return TimeSeriesCollection.
 	 */
-	public TimeSeriesCollection getData ()
-	{
+	public TimeSeriesCollection getData() {
 		return seriesCollection;
 	}
 }

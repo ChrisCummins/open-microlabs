@@ -30,32 +30,32 @@ import org.jfree.data.time.TimeSeriesCollection;
  * @author Chris Cummins
  * 
  */
-public interface LoggerView
-{
+public interface LoggerView {
 
-	public void init (HTMLFontset h, TimeSeriesCollection t, String graphTitle,
+	public void init(HTMLFontset h, TimeSeriesCollection t, String graphTitle,
 			double graphMinY, double graphMaxY, double graphTimeRange,
 			String[] signals);
 
-	public void teardown ();
-	public JFrame fetchFrame ();
+	public void teardown();
 
-	public void setViewLoggingCompleted (double graphTimeRange);
-	
-	public void setValLabels (String[] s);
+	public JFrame fetchFrame();
 
-	public void setMinLabels (String[] s);
+	public void setViewLoggingCompleted(double graphTimeRange);
 
-	public void setMaxLabels (String[] s);
+	public void setValLabels(String[] s);
 
-	public void setAvgLabels (String[] s);
+	public void setMinLabels(String[] s);
 
-	public void setReadingsLabel (String s);
+	public void setMaxLabels(String[] s);
 
-	public void setSignalStrenghLabel (String s);
+	public void setAvgLabels(String[] s);
 
-	public void setProgressBar (int current, int max);
+	public void setReadingsLabel(String s);
 
-	public void addDoneButtonListener (ActionListener l);
+	public void setSignalStrenghLabel(String s);
+
+	public void setProgressBar(int current, int max);
+
+	public void addDoneButtonListener(ActionListener l);
 
 }

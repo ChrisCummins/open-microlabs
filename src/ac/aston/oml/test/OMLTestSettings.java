@@ -23,12 +23,12 @@ import org.jfree.data.time.TimeSeriesCollection;
 
 import ac.aston.oml.model.settings.OMLDefaultSettings;
 import ac.aston.oml.model.settings.OMLSettings;
+
 /**
  * @author Chris Cummins
  * 
  */
-public class OMLTestSettings
-{
+public class OMLTestSettings {
 
 	public static final String[] signals = { "Voltage", null, "Raw", "Voltage",
 			"Voltage", null, null, null, null, "Voltage", "Raw", null, null,
@@ -36,17 +36,15 @@ public class OMLTestSettings
 	public static final String[] signalTypes = { "Raw", "Voltage" };
 	public static final int activeSignalCount = 7;
 
-	public static OMLSettings getOMLSettings ()
-	{
-		return OMLDefaultSettings.get ();
+	public static OMLSettings getOMLSettings() {
+		return OMLDefaultSettings.get();
 	}
 
-	public static TimeSeriesCollection getTimeSeriesCollection ()
-	{
-		final TimeSeriesCollection t = new TimeSeriesCollection ();
+	public static TimeSeriesCollection getTimeSeriesCollection() {
+		final TimeSeriesCollection t = new TimeSeriesCollection();
 
 		for (int i = 0; i < activeSignalCount; i++)
-			t.addSeries (new TimeSeries ("<?>"));
+			t.addSeries(new TimeSeries("<?>"));
 
 		return t;
 	}

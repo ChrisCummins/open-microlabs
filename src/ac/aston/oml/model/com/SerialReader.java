@@ -28,7 +28,6 @@ import ac.aston.oml.include.AppDetails;
 
 import jcummins.serial.SerialComm;
 
-
 /**
  * This extension of the SerialComm class from the JCummins Library provides
  * Open MicroLabs specific functionality to the class. It represents the lowest
@@ -39,8 +38,7 @@ import jcummins.serial.SerialComm;
  * @author Chris Cummins
  * 
  */
-public class SerialReader extends SerialComm
-{
+public class SerialReader extends SerialComm {
 	private final CommSettings commSettings;
 	private long sleepTime = 100;
 
@@ -51,10 +49,9 @@ public class SerialReader extends SerialComm
 	 * @param c
 	 *            CommSettingsView to connect with.
 	 */
-	public SerialReader (CommSettings c)
-	{
-		super (c.portName (), c.baudRate (), c.dataBits (), c.stopBits (), c
-				.parity (), c.flowControl ());
+	public SerialReader(CommSettings c) {
+		super(c.portName(), c.baudRate(), c.dataBits(), c.stopBits(), c
+				.parity(), c.flowControl());
 		this.commSettings = c;
 	}
 
@@ -69,17 +66,14 @@ public class SerialReader extends SerialComm
 	 * @throws IOException
 	 *             In case of IO error.
 	 */
-	public String sendDataRequest (char c) throws IOException
-	{
-		super.write (c);
-		try
-		{
-			Thread.sleep (sleepTime);
-		} catch (InterruptedException e)
-		{
+	public String sendDataRequest(char c) throws IOException {
+		super.write(c);
+		try {
+			Thread.sleep(sleepTime);
+		} catch (InterruptedException e) {
 			// Don't care.
 		}
-		return super.read ();
+		return super.read();
 	}
 
 	/**
@@ -97,13 +91,12 @@ public class SerialReader extends SerialComm
 	 * @throws NoSuchPortException
 	 * @see SerialReader#sendDataRequest(char)
 	 */
-	public boolean testConnection () throws IOException, NoSuchPortException,
-			PortInUseException, UnsupportedCommOperationException
-	{
-		super.connect (AppDetails.name ());
-		String s = sendDataRequest ((char) 255);
-		super.close ();
-		if (s.length () > 0)
+	public boolean testConnection() throws IOException, NoSuchPortException,
+			PortInUseException, UnsupportedCommOperationException {
+		super.connect(AppDetails.name());
+		String s = sendDataRequest((char) 255);
+		super.close();
+		if (s.length() > 0)
 			return true;
 		else
 			return false;
@@ -116,8 +109,7 @@ public class SerialReader extends SerialComm
 	 *            Sleep time (ms).
 	 * @see SerialReader#sendDataRequest(char)
 	 */
-	public void setSleepTime (long s)
-	{
+	public void setSleepTime(long s) {
 		this.sleepTime = s;
 	}
 
@@ -126,8 +118,7 @@ public class SerialReader extends SerialComm
 	 * 
 	 * @return CommSettingsView.
 	 */
-	public CommSettings getCommSettings ()
-	{
+	public CommSettings getCommSettings() {
 		return commSettings;
 	}
 
@@ -136,8 +127,7 @@ public class SerialReader extends SerialComm
 	 * 
 	 * @return Sleep time (ms).
 	 */
-	public long getSleepTime ()
-	{
+	public long getSleepTime() {
 		return sleepTime;
 	}
 

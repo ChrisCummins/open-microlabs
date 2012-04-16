@@ -30,8 +30,7 @@ import jcummins.gui.GUITools;
  * @author Chris Cummins
  * @see ac.aston.oml.view.gui.OMLLogSettingsView
  */
-public class DrawLoggerView
-{
+public class DrawLoggerView {
 
 	/**
 	 * Renders a OMLLoggerView frame.
@@ -39,29 +38,28 @@ public class DrawLoggerView
 	 * @param args
 	 *            None.
 	 */
-	public static void main (String[] args)
-	{
-		final OMLSettings c = OMLTestSettings.getOMLSettings ();
+	public static void main(String[] args) {
+		final OMLSettings c = OMLTestSettings.getOMLSettings();
 
-		GUITools.setNativeLookAndFeel ();
+		GUITools.setNativeLookAndFeel();
 
-		final OMLLoggerView frame = new OMLLoggerView ();
-		frame.init (c.fontset, OMLTestSettings.getTimeSeriesCollection (),
+		final OMLLoggerView frame = new OMLLoggerView();
+		frame.init(c.fontset, OMLTestSettings.getTimeSeriesCollection(),
 				"[Graph title]", 0.0, 1023.0, 30000.0, OMLTestSettings.signals);
 
 		String[] tmp = new String[OMLTestSettings.activeSignalCount];
 		for (int i = 0; i < tmp.length; i++)
 			tmp[i] = "[?]";
 
-		frame.setValLabels (tmp);
-		frame.setMinLabels (tmp);
-		frame.setMaxLabels (tmp);
-		frame.setAvgLabels (tmp);
-		frame.setReadingsLabel ("<?>");
+		frame.setValLabels(tmp);
+		frame.setMinLabels(tmp);
+		frame.setMaxLabels(tmp);
+		frame.setAvgLabels(tmp);
+		frame.setReadingsLabel("<?>");
 
-		frame.setVisible (true);
-		frame.repaint ();
-		GUITools.centreFrame (frame);
+		frame.setVisible(true);
+		frame.repaint();
+		GUITools.centreFrame(frame);
 
 	}
 

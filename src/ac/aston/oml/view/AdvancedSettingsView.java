@@ -26,21 +26,27 @@ import jcummins.gui.HTMLFontset;
 
 /**
  * @author Chris Cummins
- *
+ * 
  */
-public interface AdvancedSettingsView
-{
-	
-	public void init (HTMLFontset h);
-	public void teardown ();
-	public JFrame fetchFrame ();
-	
-	public void setMinYText (String s);
-	public void setMaxYText (String s);
-	public void setTimeRangeOptions (Object[] o, int selectedIndex);
-	public void addDoneButtonListener (ActionListener l);
-	
-	public int getTimeRangeSelectedIndex ();
+public interface AdvancedSettingsView {
+
+	public void init(HTMLFontset h);
+
+	public void teardown();
+
+	public JFrame fetchFrame();
+
+	public void setMinYText(String s);
+
+	public void setMaxYText(String s);
+
+	public void setTimeRangeOptions(Object[] o, int selectedIndex);
+
+	public void addDoneButtonListener(ActionListener l);
+
+	public int getTimeRangeSelectedIndex();
+
 	public String getMinYText();
+
 	public String getMaxYText();
 }

@@ -29,19 +29,16 @@ import ac.aston.oml.view.ViewGateway;
  * 
  */
 public class LogSettingsSlaveOptionsListener extends OMLController implements
-		ActionListener
-{
+		ActionListener {
 	private final ViewGateway v;
-	
-	public LogSettingsSlaveOptionsListener (ViewGateway v)
-	{
+
+	public LogSettingsSlaveOptionsListener(ViewGateway v) {
 		this.v = v;
 	}
 
 	@Override
-	public void actionPerformed (ActionEvent e)
-	{
-		v.ls ().setPincount ((v.ls ().getSlaveBoxSelectedIndex () + 1) * 7);
+	public void actionPerformed(ActionEvent e) {
+		v.ls().setPincount((v.ls().getSlaveBoxSelectedIndex() + 1) * 7);
 	}
 
 }

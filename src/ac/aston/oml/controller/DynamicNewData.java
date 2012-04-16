@@ -44,8 +44,8 @@ public class DynamicNewData {
 		this.v = v;
 
 		updateReadingsLabel();
-		updateSignalStrengthLabel ();
-		updateProgressBar ();
+		updateSignalStrengthLabel();
+		updateProgressBar();
 		updateValues();
 		updateMin();
 		updateMax();
@@ -60,16 +60,16 @@ public class DynamicNewData {
 		v.lv().setReadingsLabel(s);
 	}
 
-	private void updateSignalStrengthLabel () {
+	private void updateSignalStrengthLabel() {
 		String s = "100%" + " signal strength";
 		// TODO: Calculation
 		v.lv().setSignalStrenghLabel(s);
 	}
-	
-	private void updateProgressBar () {
+
+	private void updateProgressBar() {
 		v.lv().setProgressBar(data.getItemCount(0), l.readCount());
 	}
-	
+
 	private void updateValues() {
 		final String[] s = new String[data.getSeriesCount()];
 		for (int i = 0; i < s.length; i++) {

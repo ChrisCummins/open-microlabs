@@ -37,31 +37,28 @@ import ac.aston.oml.view.ViewGateway;
  * 
  */
 public class AdvancedSettingsShowListener extends OMLController implements
-		ActionListener
-{
+		ActionListener {
 	private final ModelGateway m;
 	private final ViewGateway v;
 
-	public AdvancedSettingsShowListener (ModelGateway m, ViewGateway v)
-	{
+	public AdvancedSettingsShowListener(ModelGateway m, ViewGateway v) {
 		this.m = m;
 		this.v = v;
 	}
 
 	@Override
-	public void actionPerformed (ActionEvent e)
-	{
-		final OMLSettings c = m.getOMLSettings ();
+	public void actionPerformed(ActionEvent e) {
+		final OMLSettings c = m.getOMLSettings();
 
-		v.as ().init (c.fontset);
-		
-		v.as ().setMinYText ("0.0");
-		v.as ().setMaxYText ("1023.0");
-		v.as ().setTimeRangeOptions (c.graphTimeRangeOptions[0],
+		v.as().init(c.fontset);
+
+		v.as().setMinYText("0.0");
+		v.as().setMaxYText("1023.0");
+		v.as().setTimeRangeOptions(c.graphTimeRangeOptions[0],
 				c.graphTimeRangeOptionsSelected);
 
-		GUITools.centreFrame (v.as ().fetchFrame ());
-		v.as ().fetchFrame ().setVisible (true);
+		GUITools.centreFrame(v.as().fetchFrame());
+		v.as().fetchFrame().setVisible(true);
 	}
 
 }

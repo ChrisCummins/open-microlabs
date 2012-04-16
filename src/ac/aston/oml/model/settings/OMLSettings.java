@@ -25,8 +25,7 @@ import jcummins.gui.HTMLFontset;
  * @author Chris Cummins
  * 
  */
-public class OMLSettings
-{
+public class OMLSettings {
 	public final HTMLFontset fontset;
 	public final Object[] baudOptions;
 	public final int baudOptionsSelected;
@@ -41,18 +40,18 @@ public class OMLSettings
 
 	public final Object[][] graphTimeRangeOptions;
 	public final int graphTimeRangeOptionsSelected;
-	
+
 	public final String[] signalTypeOptions;
 	public final OMLSignal[] signalTypes;
 
-	public OMLSettings (HTMLFontset fontset, Object[] baudOptions,
+	public OMLSettings(HTMLFontset fontset, Object[] baudOptions,
 			int baudOptionsSelected, Object[][] databitOptions,
 			int databitOptionsSelected, Object[][] stopbitOptions,
 			int stopbitOptionsSelected, Object[][] parityOptions,
 			int parityOptionsSelected, Object[][] flowOptions,
 			int flowOptionsSelected, Object[][] graphTimeRangeOptions,
-			int graphTimeRangeOptionsSelected, String[] signalTypeOptions, OMLSignal[] signalTypes)
-	{
+			int graphTimeRangeOptionsSelected, String[] signalTypeOptions,
+			OMLSignal[] signalTypes) {
 		this.fontset = fontset;
 		this.baudOptions = baudOptions;
 		this.baudOptionsSelected = baudOptionsSelected;
@@ -67,7 +66,7 @@ public class OMLSettings
 
 		this.graphTimeRangeOptions = graphTimeRangeOptions;
 		this.graphTimeRangeOptionsSelected = graphTimeRangeOptionsSelected;
-		
+
 		this.signalTypeOptions = signalTypeOptions;
 		this.signalTypes = signalTypes;
 	}

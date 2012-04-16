@@ -31,8 +31,7 @@ import jcummins.serial.DiscoverPorts;
  * @see ac.aston.oml.view.gui.OMLCommSettingsView
  * 
  */
-public class DrawCommSettingsView
-{
+public class DrawCommSettingsView {
 
 	/**
 	 * Renders a OMLCommSettingsView frame.
@@ -40,29 +39,27 @@ public class DrawCommSettingsView
 	 * @param args
 	 *            None.
 	 */
-	public static void main (String[] args)
-	{
-		GUITools.setNativeLookAndFeel ();
+	public static void main(String[] args) {
+		GUITools.setNativeLookAndFeel();
 
-		OMLSettings c = OMLTestSettings.getOMLSettings ();
+		OMLSettings c = OMLTestSettings.getOMLSettings();
 
-		final OMLCommSettingsView frame = new OMLCommSettingsView ();
-		frame.init (c.fontset);
+		final OMLCommSettingsView frame = new OMLCommSettingsView();
+		frame.init(c.fontset);
 
-		final String[] ports = DiscoverPorts.listToArray ();
-		if (ports.length < 1)
-		{
+		final String[] ports = DiscoverPorts.listToArray();
+		if (ports.length < 1) {
 			String[] s = { "None" };
-			frame.setComOptions (s);
+			frame.setComOptions(s);
 		} else
-			frame.setComOptions (ports);
-		frame.setBaudOptions (c.baudOptions, 5);
-		frame.setDataOptions (c.databitOptions[0], 3);
-		frame.setStopOptions (c.stopbitOptions[0], 0);
-		frame.setParityOptions (c.parityOptions[0], 0);
-		frame.setFlowOptions (c.flowOptions[0], 0);
+			frame.setComOptions(ports);
+		frame.setBaudOptions(c.baudOptions, 5);
+		frame.setDataOptions(c.databitOptions[0], 3);
+		frame.setStopOptions(c.stopbitOptions[0], 0);
+		frame.setParityOptions(c.parityOptions[0], 0);
+		frame.setFlowOptions(c.flowOptions[0], 0);
 
-		frame.setVisible (true);
+		frame.setVisible(true);
 
 	}
 

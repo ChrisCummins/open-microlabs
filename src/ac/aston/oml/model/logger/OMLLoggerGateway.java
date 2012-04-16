@@ -28,68 +28,58 @@ import ac.aston.oml.model.LoggerGateway;
  * @author Chris Cummins
  * 
  */
-public class OMLLoggerGateway implements LoggerGateway
-{
+public class OMLLoggerGateway implements LoggerGateway {
 
 	private SerialLogger serialLogger;
 	private Logger logger;
 	private AdvancedSettings advancedSettings;
 
 	@Override
-	public void startLogging ()
-	{
-		logger = new Logger (serialLogger);
-		logger.startLogging ();
+	public void startLogging() {
+		logger = new Logger(serialLogger);
+		logger.startLogging();
 	}
 
 	@Override
-	public void stopLogging ()
-	{
-		logger.stopLogging ();
+	public void stopLogging() {
+		logger.stopLogging();
 	}
 
 	@Override
-	public void setLogSettings (LogSettings l, ComGateway c)
-	{
-		serialLogger = new SerialLogger (l, c.getSerialReader ());
-		c.setSerialReader (serialLogger.getSerialBuffer ());
-		if (c.getSerialReader ().getSleepTime () > l.readDelay ())
-			throw new IllegalArgumentException ("Minimum valid read delay is "
-					+ c.getSerialReader ().getSleepTime () + "ms!");
+	public void setLogSettings(LogSettings l, ComGateway c) {
+		serialLogger = new SerialLogger(l, c.getSerialReader());
+		c.setSerialReader(serialLogger.getSerialBuffer());
+		if (c.getSerialReader().getSleepTime() > l.readDelay())
+			throw new IllegalArgumentException("Minimum valid read delay is "
+					+ c.getSerialReader().getSleepTime() + "ms!");
 	}
 
-	public void setAdvancedSettings (AdvancedSettings a)
-	{
+	public void setAdvancedSettings(AdvancedSettings a) {
 		this.advancedSettings = a;
 	}
-	
+
 	@Override
-	public void addNewDataListener (SeriesChangeListener l)
-	{
-		logger.addNewDataListener (l);
+	public void addNewDataListener(SeriesChangeListener l) {
+		logger.addNewDataListener(l);
 	}
 
 	@Override
-	public boolean isLogging ()
-	{
-		return logger.isLogging ();
+	public boolean isLogging() {
+		return logger.isLogging();
 	}
 
 	@Override
-	public LogSettings getLogSettings ()
-	{
-		return serialLogger.getLogSettings ();
+	public LogSettings getLogSettings() {
+		return serialLogger.getLogSettings();
 	}
-	
-	public AdvancedSettings getAdvancedSettings ()
-	{
+
+	public AdvancedSettings getAdvancedSettings() {
 		return advancedSettings;
 	}
 
 	@Override
-	public TimeSeriesCollection getData ()
-	{
-		return logger.getData ();
+	public TimeSeriesCollection getData() {
+		return logger.getData();
 	}
 
 }

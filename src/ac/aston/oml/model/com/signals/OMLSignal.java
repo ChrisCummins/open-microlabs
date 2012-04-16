@@ -25,8 +25,7 @@ package ac.aston.oml.model.com.signals;
  * @author Chris Cummins
  * 
  */
-public class OMLSignal
-{
+public class OMLSignal {
 
 	/**
 	 * Converts an unsigned 10-bit integer [0, 1023] to a double value
@@ -36,8 +35,7 @@ public class OMLSignal
 	 *            Value to be converted.
 	 * @return Converted value.
 	 */
-	public double toValue (double rawInt)
-	{
+	public double toValue(double rawInt) {
 		return rawInt;
 	}
 
@@ -50,9 +48,8 @@ public class OMLSignal
 	 *            Value to be converted.
 	 * @return Converted value as human readable string.
 	 */
-	public String toString (double rawInt)
-	{
-		return String.format ("%04d", (int) rawInt);
+	public String toString(double rawInt) {
+		return String.format("%04d", (int) rawInt);
 	}
 
 	/**
@@ -60,7 +57,7 @@ public class OMLSignal
 	 * 
 	 * @return String.
 	 */
-	public String name (){
+	public String name() {
 		return "Raw";
 	}
 

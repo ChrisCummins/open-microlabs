@@ -27,8 +27,7 @@ import ac.aston.oml.model.com.Datamask;
  * @author Chris Cummins
  * 
  */
-public class LogSettings
-{
+public class LogSettings {
 
 	private final Datamask DATAMASK;
 	private final long READDELAY;
@@ -47,9 +46,8 @@ public class LogSettings
 	 * @param logPath
 	 *            The file path to the log (null for no file logging).
 	 */
-	public LogSettings (Datamask datamask, long readDelay, int readCount,
-			String logPath)
-	{
+	public LogSettings(Datamask datamask, long readDelay, int readCount,
+			String logPath) {
 		this.DATAMASK = datamask;
 		this.READDELAY = readDelay;
 		this.READCOUNT = readCount;
@@ -61,8 +59,7 @@ public class LogSettings
 	 * 
 	 * @return Datamask.
 	 */
-	public Datamask datamask ()
-	{
+	public Datamask datamask() {
 		return DATAMASK;
 	}
 
@@ -71,8 +68,7 @@ public class LogSettings
 	 * 
 	 * @return Long.
 	 */
-	public long readDelay ()
-	{
+	public long readDelay() {
 		return READDELAY;
 	}
 
@@ -81,8 +77,7 @@ public class LogSettings
 	 * 
 	 * @return Int, or <code>null</code> for unlimited readings.
 	 */
-	public int readCount ()
-	{
+	public int readCount() {
 		return READCOUNT;
 	}
 
@@ -91,8 +86,7 @@ public class LogSettings
 	 * 
 	 * @return String, or <code>null</code> if not logging to file.
 	 */
-	public String logPath ()
-	{
+	public String logPath() {
 		return LOGPATH;
 	}
 

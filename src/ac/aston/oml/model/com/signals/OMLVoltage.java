@@ -28,14 +28,12 @@ import jcummins.maths.DecimalRounder;
  * @author Chris Cummins
  * 
  */
-public class OMLVoltage extends OMLSignal
-{
+public class OMLVoltage extends OMLSignal {
 
 	/**
 	 * Converts the value to a voltage in the range [0, 5]V.
 	 */
-	public double toValue (double rawInt)
-	{
+	public double toValue(double rawInt) {
 		return rawInt * 0.00488758553;
 	}
 
@@ -43,16 +41,14 @@ public class OMLVoltage extends OMLSignal
 	 * This method provides formatting of OMLVoltage values for normal formatted
 	 * display. It rounds the value to 2 decimal places and appends a 'V' unit.
 	 */
-	public String toString (double rawInt)
-	{
-		return (new DecimalRounder (2)).round (toValue (rawInt)) + "V";
+	public String toString(double rawInt) {
+		return (new DecimalRounder(2)).round(toValue(rawInt)) + "V";
 	}
 
 	/**
 	 * Returns Voltage.
 	 */
-	public String name ()
-	{
+	public String name() {
 		return "Voltage";
 	}
 

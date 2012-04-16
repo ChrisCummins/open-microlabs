@@ -31,8 +31,7 @@ import ac.aston.oml.model.com.SerialReader;
  * @author Chris Cummins
  * 
  */
-public interface ComGateway
-{
+public interface ComGateway {
 	/**
 	 * Tests the connection with the microcontroller at the set comm settings.
 	 * setCommSettings() must have been called beforehand.
@@ -43,13 +42,13 @@ public interface ComGateway
 	 *             In case of IO error
 	 * @see ModelGateway#setCommSettings(CommSettingsView) .
 	 */
-	public boolean commTest () throws NoSuchPortException, PortInUseException,
+	public boolean commTest() throws NoSuchPortException, PortInUseException,
 			UnsupportedCommOperationException, IOException;
 
-	public void commConnect () throws NoSuchPortException, PortInUseException,
+	public void commConnect() throws NoSuchPortException, PortInUseException,
 			UnsupportedCommOperationException, IOException;
 
-	public void refreshCommPorts ();
+	public void refreshCommPorts();
 
 	/**
 	 * Set the comm settings for serial communications with the microcontroller.
@@ -58,11 +57,11 @@ public interface ComGateway
 	 *            CommSettingsView.
 	 * @see ac.aston.oml.model.com.CommSettings#CommSettings()
 	 */
-	public void setCommSettings (CommSettings c);
-	
-	public void setSerialReader (SerialReader r);
+	public void setCommSettings(CommSettings c);
 
-	public Object[][] getCommPorts ();
+	public void setSerialReader(SerialReader r);
+
+	public Object[][] getCommPorts();
 
 	/**
 	 * Returns the set CommSettingsView.
@@ -70,8 +69,8 @@ public interface ComGateway
 	 * @return CommSettingsView currently in use.
 	 * @see ac.aston.oml.model.com.CommSettings#CommSettings()
 	 */
-	public CommSettings getCommSettings ();
+	public CommSettings getCommSettings();
 
-	public SerialReader getSerialReader ();
+	public SerialReader getSerialReader();
 
 }

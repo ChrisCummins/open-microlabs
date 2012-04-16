@@ -32,23 +32,23 @@ import jcummins.gui.GUITools;
  */
 public class OpenMicroLabs {
 
-    /**
-     * Hide constructor of utility class.
-     */
-    protected OpenMicroLabs() {
-    }
+	/**
+	 * Hide constructor of utility class.
+	 */
+	protected OpenMicroLabs() {
+	}
 
-    /**
-     * Instantiates a Controller.
-     * 
-     * @param args
-     *            none.
-     */
-    public static void main(final String[] args) {
-        GUITools.setNativeLookAndFeel();
+	/**
+	 * Instantiates a Controller.
+	 * 
+	 * @param args
+	 *            none.
+	 */
+	public static void main(final String[] args) {
+		GUITools.setNativeLookAndFeel();
 
-        OMLController c = new OMLController();
-        c.init(new OMLModel(), new OMLView());
-    }
+		OMLController c = new OMLController();
+		c.init(new OMLModel(), new OMLView());
+	}
 
 }
