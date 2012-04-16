@@ -37,6 +37,6 @@ public interface Controller {
 	 * @param v
 	 *            ViewGateway to be used.
 	 */
-	public void init(ModelGateway m, ViewGateway v);
+	void init(ModelGateway m, ViewGateway v);
 
 }

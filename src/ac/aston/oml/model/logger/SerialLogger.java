@@ -23,6 +23,7 @@ import java.util.Observable;
 
 import ac.aston.oml.include.AppDetails;
 import ac.aston.oml.model.com.SerialReader;
+import ac.aston.oml.model.logger.file.FileLogger;
 
 /**
  * This observable class performs the actions of reading data through the
@@ -51,8 +52,9 @@ public class SerialLogger extends Observable implements Runnable {
 	 *            LogSettingsView.
 	 * @param b
 	 *            SerialReader.
+	 * @throws IOException
 	 */
-	public SerialLogger(LogSettings l, SerialReader b) {
+	public SerialLogger(LogSettings l, SerialReader b) throws IOException {
 		this.logSettings = l;
 		this.serialReader = b;
 		this.setBufferSleepTime();
@@ -129,6 +131,7 @@ public class SerialLogger extends Observable implements Runnable {
 		} catch (IOException e) {
 			databuffer = null;
 		}
+
 		setChanged();
 		notifyObservers(databuffer);
 	}

@@ -20,6 +20,7 @@ package ac.aston.oml.controller.listeners;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
 import jcummins.gui.GUITools;
 
@@ -61,7 +62,7 @@ public class LogSettingsDoneListener implements ActionListener {
 		int readCount;
 
 		try {
-			readDelay = Long.parseLong(v.ls().getReadDelayText());
+			readDelay = (long) (Double.parseDouble(v.ls().getReadDelayText()) * 1000);
 		} catch (NumberFormatException e) {
 			v.showError("Read delay must be a positive integer!");
 			return;
@@ -74,7 +75,12 @@ public class LogSettingsDoneListener implements ActionListener {
 			return;
 		}
 
-		final String filepath = v.ls().getFilepathText();
+		String filepath;
+		if (v.ls().getLogToFile())
+			filepath = v.ls().getFilepathText();
+		else
+			filepath = null;
+
 		Datamask d = createDatamask();
 
 		LogSettings l = new LogSettings(d, readDelay, readCount, filepath);
@@ -82,13 +88,28 @@ public class LogSettingsDoneListener implements ActionListener {
 		try {
 			m.logger().setLogSettings(l, m.com());
 		} catch (IllegalArgumentException e) {
+			// Thrown by ??? because read delay was too small.
 			v.showError(e.getMessage());
+			return;
+		} catch (IOException e) {
+			// Thrown by SerialLogger being unable to instantiate FileLogger.
+			v.showError("Unable to log to file due to IO error!");
 			return;
 		}
 
-		m.logger().startLogging();
+		try {
+			m.logger().startLogging();
+		} catch (IOException e) {
+			v.showError("Unable to log to file, IO error!");
+			return;
+		}
+		
 		renderLoggerView();
 		m.logger().addNewDataListener(new LoggerNewDataListener(m, v));
+
+		v.as().fetchFrame().setVisible(false);
+		v.ls().fetchFrame().setVisible(false);
+		v.lv().fetchFrame().setVisible(true);
 	}
 
 	private Datamask createDatamask() {
@@ -117,9 +138,6 @@ public class LogSettingsDoneListener implements ActionListener {
 				a.minY(), a.maxY(), a.timeRange(),
 				m.logger().getLogSettings().datamask().signalsToString());
 		GUITools.centreFrame(v.lv().fetchFrame());
-
-		v.as().teardown();
-		v.ls().fetchFrame().setVisible(false);
-		v.lv().fetchFrame().setVisible(true);
 	}
+
 }

@@ -20,6 +20,7 @@ package ac.aston.oml.controller.listeners;
 
 import org.jfree.data.general.SeriesChangeEvent;
 import org.jfree.data.general.SeriesChangeListener;
+import org.jfree.data.time.TimeSeriesCollection;
 
 import ac.aston.oml.controller.LoggerUpdateView;
 import ac.aston.oml.controller.OMLController;
@@ -40,23 +41,27 @@ public class LoggerNewDataListener extends OMLController implements
 
 	private final ModelGateway m;
 	private final ViewGateway v;
-	private final LogSettings l;
 
 	public LoggerNewDataListener(ModelGateway m, ViewGateway v) {
 		this.m = m;
 		this.v = v;
-		this.l = m.logger().getLogSettings();
 	}
 
 	@Override
 	public void seriesChanged(SeriesChangeEvent event) {
-		new LoggerUpdateView(m.logger().getData(), l, v);
+		// Get disposable variables.
+		final TimeSeriesCollection data = m.logger().getData();
+		final LogSettings l = m.logger().getLogSettings();
 
-		if (m.logger().getData().getItemCount(0) == m.logger().getLogSettings()
-				.readCount()) {
-			v.lv().setViewLoggingCompleted(
-					m.logger().getLogSettings().readCount()
-							* m.logger().getLogSettings().readDelay());
-		}
+		// Update filelogger if necessary.
+		if (m.logger().getLogSettings().logPath() != null)
+			m.logger().addNewDataToLog(data);
+
+		// Create GUI updater.
+		new LoggerUpdateView(data, l, v);
+
+		// If last reading, set GUI to show completed.
+		if (data.getItemCount(0) == l.readCount())
+			v.lv().setViewLoggingCompleted(l.readCount() * l.readDelay());
 	}
 }

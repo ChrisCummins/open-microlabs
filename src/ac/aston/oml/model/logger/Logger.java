@@ -18,6 +18,7 @@
 
 package ac.aston.oml.model.logger;
 
+import java.io.IOException;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -28,6 +29,7 @@ import org.jfree.data.time.TimeSeriesCollection;
 
 import ac.aston.oml.model.com.SerialBuffer;
 import ac.aston.oml.model.com.signals.OMLSignal;
+import ac.aston.oml.model.logger.file.FileLogger;
 
 /**
  * This implementation of the Observer interface is responsible reading and
@@ -41,7 +43,7 @@ public class Logger implements Observer {
 
 	private final SerialLogger serialLogger;
 	private final Thread serialLoggerThread;
-
+	
 	private SerialBuffer serialBuffer;
 	private Thread serialBufferThread;
 
@@ -55,8 +57,9 @@ public class Logger implements Observer {
 	 * SerialLogger.
 	 * 
 	 * @param serialLogger
+	 * @throws IOException 
 	 */
-	public Logger(SerialLogger serialLogger) {
+	public Logger(SerialLogger serialLogger) throws IOException {
 		this.serialLogger = serialLogger;
 		this.serialBuffer = new SerialBuffer();
 
@@ -79,6 +82,7 @@ public class Logger implements Observer {
 				seriesCollection.addSeries(series[index]);
 				index++;
 			}
+
 	}
 
 	/**
@@ -106,7 +110,7 @@ public class Logger implements Observer {
 		// TODO: SeriesException handling
 		Double[] d = (Double[]) arg1;
 		for (int i = 0; i < series.length; i++)
-			series[i].add(new Millisecond(), d[i]);
+			series[i].addOrUpdate(new Millisecond(), d[i]);
 	}
 
 	/**

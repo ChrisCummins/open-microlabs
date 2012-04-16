@@ -5,7 +5,6 @@ openmicrolabs.*
 	
 openmicrolabs.view
 	readDelay in seconds
-	log file overwrite prompt
 
 openmicrolabs.model.data
 	Multithreaded avg calculator

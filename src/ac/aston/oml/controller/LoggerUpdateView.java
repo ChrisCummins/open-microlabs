@@ -18,33 +18,46 @@
 
 package ac.aston.oml.controller;
 
+import ac.aston.oml.model.logger.LogSettings;
+import ac.aston.oml.view.ViewGateway;
+
 import java.util.List;
 
 import org.jfree.data.time.TimeSeries;
 import org.jfree.data.time.TimeSeriesCollection;
 import org.jfree.data.time.TimeSeriesDataItem;
 
-import ac.aston.oml.model.logger.LogSettings;
-import ac.aston.oml.view.ViewGateway;
-
 /**
- * @author Chris Cummins
+ * This class updates the LoggerView with the latest data from the model.
  * 
+ * @author Chris Cummins
  */
 public class LoggerUpdateView {
+
+	private static final int READ_DELAY_TO_SECONDS_DIVISOR = 1000;
 
 	private final TimeSeriesCollection data;
 	private final LogSettings l;
 	private final ViewGateway v;
 
-	public LoggerUpdateView(TimeSeriesCollection data, LogSettings l,
-			ViewGateway v) {
-		this.data = data;
-		this.l = l;
-		this.v = v;
+	/**
+	 * Create a new LoggerUpdateViewer.
+	 * 
+	 * @param dataCollection
+	 *            Data model.
+	 * @param logSettings
+	 *            Log Settings in use.
+	 * @param view
+	 *            ViewGateway for updating view.
+	 */
+	public LoggerUpdateView(final TimeSeriesCollection dataCollection,
+			final LogSettings logSettings, final ViewGateway view) {
+		this.data = dataCollection;
+		this.l = logSettings;
+		this.v = view;
 
-		updateReadingsLabel();
-		updateSignalStrengthLabel();
+		updateReadings();
+		updateSignalStrength();
 		updateProgressBar();
 		updateValues();
 		updateMin();
@@ -52,54 +65,80 @@ public class LoggerUpdateView {
 		updateAvg();
 	}
 
-	private void updateReadingsLabel() {
+	/*
+	 * Update the readings label.
+	 */
+	private void updateReadings() {
+		final int r = l.readCount();
+
 		String s = data.getSeries(0).getItemCount() + " of ";
-		s += l.readCount() + " (";
-		s += (l.readDelay() * (l.readCount() - data.getSeries(0).getItemCount()))
-				/ 1000 + "s remaining)";
+		s += r + " (";
+		s += (l.readDelay() * r - data.getSeries(0).getItemCount())
+				/ READ_DELAY_TO_SECONDS_DIVISOR + "s remaining)";
 		v.lv().setReadingsLabel(s);
 	}
 
-	private void updateSignalStrengthLabel() {
+	/*
+	 * Update the signal strength label.
+	 */
+	private void updateSignalStrength() {
 		String s = "100%" + " signal strength";
 		// TODO: Calculation
 		v.lv().setSignalStrenghLabel(s);
 	}
 
+	/*
+	 * Update the progress bar.
+	 */
 	private void updateProgressBar() {
 		v.lv().setProgressBar(data.getItemCount(0), l.readCount());
 	}
 
+	/*
+	 * Update the latest reading values.
+	 */
 	private void updateValues() {
 		final String[] s = new String[data.getSeriesCount()];
 		for (int i = 0; i < s.length; i++) {
 			final Number value = data.getSeries(i).getValue(
 					data.getSeries(i).getItemCount() - 1);
-			if (value != null)
+			if (value != null) {
 				s[i] = l.datamask().activeSignals()[i].toString(value
 						.doubleValue());
-			else
+			} else {
 				s[i] = null;
+			}
 		}
 		v.lv().setValLabels(s);
 	}
 
+	/*
+	 * Update the minimum reading values.
+	 */
 	private void updateMin() {
 		final String[] s = new String[data.getSeriesCount()];
-		for (int i = 0; i < s.length; i++)
+		for (int i = 0; i < s.length; i++) {
 			s[i] = l.datamask().activeSignals()[i].toString(data.getSeries(i)
 					.getMinY());
+		}
 		v.lv().setMinLabels(s);
 	}
 
+	/*
+	 * Update the maximum reading values.
+	 */
 	private void updateMax() {
 		final String[] s = new String[data.getSeriesCount()];
-		for (int i = 0; i < s.length; i++)
+		for (int i = 0; i < s.length; i++) {
 			s[i] = l.datamask().activeSignals()[i].toString(data.getSeries(i)
 					.getMaxY());
+		}
 		v.lv().setMaxLabels(s);
 	}
 
+	/*
+	 * Update the average reading values.
+	 */
 	private void updateAvg() {
 		String[] s = new String[data.getSeriesCount()];
 		for (int i = 0; i < s.length; i++) {

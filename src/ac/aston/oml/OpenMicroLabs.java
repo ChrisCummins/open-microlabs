@@ -25,7 +25,7 @@ import jcummins.gui.GUITools;
 
 /**
  * This class is responsible for instantiating the Open MicroLabs program and
- * should be the only class that is run.
+ * should be the only class that is run by users.
  * 
  * @author Chris Cummins
  * 
@@ -39,7 +39,7 @@ public class OpenMicroLabs {
 	}
 
 	/**
-	 * Instantiates a Controller.
+	 * Instantiates a Controller and runs it.
 	 * 
 	 * @param args
 	 *            none.

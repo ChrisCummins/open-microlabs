@@ -52,8 +52,6 @@ public class AdvancedSettingsShowListener extends OMLController implements
 
 		v.as().init(c.fontset);
 
-		v.as().setMinYText("0.0");
-		v.as().setMaxYText("1023.0");
 		v.as().setTimeRangeOptions(c.graphTimeRangeOptions[0],
 				c.graphTimeRangeOptionsSelected);
 

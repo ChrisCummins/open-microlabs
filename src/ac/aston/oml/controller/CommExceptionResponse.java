@@ -18,22 +18,38 @@
 
 package ac.aston.oml.controller;
 
+import ac.aston.oml.view.ViewGateway;
+
 import gnu.io.NoSuchPortException;
 import gnu.io.PortInUseException;
 import gnu.io.UnsupportedCommOperationException;
 
 import java.io.IOException;
 
-import ac.aston.oml.view.ViewGateway;
-
 /**
- * @author Chris Cummins
+ * This controller class catches Exceptions thrown by the model during an
+ * attempt to connect to a comm port. It then interprets this exception and
+ * reacts accordingly.
  * 
+ * @author Chris Cummins
  */
-public class CommExceptionResponse {
+public final class CommExceptionResponse {
 
-	public static void catchException(ViewGateway v, String portName,
-			Throwable e) {
+	/**
+	 * Protect class from instantiation.
+	 */
+	protected CommExceptionResponse() {
+	}
+
+	/**
+	 * Catch an exception and react.
+	 * 
+	 * @param v ViewGateway for displaying error messages.
+	 * @param portName The name of the port that connection attempt was to.
+	 * @param e The Exception thrown.
+	 */
+	public static void catchException(final ViewGateway v,
+			final String portName, final Throwable e) {
 		if (portName == "-NONE-") {
 			v.showError("No com port selected!");
 		} else if (e instanceof NoSuchPortException) {

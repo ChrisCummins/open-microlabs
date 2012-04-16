@@ -18,6 +18,8 @@
 
 package ac.aston.oml.model;
 
+import java.io.IOException;
+
 import org.jfree.data.general.SeriesChangeListener;
 import org.jfree.data.time.TimeSeriesCollection;
 
@@ -32,7 +34,7 @@ public interface LoggerGateway {
 	 * 
 	 * @see ModelGateway#startLogging()
 	 */
-	public void startLogging();
+	public void startLogging() throws IOException;
 
 	/**
 	 * Stops a running logging session prematurely and prevents any more
@@ -47,7 +49,7 @@ public interface LoggerGateway {
 	 *            LogSettingsView.
 	 * @see ac.aston.oml.model.logger.LogSettings#LogSettings()
 	 */
-	public void setLogSettings(LogSettings l, ComGateway c);
+	public void setLogSettings(LogSettings l, ComGateway c) throws IOException;
 
 	public void setAdvancedSettings(AdvancedSettings a);
 
@@ -59,6 +61,8 @@ public interface LoggerGateway {
 	 *            SeriesChangeListener.
 	 */
 	public void addNewDataListener(SeriesChangeListener l);
+
+	public void addNewDataToLog(final TimeSeriesCollection data);
 
 	public boolean isLogging();
 

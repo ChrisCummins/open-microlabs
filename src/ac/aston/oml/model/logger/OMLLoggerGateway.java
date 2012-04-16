@@ -18,11 +18,14 @@
 
 package ac.aston.oml.model.logger;
 
+import java.io.IOException;
+
 import org.jfree.data.general.SeriesChangeListener;
 import org.jfree.data.time.TimeSeriesCollection;
 
 import ac.aston.oml.model.ComGateway;
 import ac.aston.oml.model.LoggerGateway;
+import ac.aston.oml.model.logger.file.FileLogger;
 
 /**
  * @author Chris Cummins
@@ -33,9 +36,10 @@ public class OMLLoggerGateway implements LoggerGateway {
 	private SerialLogger serialLogger;
 	private Logger logger;
 	private AdvancedSettings advancedSettings;
+	private FileLogger fileLogger;
 
 	@Override
-	public void startLogging() {
+	public void startLogging() throws IOException {
 		logger = new Logger(serialLogger);
 		logger.startLogging();
 	}
@@ -46,16 +50,28 @@ public class OMLLoggerGateway implements LoggerGateway {
 	}
 
 	@Override
-	public void setLogSettings(LogSettings l, ComGateway c) {
+	public void setLogSettings(LogSettings l, ComGateway c) throws IOException, IllegalArgumentException {
 		serialLogger = new SerialLogger(l, c.getSerialReader());
 		c.setSerialReader(serialLogger.getSerialBuffer());
 		if (c.getSerialReader().getSleepTime() > l.readDelay())
 			throw new IllegalArgumentException("Minimum valid read delay is "
 					+ c.getSerialReader().getSleepTime() + "ms!");
+
+		// If necessary, instantiate a file logger.
+		if (l.logPath() != null)
+			fileLogger = new FileLogger(l.logPath(), l.datamask()
+					.activeSignals());
+		else
+			fileLogger = null;
 	}
 
 	public void setAdvancedSettings(AdvancedSettings a) {
 		this.advancedSettings = a;
+	}
+
+	@Override
+	public void addNewDataToLog(TimeSeriesCollection data) {
+		fileLogger.addNewData(data);
 	}
 
 	@Override

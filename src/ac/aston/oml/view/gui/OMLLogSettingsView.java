@@ -133,6 +133,10 @@ public class OMLLogSettingsView extends JFrame implements LogSettingsView,
 		fileLabel.setText(h.format("label", s));
 	}
 
+	public boolean getLogToFile() {
+		return fileCheckBox.isSelected();
+	}
+
 	public String getFilepathText() {
 		return h.get("label").unformat(fileLabel.getText());
 	}
@@ -238,9 +242,9 @@ public class OMLLogSettingsView extends JFrame implements LogSettingsView,
 
 		btmPanel.add(slaveBox);
 
-		btmPanel.add(new JLabel("Delay between reads (ms):"));
+		btmPanel.add(new JLabel("Delay between reads (s):"));
 
-		readDelayText.setText("1000");
+		readDelayText.setText("1");
 		readDelayText.setBorder(BorderFactory.createLineBorder(Color.black));
 		readDelayText.setBackground(Color.white);
 		btmPanel.add(readDelayText);

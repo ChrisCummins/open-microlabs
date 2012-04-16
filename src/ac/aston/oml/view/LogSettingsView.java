@@ -52,6 +52,8 @@ public interface LogSettingsView {
 
 	public int getSlaveBoxSelectedIndex();
 
+	public boolean getLogToFile ();
+	
 	public String getFilepathText();
 
 	public Integer[] getSignalTypeOptions();
