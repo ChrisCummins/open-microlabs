@@ -22,19 +22,33 @@ import ac.aston.oml.model.settings.OMLSettings;
 
 /**
  * This interface specifies the required behaviour of a model class for the Open
- * MicroLabs software. It handles data flow to and from the controller and is
- * responsible for serial communications with the microcontroller along with
- * receiving, interpreting and storing the read data.
+ * MicroLabs software. It handles data flow to the comm and logger gateways,
+ * along with handling program settings.
  * 
  * @author Chris Cummins
  * 
  */
 public interface ModelGateway {
 
-	public ComGateway com();
+	/**
+	 * Returns an object implementing the CommGateway interface.
+	 * 
+	 * @return CommGateway.
+	 */
+	CommGateway com();
 
-	public LoggerGateway logger();
+	/**
+	 * Returns an object implementing the LoggerGateway interface.
+	 * 
+	 * @return LoggerGateway.
+	 */
+	LoggerGateway logger();
 
-	public OMLSettings getOMLSettings();
+	/**
+	 * Returns the OMLSettings in use.
+	 * 
+	 * @return OMLSettings.
+	 */
+	OMLSettings getOMLSettings();
 
 }

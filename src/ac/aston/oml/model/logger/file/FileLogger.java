@@ -18,6 +18,9 @@
 
 package ac.aston.oml.model.logger.file;
 
+import ac.aston.oml.include.AppDetails;
+import ac.aston.oml.model.com.signals.OMLSignal;
+
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -25,10 +28,9 @@ import java.io.IOException;
 import org.jfree.data.time.TimeSeries;
 import org.jfree.data.time.TimeSeriesCollection;
 
-import ac.aston.oml.include.AppDetails;
-import ac.aston.oml.model.com.signals.OMLSignal;
-
 /**
+ * This class is responsible for logging data to file.
+ * 
  * @author Chris Cummins
  * 
  */
@@ -37,17 +39,36 @@ public class FileLogger {
 	private final String path;
 	private final OMLSignal[] signals;
 
-	public FileLogger(String logpath, OMLSignal[] signals) throws IOException {
+	/**
+	 * Create a new file logger.
+	 * 
+	 * @param logpath
+	 *            Path to log file.
+	 * @param activeSignals
+	 *            Array of active signals.
+	 * @throws IOException
+	 *             In case of file writing error.
+	 */
+	public FileLogger(final String logpath, final OMLSignal[] activeSignals)
+			throws IOException {
 		this.path = logpath;
-		this.signals = signals;
+		this.signals = activeSignals;
 
 		// Test open and close writer, throws IOException.
 		final BufferedWriter out = new BufferedWriter(new FileWriter(path));
 		out.close();
+
+		// Write header file.
 		writeHeader();
 	}
 
-	public void addNewData(TimeSeriesCollection data) {
+	/**
+	 * Adds new data to file.
+	 * 
+	 * @param data
+	 *            Data collection to be written.
+	 */
+	public final void addNewData(final TimeSeriesCollection data) {
 		// Setup local variables.
 		final int index = data.getItemCount(0) - 1;
 
@@ -59,8 +80,9 @@ public class FileLogger {
 		for (int i = 0; i < signals.length; i++) {
 			final TimeSeries series = data.getSeries(i);
 			final Number value = series.getValue(index);
-			if (value != null)
+			if (value != null) {
 				s += signals[i].toValue(value.doubleValue());
+			}
 			s += AppDetails.datDelimiter();
 		}
 
@@ -69,20 +91,27 @@ public class FileLogger {
 				- AppDetails.datDelimiter().length()));
 	}
 
+	/*
+	 * Writes the header file to log.
+	 */
 	private void writeHeader() {
 		// Add time header.
 		String s = "Time" + AppDetails.datDelimiter();
 
 		// Add signal headers.
-		for (int i = 0; i < signals.length; i++)
+		for (int i = 0; i < signals.length; i++) {
 			s += signals[i].name() + AppDetails.datDelimiter();
+		}
 
 		// Write to file, removing last dat delimiter.
 		writeLine(s.substring(0, s.length()
 				- AppDetails.datDelimiter().length()));
 	}
 
-	private void writeLine(String s) {
+	/*
+	 * Writes a line to log.
+	 */
+	private void writeLine(final String s) {
 		try {
 			final BufferedWriter out = new BufferedWriter(new FileWriter(path,
 					true));

@@ -21,34 +21,29 @@ package ac.aston.oml.model.com.signals;
 import jcummins.maths.DecimalRounder;
 
 /**
- * This implementation of the Signal interface represents a voltage signal, with
- * an assumed AREF of 5V, thus giving a range of [0, 5]V. With 10 bits of
- * accuracy, the absolute accuray is +/- 9.76mV.
+ * This extension of the OMLSignal class represents a voltage signal, with an
+ * assumed AREF of 5V, thus giving a range of [0, 5]V. With 10 bits of accuracy,
+ * the absolute accuray is +/- 9.76mV.
  * 
  * @author Chris Cummins
  * 
  */
 public class OMLVoltage extends OMLSignal {
 
-	/**
-	 * Converts the value to a voltage in the range [0, 5]V.
-	 */
-	public double toValue(double rawInt) {
-		return rawInt * 0.00488758553;
+	private static final double VOLTAGE_MULTIPLIER = 0.00488758553;
+
+	@Override
+	protected final double signalToValue(final double rawInt) {
+		return rawInt * VOLTAGE_MULTIPLIER;
 	}
 
-	/**
-	 * This method provides formatting of OMLVoltage values for normal formatted
-	 * display. It rounds the value to 2 decimal places and appends a 'V' unit.
-	 */
-	public String toString(double rawInt) {
+	@Override
+	protected final String signalToString(final double rawInt) {
 		return (new DecimalRounder(2)).round(toValue(rawInt)) + "V";
 	}
 
-	/**
-	 * Returns Voltage.
-	 */
-	public String name() {
+	@Override
+	protected final String signalName() {
 		return "Voltage";
 	}
 

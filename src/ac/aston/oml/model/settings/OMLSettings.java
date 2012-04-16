@@ -22,53 +22,196 @@ import ac.aston.oml.model.com.signals.OMLSignal;
 import jcummins.gui.HTMLFontset;
 
 /**
+ * This class contains all of the necessary proram settings to run the OML
+ * software.
+ * 
  * @author Chris Cummins
  * 
  */
 public class OMLSettings {
-	public final HTMLFontset fontset;
-	public final Object[] baudOptions;
-	public final int baudOptionsSelected;
-	public final Object[][] databitOptions;
-	public final int databitOptionsSelected;
-	public final Object[][] stopbitOptions;
-	public final int stopbitOptionsSelected;
-	public final Object[][] parityOptions;
-	public final int parityOptionsSelected;
-	public final Object[][] flowOptions;
-	public final int flowOptionsSelected;
+	private final HTMLFontset fontsetVal;
+	private final Object[] baudOptionsVal;
+	private final int baudOptionsSelectedVal;
+	private final Object[][] databitOptionsVal;
+	private final int databitOptionsSelectedVal;
+	private final Object[][] stopbitOptionsVal;
+	private final int stopbitOptionsSelectedVal;
+	private final Object[][] parityOptionsVal;
+	private final int parityOptionsSelectedVal;
+	private final Object[][] flowOptionsVal;
+	private final int flowOptionsSelectedVal;
 
-	public final Object[][] graphTimeRangeOptions;
-	public final int graphTimeRangeOptionsSelected;
+	private final Object[][] graphTimeRangeOptionsVal;
+	private final int graphTimeRangeOptionsSelectedVal;
 
-	public final String[] signalTypeOptions;
-	public final OMLSignal[] signalTypes;
+	private final String[] signalTypeOptionsVal;
+	private final OMLSignal[] signalTypesVal;
 
-	public OMLSettings(HTMLFontset fontset, Object[] baudOptions,
-			int baudOptionsSelected, Object[][] databitOptions,
-			int databitOptionsSelected, Object[][] stopbitOptions,
-			int stopbitOptionsSelected, Object[][] parityOptions,
-			int parityOptionsSelected, Object[][] flowOptions,
-			int flowOptionsSelected, Object[][] graphTimeRangeOptions,
-			int graphTimeRangeOptionsSelected, String[] signalTypeOptions,
-			OMLSignal[] signalTypes) {
-		this.fontset = fontset;
-		this.baudOptions = baudOptions;
-		this.baudOptionsSelected = baudOptionsSelected;
-		this.databitOptions = databitOptions;
-		this.databitOptionsSelected = databitOptionsSelected;
-		this.stopbitOptions = stopbitOptions;
-		this.stopbitOptionsSelected = stopbitOptionsSelected;
-		this.parityOptions = parityOptions;
-		this.parityOptionsSelected = parityOptionsSelected;
-		this.flowOptions = flowOptions;
-		this.flowOptionsSelected = flowOptionsSelected;
+	/**
+	 * Generates a new OMLSettings object.
+	 * 
+	 * @param fontset
+	 *            HTMLFontset.
+	 * @param baudOptions
+	 *            Baud options.
+	 * @param baudOptionsSelected
+	 *            Default selected option.
+	 * @param databitOptions
+	 *            Databit options.
+	 * @param databitOptionsSelected
+	 *            Databit selected option.
+	 * @param stopbitOptions
+	 *            Stopbit options.
+	 * @param stopbitOptionsSelected
+	 *            Stopbit selected option.
+	 * @param parityOptions
+	 *            Parity options.
+	 * @param parityOptionsSelected
+	 *            Parity selected option.
+	 * @param flowOptions
+	 *            Flow control options.
+	 * @param flowOptionsSelected
+	 *            Flow control selected option.
+	 * @param graphTimeRangeOptions
+	 *            Time range options.
+	 * @param graphTimeRangeOptionsSelected
+	 *            Time range selected option.
+	 * @param signalTypeOptions
+	 *            Signal types options.
+	 * @param signalTypes
+	 *            Selected type option.
+	 */
+	public OMLSettings(final HTMLFontset fontset, final Object[] baudOptions,
+			final int baudOptionsSelected, final Object[][] databitOptions,
+			final int databitOptionsSelected, final Object[][] stopbitOptions,
+			final int stopbitOptionsSelected, final Object[][] parityOptions,
+			final int parityOptionsSelected, final Object[][] flowOptions,
+			final int flowOptionsSelected,
+			final Object[][] graphTimeRangeOptions,
+			final int graphTimeRangeOptionsSelected,
+			final String[] signalTypeOptions, final OMLSignal[] signalTypes) {
+		this.fontsetVal = fontset;
+		this.baudOptionsVal = baudOptions;
+		this.baudOptionsSelectedVal = baudOptionsSelected;
+		this.databitOptionsVal = databitOptions;
+		this.databitOptionsSelectedVal = databitOptionsSelected;
+		this.stopbitOptionsVal = stopbitOptions;
+		this.stopbitOptionsSelectedVal = stopbitOptionsSelected;
+		this.parityOptionsVal = parityOptions;
+		this.parityOptionsSelectedVal = parityOptionsSelected;
+		this.flowOptionsVal = flowOptions;
+		this.flowOptionsSelectedVal = flowOptionsSelected;
 
-		this.graphTimeRangeOptions = graphTimeRangeOptions;
-		this.graphTimeRangeOptionsSelected = graphTimeRangeOptionsSelected;
+		this.graphTimeRangeOptionsVal = graphTimeRangeOptions;
+		this.graphTimeRangeOptionsSelectedVal = graphTimeRangeOptionsSelected;
 
-		this.signalTypeOptions = signalTypeOptions;
-		this.signalTypes = signalTypes;
+		this.signalTypeOptionsVal = signalTypeOptions;
+		this.signalTypesVal = signalTypes;
+	}
+
+	/**
+	 * @return the fontset
+	 */
+	public final HTMLFontset getFontset() {
+		return fontsetVal;
+	}
+
+	/**
+	 * @return the baudOptions
+	 */
+	public final Object[] getBaudOptions() {
+		return baudOptionsVal;
+	}
+
+	/**
+	 * @return the baudOptionsSelected
+	 */
+	public final int getBaudOptionsSelected() {
+		return baudOptionsSelectedVal;
+	}
+
+	/**
+	 * @return the databitOptions
+	 */
+	public final Object[][] getDatabitOptions() {
+		return databitOptionsVal;
+	}
+
+	/**
+	 * @return the databitOptionsSelected
+	 */
+	public final int getDatabitOptionsSelected() {
+		return databitOptionsSelectedVal;
+	}
+
+	/**
+	 * @return the stopbitOptions
+	 */
+	public final Object[][] getStopbitOptions() {
+		return stopbitOptionsVal;
+	}
+
+	/**
+	 * @return the stopbitOptionsSelected
+	 */
+	public final int getStopbitOptionsSelected() {
+		return stopbitOptionsSelectedVal;
+	}
+
+	/**
+	 * @return the parityOptions
+	 */
+	public final Object[][] getParityOptions() {
+		return parityOptionsVal;
+	}
+
+	/**
+	 * @return the parityOptionsSelected
+	 */
+	public final int getParityOptionsSelected() {
+		return parityOptionsSelectedVal;
+	}
+
+	/**
+	 * @return the flowOptions
+	 */
+	public final Object[][] getFlowOptions() {
+		return flowOptionsVal;
+	}
+
+	/**
+	 * @return the flowOptionsSelected
+	 */
+	public final int getFlowOptionsSelected() {
+		return flowOptionsSelectedVal;
+	}
+
+	/**
+	 * @return the graphTimeRangeOptions
+	 */
+	public final Object[][] getGraphTimeRangeOptions() {
+		return graphTimeRangeOptionsVal;
+	}
+
+	/**
+	 * @return the graphTimeRangeOptionsSelected
+	 */
+	public final int getGraphTimeRangeOptionsSelected() {
+		return graphTimeRangeOptionsSelectedVal;
+	}
+
+	/**
+	 * @return the signalTypeOptions
+	 */
+	public final String[] getSignalTypeOptions() {
+		return signalTypeOptionsVal;
+	}
+
+	/**
+	 * @return the signalTypes
+	 */
+	public final OMLSignal[] getSignalTypes() {
+		return signalTypesVal;
 	}
 
 }

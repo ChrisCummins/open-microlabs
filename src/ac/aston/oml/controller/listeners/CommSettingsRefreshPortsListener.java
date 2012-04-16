@@ -18,31 +18,44 @@
 
 package ac.aston.oml.controller.listeners;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
-import ac.aston.oml.controller.OMLController;
 import ac.aston.oml.model.ModelGateway;
 import ac.aston.oml.view.ViewGateway;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 /**
+ * This implementation of the ActionListener interface is responsible for
+ * refreshing the list of available comm ports.
+ * 
  * @author Chris Cummins
  * 
  */
-public class CommSettingsRefreshPortsListener extends OMLController implements
-		ActionListener {
+public class CommSettingsRefreshPortsListener implements ActionListener {
 
 	private final ModelGateway m;
 	private final ViewGateway v;
 
-	public CommSettingsRefreshPortsListener(ModelGateway m, ViewGateway v) {
-		this.m = m;
-		this.v = v;
+	/**
+	 * Create a new Action Listener.
+	 * 
+	 * @param model
+	 *            Model Gateway for refreshing comm ports.
+	 * @param view
+	 *            View Gateway for setting new comm ports.
+	 */
+	public CommSettingsRefreshPortsListener(final ModelGateway model,
+			final ViewGateway view) {
+		this.m = model;
+		this.v = view;
 	}
 
 	@Override
-	public void actionPerformed(ActionEvent arg0) {
+	public final void actionPerformed(final ActionEvent arg0) {
+		// Update record state data.
 		m.com().refreshCommPorts();
+
+		// Set new screen state data.
 		v.cs().setComOptions(m.com().getCommPorts()[0]);
 	}
 

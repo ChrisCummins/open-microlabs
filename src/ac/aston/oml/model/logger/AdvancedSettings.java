@@ -26,12 +26,17 @@ package ac.aston.oml.model.logger;
  */
 public class AdvancedSettings {
 
-	private Double timeRange;
-	private final double minY;
-	private final double maxY;
+	private static final double MIN_LEGAL_Y = 0.0;
+	private static final double MAX_LEGAL_Y = 1023.0;
+
+	private Double timeRangeVal;
+	private final double minYVal;
+	private final double maxYVal;
 
 	/**
-	 * Creates a GUISettings object from arguments.
+	 * Creates an AdvancedSettings object from arguments. Note that in case of
+	 * invalid arguments, an IllegalArgumentException runtime exception will be
+	 * thrown. See the exception message for further run time information.
 	 * 
 	 * @param timeRange
 	 *            The time range to be displayed on the graph (ms), null if full
@@ -40,19 +45,26 @@ public class AdvancedSettings {
 	 *            The minimum Y value to be displayed on the graph.
 	 * @param maxY
 	 *            The maximum Y value to be displayed on the graph.
-	 * @throws IllegalArgument
-	 *             Exception If any of the values are out of range.
+	 * @throws IllegalArgumentException
+	 * 
 	 */
-	public AdvancedSettings(Double timeRange, double minY, double maxY) {
-		if (minY < 0 || maxY < 0)
+	public AdvancedSettings(final Double timeRange, final double minY,
+			final double maxY) {
+		if (minY < MIN_LEGAL_Y || maxY < MIN_LEGAL_Y) {
 			throw new IllegalArgumentException(
 					"Y axis arguments too low! Acceptable range: [0, 1023.0]");
-		if (minY > 1023.0 || maxY > 1023.0)
+		}
+		if (minY > MAX_LEGAL_Y || maxY > MAX_LEGAL_Y) {
 			throw new IllegalArgumentException(
 					"Y axis arguments too high! Acceptable range: [0, 1023.0]");
-		this.timeRange = timeRange;
-		this.minY = minY;
-		this.maxY = maxY;
+		}
+		if (minY > maxY) {
+			throw new IllegalArgumentException(
+					"Y axis min value is larger than max value!");
+		}
+		this.timeRangeVal = timeRange;
+		this.minYVal = minY;
+		this.maxYVal = maxY;
 	}
 
 	/**
@@ -61,12 +73,18 @@ public class AdvancedSettings {
 	 * 
 	 * @return Double.
 	 */
-	public Double timeRange() {
-		return timeRange;
+	public final Double timeRange() {
+		return timeRangeVal;
 	}
 
-	public void timeRange(Double timeRange) {
-		this.timeRange = timeRange;
+	/**
+	 * Sets a new timeRange value, specified by argument.
+	 * 
+	 * @param timeRange
+	 *            New timeRange value.
+	 */
+	public final void timeRange(final Double timeRange) {
+		this.timeRangeVal = timeRange;
 	}
 
 	/**
@@ -74,17 +92,17 @@ public class AdvancedSettings {
 	 * 
 	 * @return Double.
 	 */
-	public double minY() {
-		return minY;
+	public final double minY() {
+		return minYVal;
 	}
 
 	/**
-	 * Return the maximum Y value for the grah.
+	 * Return the maximum Y value for the graph.
 	 * 
 	 * @return Double.
 	 */
-	public double maxY() {
-		return maxY;
+	public final double maxY() {
+		return maxYVal;
 	}
 
 }

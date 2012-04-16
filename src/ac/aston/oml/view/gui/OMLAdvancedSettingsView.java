@@ -47,8 +47,8 @@ import ac.aston.oml.view.AdvancedSettingsView;
 public class OMLAdvancedSettingsView extends JFrame implements
 		AdvancedSettingsView {
 	private static final long serialVersionUID = -1475245631891524654L;
-	private static final int frameWidth = 260;
-	private static final int frameHeight = 150;
+	private static final int FRAME_WIDTH = 260;
+	private static final int FRAME_HEIGHT = 150;
 
 	private HTMLFontset h;
 
@@ -59,7 +59,7 @@ public class OMLAdvancedSettingsView extends JFrame implements
 
 	public OMLAdvancedSettingsView() {
 		this.setTitle(AppDetails.name());
-		this.setSize(frameWidth, frameHeight);
+		this.setSize(FRAME_WIDTH, FRAME_HEIGHT);
 		this.setResizable(false);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setIconImage(AppDetails.icon());
@@ -119,7 +119,7 @@ public class OMLAdvancedSettingsView extends JFrame implements
 		final GridLayout g = new GridLayout(4, 1);
 		g.setVgap(5);
 		contentPanel.setLayout(g);
-		contentPanel.setSize(frameWidth, frameHeight);
+		contentPanel.setSize(FRAME_WIDTH, FRAME_HEIGHT);
 
 		final JPanel minYPanel = new JPanel();
 		minYPanel.setLayout(new GridLayout(1, 2));

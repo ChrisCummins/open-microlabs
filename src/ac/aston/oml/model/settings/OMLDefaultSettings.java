@@ -18,6 +18,7 @@
 
 package ac.aston.oml.model.settings;
 
+import ac.aston.oml.model.com.signals.OMLRaw;
 import ac.aston.oml.model.com.signals.OMLSignal;
 import ac.aston.oml.model.com.signals.OMLVoltage;
 import jcummins.gui.HTMLFont;
@@ -28,46 +29,56 @@ import gnu.io.SerialPort;
  * @author Chris Cummins
  * 
  */
-public class OMLDefaultSettings {
+public abstract class OMLDefaultSettings {
 
-	private static final Object[] baudOptions = { 1200, 2400, 4800, 9600,
+	private static final Object[] BAUD_OPTIONS = { 1200, 2400, 4800, 9600,
 			19200, 38400 };
-	private static final Object[][] databitOptions = {
+	private static final Object[][] DATABIT_OPTIONS = {
 			{ 5, 6, 7, 8 },
 			{ SerialPort.DATABITS_5, SerialPort.DATABITS_6,
 					SerialPort.DATABITS_7, SerialPort.DATABITS_8 } };
-	private static final Object[][] stopbitOptions = {
+	private static final Object[][] STOPBIT_OPTIONS = {
 			{ 1, 1.5, 2 },
 			{ SerialPort.STOPBITS_1, SerialPort.STOPBITS_1_5,
 					SerialPort.STOPBITS_2 } };
-	private static final Object[][] parityOptions = {
+	private static final Object[][] PARITY_OPTIONS = {
 			{ "None", "Even", "Odd" },
 			{ SerialPort.PARITY_NONE, SerialPort.PARITY_EVEN,
 					SerialPort.PARITY_ODD } };
-	private static final Object[][] flowcontrolOptions = {
+	private static final Object[][] FLOWCONTROL_OPTIONS = {
 			{ "None", "XONOFF In", "XONOFF Out", "RTSCTS In", "RTSCTS Out" },
 			{ SerialPort.FLOWCONTROL_NONE, SerialPort.FLOWCONTROL_XONXOFF_IN,
 					SerialPort.FLOWCONTROL_XONXOFF_OUT,
 					SerialPort.FLOWCONTROL_RTSCTS_IN,
 					SerialPort.FLOWCONTROL_RTSCTS_OUT } };
 
-	private static final Object[][] graphTimeRangeOptions = {
+	private static final Object[][] TIME_RANGE_OPTIONS = {
 			{ "1 second", "2.5 seconds", "5 seconds", "10 seconds",
 					"30 seconds", "60 seconds", "10 minutes" },
 			{ 1000.0, 2500.0, 5000.0, 10000.0, 30000.0, 60000.0, 600000 } };
 
-	private static final String[] signalTypeOptions = { "Raw", "Voltage" };
-	private static final OMLSignal[] signalTypes = { new OMLSignal(),
+	private static final String[] SIGNAL_TYPE_OPTIONS = { "Raw", "Voltage" };
+	private static final OMLSignal[] SIGNAL_TYPES = { new OMLRaw(),
 			new OMLVoltage() };
 
+	private static final int FONT_SIZE = 3;
+	private static final int BAUD_OPTIONS_SELECTED = 5;
+	private static final int DATABIT_OPTIONS_SELETED = 3;
+	private static final int TIME_RANGE_SELECTED = 3;
+
+	/**
+	 * Returns a default set of OMLSettings.
+	 * 
+	 * @return OMLSettings.
+	 */
 	public static OMLSettings get() {
-		HTMLFont label = new HTMLFont(false, false, false, 3, "Verdana",
-				HTMLFont.COLOR_BLACK);
-		HTMLFont labelBold = new HTMLFont(true, false, false, 3, "Verdana",
-				HTMLFont.COLOR_BLACK);
-		HTMLFont labelRed = new HTMLFont(true, false, false, 3, "Verdana",
-				HTMLFont.COLOR_RED);
-		HTMLFont body = new HTMLFont(false, false, false, 3, "Arial",
+		HTMLFont label = new HTMLFont(false, false, false, FONT_SIZE,
+				"Verdana", HTMLFont.COLOR_BLACK);
+		HTMLFont labelBold = new HTMLFont(true, false, false, FONT_SIZE,
+				"Verdana", HTMLFont.COLOR_BLACK);
+		HTMLFont labelRed = new HTMLFont(true, false, false, FONT_SIZE,
+				"Verdana", HTMLFont.COLOR_RED);
+		HTMLFont body = new HTMLFont(false, false, false, FONT_SIZE, "Arial",
 				HTMLFont.COLOR_BLACK);
 
 		HTMLFontset h = new HTMLFontset();
@@ -76,9 +87,10 @@ public class OMLDefaultSettings {
 		h.add("label-red", labelRed);
 		h.add("body", body);
 
-		return new OMLSettings(h, baudOptions, 5, databitOptions, 3,
-				stopbitOptions, 0, parityOptions, 0, flowcontrolOptions, 0,
-				graphTimeRangeOptions, 3, signalTypeOptions, signalTypes);
+		return new OMLSettings(h, BAUD_OPTIONS, BAUD_OPTIONS_SELECTED,
+				DATABIT_OPTIONS, DATABIT_OPTIONS_SELETED, STOPBIT_OPTIONS, 0,
+				PARITY_OPTIONS, 0, FLOWCONTROL_OPTIONS, 0, TIME_RANGE_OPTIONS,
+				TIME_RANGE_SELECTED, SIGNAL_TYPE_OPTIONS, SIGNAL_TYPES);
 	}
 
 }

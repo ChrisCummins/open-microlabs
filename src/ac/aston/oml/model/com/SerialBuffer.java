@@ -23,6 +23,9 @@ import java.util.Observable;
 import java.util.Observer;
 
 /**
+ * This class acts as a FIFO queue between the SerialReader and any higher level
+ * loggers.
+ * 
  * @author Chris Cummins
  * 
  */
@@ -32,7 +35,7 @@ public class SerialBuffer extends Observable implements Observer, Runnable {
 	private Double[] msg;
 
 	@Override
-	public void run() {
+	public final void run() {
 		while (true) {
 			msg = get();
 			setChanged();
@@ -41,21 +44,24 @@ public class SerialBuffer extends Observable implements Observer, Runnable {
 	}
 
 	@Override
-	public void update(Observable arg0, Object arg1) {
+	public final void update(final Observable arg0, final Object arg1) {
 		put((Double[]) arg1);
 	}
 
-	private void put(Double[] d) {
+	private void put(final Double[] d) {
 		queue.add(d);
 	}
 
 	private Double[] get() {
-		while (queue.isEmpty())
+		while (queue.isEmpty()) {
 			try {
 				Thread.sleep(1);
 			} catch (InterruptedException e) {
 				// Don't care.
 			}
+		}
+
 		return queue.removeFirst();
 	}
+
 }

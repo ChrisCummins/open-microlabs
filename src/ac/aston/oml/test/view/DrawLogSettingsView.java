@@ -43,7 +43,7 @@ public class DrawLogSettingsView {
 		final String[] s = { "1 Microcontroller", "2 Microcontrollers" };
 
 		final OMLLogSettingsView frame = new OMLLogSettingsView();
-		frame.init(c.fontset, 14, OMLTestSettings.signalTypes);
+		frame.init(c.getFontset(), 14, OMLTestSettings.SIGNAL_TYPES);
 		frame.setSlaveBoxOptions(s);
 
 		frame.setFilepathLabel("C:\\test");

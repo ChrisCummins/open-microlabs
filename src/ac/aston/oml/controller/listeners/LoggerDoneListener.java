@@ -18,12 +18,11 @@
 
 package ac.aston.oml.controller.listeners;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
-import ac.aston.oml.controller.OMLController;
 import ac.aston.oml.model.ModelGateway;
 import ac.aston.oml.view.ViewGateway;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 /**
  * This implementation of the ActionListener interface is responsible for
@@ -33,27 +32,43 @@ import ac.aston.oml.view.ViewGateway;
  * @author Chris Cummins
  * 
  */
-public class LoggerDoneListener extends OMLController implements ActionListener {
+public class LoggerDoneListener implements ActionListener {
+
 	private final ModelGateway m;
 	private final ViewGateway v;
 
-	public LoggerDoneListener(ModelGateway m, ViewGateway v) {
-		this.m = m;
-		this.v = v;
+	/**
+	 * Constructs a new ActionListener.
+	 * 
+	 * @param model
+	 *            Model Gateway for stopping logging.
+	 * @param view
+	 *            View Gateway for updating view.
+	 */
+	public LoggerDoneListener(final ModelGateway model, final ViewGateway view) {
+		this.m = model;
+		this.v = view;
 	}
 
 	@Override
-	public void actionPerformed(ActionEvent e) {
-		if (m.logger().isLogging())
+	public final void actionPerformed(final ActionEvent e) {
+		// Check record state for logging.
+		if (m.logger().isLogging()) {
 			if (v.showYesNoPrompt("Readings in progress!\nAre you sure you "
-					+ "would like to exit?"))
+					+ "would like to exit?")) {
+				m.logger().stopLogging();
 				returnToLogSettings();
-			else
+			} else {
 				return;
-		else
+			}
+		} else {
 			returnToLogSettings();
+		}
 	}
 
+	/*
+	 * Return from LoggerView to LogSettingsView.
+	 */
 	private void returnToLogSettings() {
 		v.lv().teardown();
 		v.ls().fetchFrame().setVisible(true);

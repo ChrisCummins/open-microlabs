@@ -18,60 +18,79 @@
 
 package ac.aston.oml.controller.listeners;
 
+import ac.aston.oml.controller.CommExceptionResponse;
+import ac.aston.oml.model.ModelGateway;
+import ac.aston.oml.model.com.CommSettings;
+import ac.aston.oml.model.settings.OMLSettings;
+import ac.aston.oml.view.ViewGateway;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 
 import jcummins.gui.GUITools;
 
-import ac.aston.oml.controller.CommExceptionResponse;
-import ac.aston.oml.controller.OMLController;
-import ac.aston.oml.model.ModelGateway;
-import ac.aston.oml.model.com.CommSettings;
-import ac.aston.oml.model.settings.OMLSettings;
-import ac.aston.oml.view.ViewGateway;
-
 /**
  * This implementation of the ActionListener interface is responsible for
  * getting comm settings from the view and setting those to the model.
  * Additionally, it will interpret any exceptions thrown by the model and feed
- * those back to the view for the user.
+ * those to a CommExceptionResponse object.
  * 
  * @author Chris Cummins
- * 
+ * @see CommExceptionResponse#catchException(ViewGateway, String, Throwable)
  */
-public class CommSettingsDoneListener extends OMLController implements
-		ActionListener {
+public class CommSettingsDoneListener implements ActionListener {
+
+	private static final String[] SLAVE_OPTIONS = { "1 Microcontroller",
+			"2 Microcontrollers", "3 Microcontrollers", "4 Microcontrollers",
+			"5 Microcontrollers", "6 Microcontrollers", "7 Microcontrollers",
+			"8 Microcontrollers", "9 Microcontrollers", "10 Microcontrollers",
+			"11 Microcontrollers", "12 Microcontrollers",
+			"13 Microcontrollers", "14 Microcontrollers" };
+	private static final int DEFAULT_PIN_COUNT = 7;
 
 	private final ModelGateway m;
 	private final ViewGateway v;
+	private final OMLSettings c;
 
-	private OMLSettings c;
-
-	public CommSettingsDoneListener(ModelGateway m, ViewGateway v) {
-		this.m = m;
-		this.v = v;
+	/**
+	 * Creates a new Action Listener.
+	 * 
+	 * @param model
+	 *            Model Gateway for setting comm settings.
+	 * @param view
+	 *            View Gateway for controlling view.
+	 */
+	public CommSettingsDoneListener(final ModelGateway model,
+			final ViewGateway view) {
+		this.m = model;
+		this.v = view;
+		this.c = m.getOMLSettings();
 	}
 
 	@Override
-	public void actionPerformed(ActionEvent arg0) {
-		c = m.getOMLSettings();
+	public final void actionPerformed(final ActionEvent arg0) {
 
+		// Get data from UI.
 		final String portName = (String) m.com().getCommPorts()[1][v.cs()
 				.getSelectedComOption()];
-		final int baudrate = (int) c.baudOptions[v.cs().getSelectedBaudOption()];
-		final int databits = (int) c.databitOptions[1][v.cs()
+		final int baudrate = (int) c.getBaudOptions()[v.cs()
+				.getSelectedBaudOption()];
+		final int databits = (int) c.getDatabitOptions()[1][v.cs()
 				.getSelectedDataOption()];
-		final int stopbits = (int) c.stopbitOptions[1][v.cs()
+		final int stopbits = (int) c.getStopbitOptions()[1][v.cs()
 				.getSelectedStopOption()];
-		final int paritybits = (int) c.parityOptions[1][v.cs()
+		final int paritybits = (int) c.getParityOptions()[1][v.cs()
 				.getSelectedParityOption()];
-		final int flowbits = (int) c.flowOptions[1][v.cs()
+		final int flowbits = (int) c.getFlowOptions()[1][v.cs()
 				.getSelectedFlowOption()];
 
+		// Construct model data from values.
 		final CommSettings com = new CommSettings(portName, baudrate, databits,
 				stopbits, paritybits, flowbits);
 
+		// Try and assign to model, exceptions are handled by
+		// CommExceptionResponse.
 		try {
 			m.com().setCommSettings(com);
 			m.com().commConnect();
@@ -82,17 +101,19 @@ public class CommSettingsDoneListener extends OMLController implements
 		}
 	}
 
+	/*
+	 * Render the Log Settings view.
+	 */
 	private void renderLogSettings() {
-		final String[] s = { "1 Microcontroller", "2 Microcontrollers",
-				"3 Microcontrollers", "4 Microcontrollers",
-				"5 Microcontrollers" };
-
-		v.ls().init(c.fontset, 7, c.signalTypeOptions);
-
+		// Setup screen state data.
+		v.ls()
+				.init(c.getFontset(), DEFAULT_PIN_COUNT,
+						c.getSignalTypeOptions());
 		v.ls().setFilepathLabel(
 				System.getProperty("user.dir") + File.separator + "log.dat");
-		v.ls().setSlaveBoxOptions(s);
+		v.ls().setSlaveBoxOptions(SLAVE_OPTIONS);
 
+		// Make frame visible.
 		GUITools.centreFrame(v.ls().fetchFrame());
 		v.ls().fetchFrame().setVisible(true);
 	}

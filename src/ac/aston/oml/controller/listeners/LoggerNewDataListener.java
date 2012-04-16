@@ -18,50 +18,58 @@
 
 package ac.aston.oml.controller.listeners;
 
-import org.jfree.data.general.SeriesChangeEvent;
-import org.jfree.data.general.SeriesChangeListener;
-import org.jfree.data.time.TimeSeriesCollection;
-
 import ac.aston.oml.controller.LoggerUpdateView;
-import ac.aston.oml.controller.OMLController;
 import ac.aston.oml.model.ModelGateway;
 import ac.aston.oml.model.logger.LogSettings;
 import ac.aston.oml.view.ViewGateway;
 
+import org.jfree.data.general.SeriesChangeEvent;
+import org.jfree.data.general.SeriesChangeListener;
+import org.jfree.data.time.TimeSeriesCollection;
+
 /**
  * This implementation of the SeriesChangeListener interface is responsible for
- * handling new data notifications from the model and updating the view
- * accordingly.
+ * updating screen state data after a change to the record state data.
  * 
  * @author Chris Cummins
  * 
  */
-public class LoggerNewDataListener extends OMLController implements
-		SeriesChangeListener {
+public class LoggerNewDataListener implements SeriesChangeListener {
 
 	private final ModelGateway m;
 	private final ViewGateway v;
 
-	public LoggerNewDataListener(ModelGateway m, ViewGateway v) {
-		this.m = m;
-		this.v = v;
+	/**
+	 * Creates a new SeriesChangeListener.
+	 * 
+	 * @param model
+	 *            Model Gateway for getting record state data.
+	 * @param view
+	 *            View Gateway for update screen state data.
+	 */
+	public LoggerNewDataListener(final ModelGateway model,
+			final ViewGateway view) {
+		this.m = model;
+		this.v = view;
 	}
 
 	@Override
-	public void seriesChanged(SeriesChangeEvent event) {
-		// Get disposable variables.
+	public final void seriesChanged(final SeriesChangeEvent event) {
+		// Get record state data.
 		final TimeSeriesCollection data = m.logger().getData();
 		final LogSettings l = m.logger().getLogSettings();
 
 		// Update filelogger if necessary.
-		if (m.logger().getLogSettings().logPath() != null)
+		if (m.logger().getLogSettings().logPath() != null) {
 			m.logger().addNewDataToLog(data);
+		}
 
-		// Create GUI updater.
+		// Update screen state.
 		new LoggerUpdateView(data, l, v);
 
-		// If last reading, set GUI to show completed.
-		if (data.getItemCount(0) == l.readCount())
+		// If last reading, set screen state to readings complete.
+		if (data.getItemCount(0) == l.readCount()) {
 			v.lv().setViewLoggingCompleted(l.readCount() * l.readDelay());
+		}
 	}
 }

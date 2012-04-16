@@ -18,37 +18,62 @@
 
 package ac.aston.oml.model;
 
+import ac.aston.oml.model.com.CommSettings;
+import ac.aston.oml.model.com.SerialReader;
+
 import gnu.io.NoSuchPortException;
 import gnu.io.PortInUseException;
 import gnu.io.UnsupportedCommOperationException;
 
 import java.io.IOException;
 
-import ac.aston.oml.model.com.CommSettings;
-import ac.aston.oml.model.com.SerialReader;
-
 /**
+ * The CommGateway interface details the method contract for the Serial Comms
+ * Model.
+ * 
  * @author Chris Cummins
  * 
  */
-public interface ComGateway {
+public interface CommGateway {
+
 	/**
 	 * Tests the connection with the microcontroller at the set comm settings.
 	 * setCommSettings() must have been called beforehand.
 	 * 
 	 * @return <code>true</code> if connection is established, else
 	 *         <code>false</code>.
+	 * @throws NoSuchPortException
+	 *             If port was not found.
+	 * @throws PortInUseException
+	 *             If port is in use.
+	 * @throws UnsupportedCommOperationException
+	 *             If port is not supported.
 	 * @throws IOException
-	 *             In case of IO error
-	 * @see ModelGateway#setCommSettings(CommSettingsView) .
+	 *             In case of IO error.
 	 */
-	public boolean commTest() throws NoSuchPortException, PortInUseException,
+	boolean commTest() throws NoSuchPortException, PortInUseException,
 			UnsupportedCommOperationException, IOException;
 
-	public void commConnect() throws NoSuchPortException, PortInUseException,
+	/**
+	 * Connects to the serial port. setCommSettings() must have been called
+	 * beforehand.
+	 * 
+	 * @throws NoSuchPortException
+	 *             If port was not found.
+	 * @throws PortInUseException
+	 *             If port is in use.
+	 * @throws UnsupportedCommOperationException
+	 *             If port is not supported.
+	 * @throws IOException
+	 *             In case of IO error.
+	 */
+	void commConnect() throws NoSuchPortException, PortInUseException,
 			UnsupportedCommOperationException, IOException;
 
-	public void refreshCommPorts();
+	/**
+	 * This method refreshes the list of available comm ports.
+	 */
+	void refreshCommPorts();
 
 	/**
 	 * Set the comm settings for serial communications with the microcontroller.
@@ -57,11 +82,22 @@ public interface ComGateway {
 	 *            CommSettingsView.
 	 * @see ac.aston.oml.model.com.CommSettings#CommSettings()
 	 */
-	public void setCommSettings(CommSettings c);
+	void setCommSettings(CommSettings c);
 
-	public void setSerialReader(SerialReader r);
+	/**
+	 * This method sets a new SerialReader to the record state.
+	 * 
+	 * @param r
+	 *            SerialReader.
+	 */
+	void setSerialReader(SerialReader r);
 
-	public Object[][] getCommPorts();
+	/**
+	 * Returns a list of available comm ports.
+	 * 
+	 * @return 2xn Object array.
+	 */
+	Object[][] getCommPorts();
 
 	/**
 	 * Returns the set CommSettingsView.
@@ -69,8 +105,13 @@ public interface ComGateway {
 	 * @return CommSettingsView currently in use.
 	 * @see ac.aston.oml.model.com.CommSettings#CommSettings()
 	 */
-	public CommSettings getCommSettings();
+	CommSettings getCommSettings();
 
-	public SerialReader getSerialReader();
+	/**
+	 * Returns the used SerialReader.
+	 * 
+	 * @return SerialReader.
+	 */
+	SerialReader getSerialReader();
 
 }

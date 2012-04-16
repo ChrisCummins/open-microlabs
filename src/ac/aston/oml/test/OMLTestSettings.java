@@ -25,26 +25,44 @@ import ac.aston.oml.model.settings.OMLDefaultSettings;
 import ac.aston.oml.model.settings.OMLSettings;
 
 /**
+ * Settings to be used for tests.
+ * 
  * @author Chris Cummins
  * 
  */
-public class OMLTestSettings {
+public abstract class OMLTestSettings {
 
-	public static final String[] signals = { "Voltage", null, "Raw", "Voltage",
+	/** Signal names. */
+	public static final String[] SIGNALS = { "Voltage", null, "Raw", "Voltage",
 			"Voltage", null, null, null, null, "Voltage", "Raw", null, null,
 			"Raw" };
-	public static final String[] signalTypes = { "Raw", "Voltage" };
-	public static final int activeSignalCount = 7;
 
+	/** Signal types. */
+	public static final String[] SIGNAL_TYPES = { "Raw", "Voltage" };
+
+	/** Active signals. */
+	public static final int ACTIVE_SIGNAL_COUNT = 7;
+
+	/**
+	 * Return test OMLSettings.
+	 * 
+	 * @return OMLSettings.
+	 */
 	public static OMLSettings getOMLSettings() {
 		return OMLDefaultSettings.get();
 	}
 
+	/**
+	 * Returns test TimeSeriesCollection.
+	 * 
+	 * @return TimeSeriesCollection.
+	 */
 	public static TimeSeriesCollection getTimeSeriesCollection() {
 		final TimeSeriesCollection t = new TimeSeriesCollection();
 
-		for (int i = 0; i < activeSignalCount; i++)
+		for (int i = 0; i < ACTIVE_SIGNAL_COUNT; i++) {
 			t.addSeries(new TimeSeries("<?>"));
+		}
 
 		return t;
 	}

@@ -18,43 +18,53 @@
 
 package ac.aston.oml.controller.listeners;
 
+import ac.aston.oml.model.ModelGateway;
+import ac.aston.oml.model.settings.OMLSettings;
+import ac.aston.oml.view.ViewGateway;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import jcummins.gui.GUITools;
 
-import ac.aston.oml.controller.OMLController;
-import ac.aston.oml.model.ModelGateway;
-import ac.aston.oml.model.settings.OMLSettings;
-import ac.aston.oml.view.ViewGateway;
-
 /**
  * This implementation of the ActionListener interface is responsible for
- * receiving show GUISettings requests from the user and so updating the view
- * accordingly.
+ * receiving show AdvancedSettings requests from the user and so updating the
+ * view accordingly.
  * 
  * @author Chris Cummins
  * 
  */
-public class AdvancedSettingsShowListener extends OMLController implements
-		ActionListener {
+public class AdvancedSettingsShowListener implements ActionListener {
+
 	private final ModelGateway m;
 	private final ViewGateway v;
+	private final OMLSettings c;
 
-	public AdvancedSettingsShowListener(ModelGateway m, ViewGateway v) {
-		this.m = m;
-		this.v = v;
+	/**
+	 * Constructs a new listener.
+	 * 
+	 * @param model
+	 *            Model Gateway for getting settings data.
+	 * @param view
+	 *            View Gateway for rendering frame.
+	 */
+	public AdvancedSettingsShowListener(final ModelGateway model,
+			final ViewGateway view) {
+		this.m = model;
+		this.v = view;
+
+		c = m.getOMLSettings();
 	}
 
 	@Override
-	public void actionPerformed(ActionEvent e) {
-		final OMLSettings c = m.getOMLSettings();
+	public final void actionPerformed(final ActionEvent e) {
+		// Setup screen state data.
+		v.as().init(c.getFontset());
+		v.as().setTimeRangeOptions(c.getGraphTimeRangeOptions()[0],
+				c.getGraphTimeRangeOptionsSelected());
 
-		v.as().init(c.fontset);
-
-		v.as().setTimeRangeOptions(c.graphTimeRangeOptions[0],
-				c.graphTimeRangeOptionsSelected);
-
+		// Make frame visible.
 		GUITools.centreFrame(v.as().fetchFrame());
 		v.as().fetchFrame().setVisible(true);
 	}

@@ -16,12 +16,29 @@
  * along with Open MicroLabs.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+package ac.aston.oml.model.com.signals;
+
 /**
- * This package contains all of the ActionListener implementations for the
- * Controller.
+ * This extension of the OMLSignal class represents a raw value signal.
  * 
  * @author Chris Cummins
- * @version 0.5
+ * 
  */
-package ac.aston.oml.controller.listeners;
+public class OMLRaw extends OMLSignal {
 
+	@Override
+	protected final double signalToValue(final double rawInt) {
+		return rawInt;
+	}
+
+	@Override
+	protected final String signalToString(final double rawInt) {
+		return String.format("%04d", (int) rawInt);
+	}
+
+	@Override
+	protected final String signalName() {
+		return "Raw";
+	}
+
+}

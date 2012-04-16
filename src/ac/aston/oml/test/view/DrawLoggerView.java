@@ -44,10 +44,10 @@ public class DrawLoggerView {
 		GUITools.setNativeLookAndFeel();
 
 		final OMLLoggerView frame = new OMLLoggerView();
-		frame.init(c.fontset, OMLTestSettings.getTimeSeriesCollection(),
-				"[Graph title]", 0.0, 1023.0, 30000.0, OMLTestSettings.signals);
+		frame.init(c.getFontset(), OMLTestSettings.getTimeSeriesCollection(),
+				"[Graph title]", 0.0, 1023.0, 30000.0, OMLTestSettings.SIGNALS);
 
-		String[] tmp = new String[OMLTestSettings.activeSignalCount];
+		String[] tmp = new String[OMLTestSettings.ACTIVE_SIGNAL_COUNT];
 		for (int i = 0; i < tmp.length; i++)
 			tmp[i] = "[?]";
 

@@ -18,13 +18,13 @@
 
 package ac.aston.oml.model.com;
 
+import ac.aston.oml.include.AppDetails;
+
 import gnu.io.NoSuchPortException;
 import gnu.io.PortInUseException;
 import gnu.io.UnsupportedCommOperationException;
 
 import java.io.IOException;
-
-import ac.aston.oml.include.AppDetails;
 
 import jcummins.serial.SerialComm;
 
@@ -39,17 +39,20 @@ import jcummins.serial.SerialComm;
  * 
  */
 public class SerialReader extends SerialComm {
+
+	private static final long DEFAULT_SLEEP_TIME = 100;
+	private static final char TEST_CONNECT_CHAR = (char) 255;
+
 	private final CommSettings commSettings;
-	private long sleepTime = 100;
+	private long sleepTime = DEFAULT_SLEEP_TIME;
 
 	/**
-	 * Creates an instance of superclass SerialComm and attempts to connect to
-	 * it. In case of error, an exception is thrown.
+	 * Creates an instance of superclass SerialComm.
 	 * 
 	 * @param c
 	 *            CommSettingsView to connect with.
 	 */
-	public SerialReader(CommSettings c) {
+	public SerialReader(final CommSettings c) {
 		super(c.portName(), c.baudRate(), c.dataBits(), c.stopBits(), c
 				.parity(), c.flowControl());
 		this.commSettings = c;
@@ -66,13 +69,15 @@ public class SerialReader extends SerialComm {
 	 * @throws IOException
 	 *             In case of IO error.
 	 */
-	public String sendDataRequest(char c) throws IOException {
+	public final String sendDataRequest(final char c) throws IOException {
 		super.write(c);
+
 		try {
 			Thread.sleep(sleepTime);
 		} catch (InterruptedException e) {
 			// Don't care.
 		}
+
 		return super.read();
 	}
 
@@ -87,19 +92,22 @@ public class SerialReader extends SerialComm {
 	 * @throws IOException
 	 *             In case of IO error.
 	 * @throws UnsupportedCommOperationException
+	 *             If port is not supported.
 	 * @throws PortInUseException
+	 *             If port is in use.
 	 * @throws NoSuchPortException
+	 *             If port is not found.
 	 * @see SerialReader#sendDataRequest(char)
 	 */
-	public boolean testConnection() throws IOException, NoSuchPortException,
-			PortInUseException, UnsupportedCommOperationException {
+	public final boolean testConnection() throws IOException,
+			NoSuchPortException, PortInUseException,
+			UnsupportedCommOperationException {
 		super.connect(AppDetails.name());
-		String s = sendDataRequest((char) 255);
+
+		String s = sendDataRequest((char) TEST_CONNECT_CHAR);
 		super.close();
-		if (s.length() > 0)
-			return true;
-		else
-			return false;
+
+		return (s.length() > 0);
 	}
 
 	/**
@@ -109,7 +117,7 @@ public class SerialReader extends SerialComm {
 	 *            Sleep time (ms).
 	 * @see SerialReader#sendDataRequest(char)
 	 */
-	public void setSleepTime(long s) {
+	public final void setSleepTime(final long s) {
 		this.sleepTime = s;
 	}
 
@@ -118,7 +126,7 @@ public class SerialReader extends SerialComm {
 	 * 
 	 * @return CommSettingsView.
 	 */
-	public CommSettings getCommSettings() {
+	public final CommSettings getCommSettings() {
 		return commSettings;
 	}
 
@@ -127,7 +135,7 @@ public class SerialReader extends SerialComm {
 	 * 
 	 * @return Sleep time (ms).
 	 */
-	public long getSleepTime() {
+	public final long getSleepTime() {
 		return sleepTime;
 	}
 

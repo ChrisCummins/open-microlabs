@@ -18,27 +18,39 @@
 
 package ac.aston.oml.controller.listeners;
 
+import ac.aston.oml.view.ViewGateway;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import ac.aston.oml.controller.OMLController;
-import ac.aston.oml.view.ViewGateway;
-
 /**
+ * This implementation of the ActionListener interface is responsible for
+ * getting updating the number of pins visible in the LogSettingsView.
+ * 
  * @author Chris Cummins
  * 
  */
-public class LogSettingsSlaveOptionsListener extends OMLController implements
-		ActionListener {
+public class LogSettingsSlaveOptionsListener implements ActionListener {
+
+	private static final int SLAVE_BITS = 1;
+	private static final int PIN_BITS = 7;
+
 	private final ViewGateway v;
 
-	public LogSettingsSlaveOptionsListener(ViewGateway v) {
-		this.v = v;
+	/**
+	 * Constructs a new Action Listener.
+	 * 
+	 * @param view
+	 *            View Gateway for updating screen state.
+	 */
+	public LogSettingsSlaveOptionsListener(final ViewGateway view) {
+		this.v = view;
 	}
 
 	@Override
-	public void actionPerformed(ActionEvent e) {
-		v.ls().setPincount((v.ls().getSlaveBoxSelectedIndex() + 1) * 7);
+	public final void actionPerformed(final ActionEvent e) {
+		v.ls().setPincount(
+				(v.ls().getSlaveBoxSelectedIndex() + SLAVE_BITS) * PIN_BITS);
 	}
 
 }

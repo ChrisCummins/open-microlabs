@@ -18,6 +18,8 @@
 
 package ac.aston.oml.model.com;
 
+import ac.aston.oml.model.CommGateway;
+
 import gnu.io.NoSuchPortException;
 import gnu.io.PortInUseException;
 import gnu.io.UnsupportedCommOperationException;
@@ -26,40 +28,32 @@ import java.io.IOException;
 
 import jcummins.serial.DiscoverPorts;
 
-import ac.aston.oml.model.ComGateway;
-
 /**
+ * This implementation of the CommGateway interface provides the necessary
+ * functionality to fulfill the interface contract.
+ * 
  * @author Chris Cummins
  * 
  */
-public class OMLComGateway implements ComGateway {
+public class OMLComGateway implements CommGateway {
 
 	private SerialReader serialReader;
 	private Object[][] o;
 
-	/**
-	 * Tests the connection with the microcontroller at the set comm settings.
-	 * setCommSettings() must have been called beforehand.
-	 * 
-	 * @throws UnsupportedCommOperationException
-	 * @throws PortInUseException
-	 * @throws NoSuchPortException
-	 * 
-	 */
 	@Override
-	public boolean commTest() throws NoSuchPortException, PortInUseException,
-			UnsupportedCommOperationException, IOException {
+	public final boolean commTest() throws NoSuchPortException,
+			PortInUseException, UnsupportedCommOperationException, IOException {
 		return serialReader.testConnection();
 	}
 
 	@Override
-	public void commConnect() throws NoSuchPortException, PortInUseException,
-			UnsupportedCommOperationException, IOException {
+	public final void commConnect() throws NoSuchPortException,
+			PortInUseException, UnsupportedCommOperationException, IOException {
 		serialReader.connect(ac.aston.oml.include.AppDetails.name());
 	}
 
 	@Override
-	public void refreshCommPorts() {
+	public final void refreshCommPorts() {
 		if (DiscoverPorts.size() > 0) {
 			o = new Object[2][DiscoverPorts.size()];
 			o[0] = DiscoverPorts.listToArray();
@@ -72,25 +66,27 @@ public class OMLComGateway implements ComGateway {
 	}
 
 	@Override
-	public void setCommSettings(CommSettings c) {
+	public final void setCommSettings(final CommSettings c) {
 		serialReader = new SerialReader(c);
 	}
 
-	public void setSerialReader(SerialReader r) {
+	@Override
+	public final void setSerialReader(final SerialReader r) {
 		this.serialReader = r;
 	}
 
 	@Override
-	public Object[][] getCommPorts() {
+	public final Object[][] getCommPorts() {
 		return o;
 	}
 
 	@Override
-	public CommSettings getCommSettings() {
+	public final CommSettings getCommSettings() {
 		return null;
 	}
 
-	public SerialReader getSerialReader() {
+	@Override
+	public final SerialReader getSerialReader() {
 		return serialReader;
 	}
 }

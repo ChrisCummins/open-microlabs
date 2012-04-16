@@ -17,11 +17,11 @@
  */
 
 /**
- * This package contains all of the ActionListener implementations for the
- * Controller.
+ * This package contains the OMLSignal class and it's subclasses, which are used
+ * to represent physical real world properties as a function of an ADC value.
  * 
  * @author Chris Cummins
  * @version 0.5
  */
-package ac.aston.oml.controller.listeners;
+package ac.aston.oml.model.com.signals;
 

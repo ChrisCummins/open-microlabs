@@ -24,32 +24,36 @@ import ac.aston.oml.model.settings.OMLDefaultSettings;
 import ac.aston.oml.model.settings.OMLSettings;
 
 /**
- * This implementation of the Model interface performs the necessary roles of an
- * Open MicroLabs model.
+ * This implementation of the ModelGateway interface performs the necessary
+ * roles of an Open MicroLabs ModelGateway.
  * 
  * @author Chris Cummins
  * 
  */
-public class OMLModel implements ModelGateway {
+public class OMLModelGateway implements ModelGateway {
 	private final OMLComGateway c;
 	private final OMLLoggerGateway l;
 
-	public OMLModel() {
+	/**
+	 * Creates a new OMLModelGateway.
+	 */
+	public OMLModelGateway() {
 		c = new OMLComGateway();
 		l = new OMLLoggerGateway();
 	}
 
 	@Override
-	public ComGateway com() {
+	public final CommGateway com() {
 		return c;
 	}
 
 	@Override
-	public LoggerGateway logger() {
+	public final LoggerGateway logger() {
 		return l;
 	}
 
-	public OMLSettings getOMLSettings() {
+	@Override
+	public final OMLSettings getOMLSettings() {
 		return OMLDefaultSettings.get();
 	}
 

@@ -18,38 +18,57 @@
 
 package ac.aston.oml.controller.listeners;
 
+import ac.aston.oml.view.ViewGateway;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 
 import javax.swing.JFileChooser;
 
-import ac.aston.oml.controller.OMLController;
-import ac.aston.oml.view.ViewGateway;
-
 /**
+ * This implementation of the ActionListener interface is responsible for
+ * responding to choose file requests from the log settings view.
+ * 
  * @author Chris Cummins
  * 
  */
-public class LogSettingsFileListener extends OMLController implements
-		ActionListener {
+public class LogSettingsFileListener implements ActionListener {
 
 	private final ViewGateway v;
 
-	public LogSettingsFileListener(ViewGateway v) {
-		this.v = v;
+	/**
+	 * Creates a new Action Listener.
+	 * 
+	 * @param view
+	 *            ViewGateway for setting screen state data.
+	 */
+	public LogSettingsFileListener(final ViewGateway view) {
+		this.v = view;
 	}
 
 	@Override
-	public void actionPerformed(ActionEvent arg0) {
+	public final void actionPerformed(final ActionEvent arg0) {
+		// Create session state data.
 		final JFileChooser fileChooser = new JFileChooser();
-		if (fileChooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION)
+
+		// Display file chooser.
+		if (fileChooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
 			if (fileChooser.getSelectedFile().exists()) {
-				boolean b = v
-						.showYesNoPrompt("File exists, replace existing file?");
-				if (b)
-					v.ls().setFilepathLabel(
-							fileChooser.getSelectedFile().getAbsolutePath());
+				fileOverwrite(fileChooser.getSelectedFile());
 			}
+		}
+	}
+
+	/*
+	 * Prompt user for file overwrite.
+	 */
+	private void fileOverwrite(final File file) {
+		boolean b = v.showYesNoPrompt("File exists, replace existing file?");
+
+		if (b) {
+			v.ls().setFilepathLabel(file.getAbsolutePath());
+		}
 	}
 
 }

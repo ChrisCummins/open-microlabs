@@ -17,11 +17,10 @@
  */
 
 /**
- * This package contains all of the ActionListener implementations for the
- * Controller.
+ * This package represents the root package for test classes.
  * 
  * @author Chris Cummins
  * @version 0.5
  */
-package ac.aston.oml.controller.listeners;
+package ac.aston.oml.test;
 

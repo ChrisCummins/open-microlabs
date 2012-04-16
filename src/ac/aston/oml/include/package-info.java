@@ -17,11 +17,11 @@
  */
 
 /**
- * This package contains all of the ActionListener implementations for the
- * Controller.
+ * This package contains shared fields and objects to be used at any point
+ * within the program. It is analogous in use to server side includes.
  * 
  * @author Chris Cummins
  * @version 0.5
  */
-package ac.aston.oml.controller.listeners;
+package ac.aston.oml.include;
 

@@ -18,53 +18,61 @@
 
 package ac.aston.oml.model.com;
 
-import java.util.ArrayList;
-
 import ac.aston.oml.model.com.signals.OMLSignal;
+
+import java.util.ArrayList;
 
 /**
  * This class contains a representation of the active ports on the slave
- * microcontroller along with the data types that they represent.
+ * microcontrollers along with the data types that they represent.
  * 
  * @author Chris Cummins
  * 
  */
 public class Datamask {
-	private final OMLSignal[] SIGNALS;
-	private final OMLSignal[] ACTIVESIGNALS;
-	private final char CHAR;
+	private final OMLSignal[] signals;
+	private final OMLSignal[] activeSignals;
+	private final char comChar;
 
 	/**
 	 * Produces a Datamask object from the given argument.
 	 * 
-	 * @param signals
+	 * @param signalMask
 	 *            An array of signal types, one representing each pin.
 	 *            <code>null</code> if the pin is not active.
 	 */
-	public Datamask(OMLSignal[] signals) {
-		this.SIGNALS = signals;
-		this.ACTIVESIGNALS = getActiveSignals();
-		this.CHAR = getChar();
+	public Datamask(final OMLSignal[] signalMask) {
+		this.signals = signalMask;
+		this.activeSignals = getActiveSignals();
+		this.comChar = getChar();
 	}
 
 	/**
 	 * Returns an array of signal types, <code>null</code> entries indicate
-	 * inactive pins.
+	 * inactive signals.
 	 * 
-	 * @return Array of Signals, with <code>null</code> entries.
+	 * @return Array of Signals, <code>null</code> entries possible.
 	 */
-	public OMLSignal[] signals() {
-		return SIGNALS;
+	public final OMLSignal[] signals() {
+		return signals;
 	}
 
-	public String[] signalsToString() {
-		String[] s = new String[SIGNALS.length];
+	/**
+	 * Returns an array of strings, <code>null</code> entries indicate inactive
+	 * signals.
+	 * 
+	 * @return Array of Strings, <code>null</code> entries possible.
+	 */
+	public final String[] signalsToString() {
+		String[] s = new String[signals.length];
 
-		for (int i = 0; i < s.length; i++)
-			if (SIGNALS[i] != null)
-				s[i] = SIGNALS[i].name();
-			else
+		for (int i = 0; i < s.length; i++) {
+			if (signals[i] != null) {
+				s[i] = signals[i].name();
+			} else {
 				s[i] = null;
+			}
+		}
 
 		return s;
 	}
@@ -76,23 +84,20 @@ public class Datamask {
 	 * 
 	 * @return Array of Signals.
 	 */
-	public OMLSignal[] activeSignals() {
-		return ACTIVESIGNALS;
+	public final OMLSignal[] activeSignals() {
+		return activeSignals;
 	}
 
 	/**
-	 * Returns
-	 * <code>true<code> if selected pin is active, else <code>false</code>.
+	 * Returns <code>true</code> if selected pin is active, else
+	 * <code>false</code>.
 	 * 
 	 * @param n
 	 *            Pin index to check.
 	 * @return <code>true</code> or <code>false</code>.
 	 */
-	public boolean pin(int n) {
-		if (SIGNALS[n] != null)
-			return true;
-		else
-			return false;
+	public final boolean pin(final int n) {
+		return (signals[n] != null);
 	}
 
 	/**
@@ -101,10 +106,10 @@ public class Datamask {
 	 * 
 	 * @param n
 	 *            Pin index to check.
-	 * @return OMLSignal.
+	 * @return OMLSignal, <code>null</code> possible.
 	 */
-	public OMLSignal signal(int n) {
-		return SIGNALS[n];
+	public final OMLSignal signal(final int n) {
+		return signals[n];
 	}
 
 	/**
@@ -113,38 +118,39 @@ public class Datamask {
 	 * 
 	 * @return character.
 	 */
-	public char asciiChar() {
-		return CHAR;
+	public final char asciiChar() {
+		return comChar;
 	}
 
 	/*
-	 * Strips the SIGNALS array of null entries and returns.
-	 * 
-	 * @return Array of Signals.
+	 * Strips the signals array of null entries and returns.
 	 */
 	private OMLSignal[] getActiveSignals() {
-		ArrayList<OMLSignal> activeSignals = new ArrayList<OMLSignal>();
-		for (OMLSignal signal : SIGNALS)
-			if (signal != null)
-				activeSignals.add(signal);
-		OMLSignal[] array = new OMLSignal[activeSignals.size()];
-		activeSignals.toArray(array);
+		ArrayList<OMLSignal> active = new ArrayList<OMLSignal>();
+		for (OMLSignal signal : signals) {
+			if (signal != null) {
+				active.add(signal);
+			}
+		}
+
+		OMLSignal[] array = new OMLSignal[active.size()];
+		active.toArray(array);
 
 		return array;
 	}
 
 	/*
-	 * Iterates over SIGNALS and produces an ascii char data request code.
-	 * 
-	 * @return Ascii char.
+	 * Iterates over signals and produces an ascii char data request code.
 	 */
 	private char getChar() {
 		String binary = "";
-		for (OMLSignal signal : SIGNALS)
-			if (signal != null)
+		for (OMLSignal signal : signals) {
+			if (signal != null) {
 				binary += "1";
-			else
+			} else {
 				binary += "0";
+			}
+		}
 
 		// TODO: Proper char creation.
 

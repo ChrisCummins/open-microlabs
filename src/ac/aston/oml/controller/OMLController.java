@@ -87,13 +87,18 @@ public class OMLController implements Controller {
 		final OMLSettings c = m.getOMLSettings();
 		m.com().refreshCommPorts();
 
-		v.cs().init(m.getOMLSettings().fontset);
-		v.cs().setBaudOptions(c.baudOptions, c.baudOptionsSelected);
+		v.cs().init(m.getOMLSettings().getFontset());
+		v.cs().setBaudOptions(c.getBaudOptions(), c.getBaudOptionsSelected());
 		v.cs().setComOptions(m.com().getCommPorts()[0]);
-		v.cs().setDataOptions(c.databitOptions[0], c.databitOptionsSelected);
-		v.cs().setStopOptions(c.stopbitOptions[0], c.stopbitOptionsSelected);
-		v.cs().setParityOptions(c.parityOptions[0], c.parityOptionsSelected);
-		v.cs().setFlowOptions(c.flowOptions[0], c.flowOptionsSelected);
+		v.cs().setDataOptions(c.getDatabitOptions()[0],
+				c.getDatabitOptionsSelected());
+		v.cs().setStopOptions(c.getStopbitOptions()[0],
+				c.getStopbitOptionsSelected());
+		v.cs().setParityOptions(c.getParityOptions()[0],
+				c.getParityOptionsSelected());
+		v.cs()
+				.setFlowOptions(c.getFlowOptions()[0],
+						c.getFlowOptionsSelected());
 
 		GUITools.centreFrame(v.cs().fetchFrame());
 		v.cs().fetchFrame().setVisible(true);

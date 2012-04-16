@@ -18,12 +18,11 @@
 
 package ac.aston.oml.model.logger;
 
-import java.io.IOException;
-import java.util.Observable;
-
 import ac.aston.oml.include.AppDetails;
 import ac.aston.oml.model.com.SerialReader;
-import ac.aston.oml.model.logger.file.FileLogger;
+
+import java.io.IOException;
+import java.util.Observable;
 
 /**
  * This observable class performs the actions of reading data through the
@@ -36,25 +35,27 @@ import ac.aston.oml.model.logger.file.FileLogger;
  * 
  */
 public class SerialLogger extends Observable implements Runnable {
+
 	private final LogSettings logSettings;
 	private final SerialReader serialReader;
 	private final long restTime;
 
-	// private boolean isRunning;
 	private Double[] databuffer;
 
 	/**
 	 * Creates a SerialLogger object form the given arguments. It then sets the
 	 * SerialReader sleep time to the required amount calculated, and sets the
-	 * size of the databuffer to numer of active signals in the datamask.
+	 * size of the databuffer to the number of active signals in the datamask.
 	 * 
 	 * @param l
 	 *            LogSettingsView.
 	 * @param b
 	 *            SerialReader.
 	 * @throws IOException
+	 *             In case of IO error.
 	 */
-	public SerialLogger(LogSettings l, SerialReader b) throws IOException {
+	public SerialLogger(final LogSettings l, final SerialReader b)
+			throws IOException {
 		this.logSettings = l;
 		this.serialReader = b;
 		this.setBufferSleepTime();
@@ -62,7 +63,10 @@ public class SerialLogger extends Observable implements Runnable {
 		this.databuffer = new Double[logSettings.datamask().activeSignals().length];
 	}
 
-	public void run() {
+	/**
+	 * Takes a reading from the serial port.
+	 */
+	public final void run() {
 		for (int i = 0; i < logSettings.readCount(); i++) {
 			takeReading();
 			try {
@@ -78,7 +82,7 @@ public class SerialLogger extends Observable implements Runnable {
 	 * 
 	 * @return Double array.
 	 */
-	public Double[] getDatabuffer() {
+	public final Double[] getDatabuffer() {
 		return databuffer;
 	}
 
@@ -87,7 +91,7 @@ public class SerialLogger extends Observable implements Runnable {
 	 * 
 	 * @return SerialReader.
 	 */
-	public SerialReader getSerialBuffer() {
+	public final SerialReader getSerialBuffer() {
 		return serialReader;
 	}
 
@@ -96,7 +100,7 @@ public class SerialLogger extends Observable implements Runnable {
 	 * 
 	 * @return LogSettingsView.
 	 */
-	public LogSettings getLogSettings() {
+	public final LogSettings getLogSettings() {
 		return logSettings;
 	}
 
@@ -120,7 +124,7 @@ public class SerialLogger extends Observable implements Runnable {
 					.serialDelimiter()); //
 
 			// Iterate over databuffer.
-			for (int i = 0; i < databuffer.length; i++)
+			for (int i = 0; i < databuffer.length; i++) {
 				try {
 					// Convert strings to doubles.
 					databuffer[i] = Double.parseDouble(splitbuffer[i]);
@@ -128,10 +132,12 @@ public class SerialLogger extends Observable implements Runnable {
 					// Else assign them null.
 					databuffer[i] = null;
 				}
+			}
 		} catch (IOException e) {
 			databuffer = null;
 		}
 
+		// Update observers.
 		setChanged();
 		notifyObservers(databuffer);
 	}

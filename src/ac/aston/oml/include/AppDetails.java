@@ -67,7 +67,7 @@ public abstract class AppDetails {
 	}
 
 	/**
-	 * Returns the delimiter to be used during File Writing.
+	 * Returns the delimiter to be used during File Logging.
 	 * 
 	 * @return Delimiter string.
 	 */
@@ -75,12 +75,17 @@ public abstract class AppDetails {
 		return DATA_DELIMITER;
 	}
 
+	/**
+	 * Returns the end-of-line to be used during File Logging.
+	 * 
+	 * @return EOL string.
+	 */
 	public static final String datEOL() {
 		return DATA_EOL;
 	}
 
 	/**
-	 * Returns the delimiter used by the microcontroller to seperate ADC values
+	 * Returns the delimiter used by the microcontroller to separate ADC values
 	 * during serial comms.
 	 * 
 	 * @return Delimiter string.

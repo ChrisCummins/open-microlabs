@@ -74,8 +74,9 @@ public class AdvancedSettingsDoneListenner implements ActionListener {
 		}
 
 		// Get graph time range.
-		final Double graphTimeRange = (Double) m.getOMLSettings().graphTimeRangeOptions[1][v
-				.as().getTimeRangeSelectedIndex()];
+		final Double graphTimeRange = (Double) m.getOMLSettings()
+				.getGraphTimeRangeOptions()[1][v.as()
+				.getTimeRangeSelectedIndex()];
 
 		// Construct AdvancedSettings from obtained data.
 		final AdvancedSettings a = new AdvancedSettings(graphTimeRange, minY,

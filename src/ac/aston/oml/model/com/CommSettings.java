@@ -27,12 +27,12 @@ package ac.aston.oml.model.com;
  */
 public class CommSettings {
 
-	private final String PORTNAME;
-	private final int BAUDRATE;
-	private final int DATABITS;
-	private final int STOPBITS;
-	private final int PARITY;
-	private final int FLOWCONTROL;
+	private final String portNameVal;
+	private final int baudRateVal;
+	private final int dataBitsVal;
+	private final int stopBitsVal;
+	private final int parityVal;
+	private final int flowControlVal;
 
 	/**
 	 * Constructs a CommSettingsView object from arguments.
@@ -52,14 +52,15 @@ public class CommSettings {
 	 * @see jcummins.serial.SerialComm#SerialComm(String, int, int, int, int,
 	 *      int)
 	 */
-	public CommSettings(String portName, int baudRate, int dataBits,
-			int stopBits, int parity, int flowControl) {
-		this.PORTNAME = portName;
-		this.BAUDRATE = baudRate;
-		this.DATABITS = dataBits;
-		this.STOPBITS = stopBits;
-		this.PARITY = parity;
-		this.FLOWCONTROL = flowControl;
+	public CommSettings(final String portName, final int baudRate,
+			final int dataBits, final int stopBits, final int parity,
+			final int flowControl) {
+		this.portNameVal = portName;
+		this.baudRateVal = baudRate;
+		this.dataBitsVal = dataBits;
+		this.stopBitsVal = stopBits;
+		this.parityVal = parity;
+		this.flowControlVal = flowControl;
 	}
 
 	/**
@@ -67,8 +68,8 @@ public class CommSettings {
 	 * 
 	 * @return String.
 	 */
-	public String portName() {
-		return PORTNAME;
+	public final String portName() {
+		return portNameVal;
 	}
 
 	/**
@@ -76,8 +77,8 @@ public class CommSettings {
 	 * 
 	 * @return Int.
 	 */
-	public int baudRate() {
-		return BAUDRATE;
+	public final int baudRate() {
+		return baudRateVal;
 	}
 
 	/**
@@ -85,8 +86,8 @@ public class CommSettings {
 	 * 
 	 * @return Int.
 	 */
-	public int dataBits() {
-		return DATABITS;
+	public final int dataBits() {
+		return dataBitsVal;
 	}
 
 	/**
@@ -94,8 +95,8 @@ public class CommSettings {
 	 * 
 	 * @return Int.
 	 */
-	public int stopBits() {
-		return STOPBITS;
+	public final int stopBits() {
+		return stopBitsVal;
 	}
 
 	/**
@@ -103,8 +104,8 @@ public class CommSettings {
 	 * 
 	 * @return Int.
 	 */
-	public int parity() {
-		return PARITY;
+	public final int parity() {
+		return parityVal;
 	}
 
 	/**
@@ -112,8 +113,8 @@ public class CommSettings {
 	 * 
 	 * @return Int.
 	 */
-	public int flowControl() {
-		return FLOWCONTROL;
+	public final int flowControl() {
+		return flowControlVal;
 	}
 
 }

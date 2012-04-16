@@ -64,31 +64,55 @@ public interface LoggerGateway {
 
 	/**
 	 * Set the advanced settings for the logging session.
+	 * 
 	 * @param a
+	 *            Advanced Settings.
+	 * @see ac.aston.oml.model.logger.AdvancedSettings#AdvancedSettings(Double,
+	 *      double, double)
 	 */
 	void setAdvancedSettings(AdvancedSettings a);
 
 	/**
 	 * Adds a series change listener to the microcontroller data model,
-	 * therefore enabling new data to be read.
+	 * therefore enabling new data to be read. Note that logging must have
+	 * started first.
 	 * 
 	 * @param l
 	 *            SeriesChangeListener.
 	 */
 	void addNewDataListener(SeriesChangeListener l);
 
-	void addNewDataToLog(final TimeSeriesCollection data);
+	/**
+	 * Add new data to File Logger.
+	 * 
+	 * @param data
+	 *            TimeSeriesCollection.
+	 * @see ac.aston.oml.model.logger.file.FileLogger#addNewData(TimeSeriesCollection)
+	 */
+	void addNewDataToLog(TimeSeriesCollection data);
 
+	/**
+	 * Returns whether a logger session is active or not.
+	 * 
+	 * @return <code>true</code> if active, else <code>false</code>.
+	 */
 	boolean isLogging();
 
 	/**
-	 * Returns the LogSettingsView.
+	 * Returns the LogSettings.
 	 * 
-	 * @return LogSettingsView currently in use.
+	 * @return LogSettings currently in use.
 	 * @see ac.aston.oml.model.logger.LogSettings#LogSettings()
 	 */
 	LogSettings getLogSettings();
 
+	/**
+	 * Returns the AdvancedSettings.
+	 * 
+	 * @return Advanced Settings in use.
+	 * @see ac.aston.oml.model.logger.AdvancedSettings#AdvancedSettings(Double,
+	 *      double, double)
+	 */
 	AdvancedSettings getAdvancedSettings();
 
 	/**

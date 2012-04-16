@@ -18,16 +18,19 @@
 
 package ac.aston.oml.model.logger;
 
+import ac.aston.oml.model.CommGateway;
+import ac.aston.oml.model.LoggerGateway;
+import ac.aston.oml.model.logger.file.FileLogger;
+
 import java.io.IOException;
 
 import org.jfree.data.general.SeriesChangeListener;
 import org.jfree.data.time.TimeSeriesCollection;
 
-import ac.aston.oml.model.ComGateway;
-import ac.aston.oml.model.LoggerGateway;
-import ac.aston.oml.model.logger.file.FileLogger;
-
 /**
+ * This implementation of the LoggerGateway interface provides all of the
+ * necessary functionality to adhere to the contract.
+ * 
  * @author Chris Cummins
  * 
  */
@@ -39,62 +42,69 @@ public class OMLLoggerGateway implements LoggerGateway {
 	private FileLogger fileLogger;
 
 	@Override
-	public void startLogging() throws IOException {
+	public final void startLogging() throws IOException {
 		logger = new Logger(serialLogger);
 		logger.startLogging();
 	}
 
 	@Override
-	public void stopLogging() {
+	public final void stopLogging() {
 		logger.stopLogging();
 	}
 
 	@Override
-	public void setLogSettings(LogSettings l, ComGateway c) throws IOException, IllegalArgumentException {
+	public final void setLogSettings(final LogSettings l, final CommGateway c)
+			throws IOException {
 		serialLogger = new SerialLogger(l, c.getSerialReader());
 		c.setSerialReader(serialLogger.getSerialBuffer());
-		if (c.getSerialReader().getSleepTime() > l.readDelay())
+
+		// Throw a runtime exception if read delay is too small.
+		if (c.getSerialReader().getSleepTime() > l.readDelay()) {
 			throw new IllegalArgumentException("Minimum valid read delay is "
 					+ c.getSerialReader().getSleepTime() + "ms!");
+		}
 
 		// If necessary, instantiate a file logger.
-		if (l.logPath() != null)
+		if (l.logPath() != null) {
 			fileLogger = new FileLogger(l.logPath(), l.datamask()
 					.activeSignals());
-		else
+		} else {
 			fileLogger = null;
+		}
 	}
 
-	public void setAdvancedSettings(AdvancedSettings a) {
+	@Override
+	public final void setAdvancedSettings(final AdvancedSettings a) {
 		this.advancedSettings = a;
 	}
 
 	@Override
-	public void addNewDataToLog(TimeSeriesCollection data) {
+	public final void addNewDataToLog(final TimeSeriesCollection data) {
 		fileLogger.addNewData(data);
 	}
 
 	@Override
-	public void addNewDataListener(SeriesChangeListener l) {
+	public final void addNewDataListener(final SeriesChangeListener l) {
 		logger.addNewDataListener(l);
 	}
 
 	@Override
-	public boolean isLogging() {
+	public final boolean isLogging() {
 		return logger.isLogging();
 	}
 
 	@Override
-	public LogSettings getLogSettings() {
+	public final LogSettings getLogSettings() {
 		return serialLogger.getLogSettings();
 	}
 
-	public AdvancedSettings getAdvancedSettings() {
+	@Override
+	public final AdvancedSettings getAdvancedSettings() {
 		return advancedSettings;
 	}
 
 	@Override
-	public TimeSeriesCollection getData() {
+	public final TimeSeriesCollection getData() {
 		return logger.getData();
 	}
 

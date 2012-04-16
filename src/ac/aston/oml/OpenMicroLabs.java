@@ -19,7 +19,7 @@
 package ac.aston.oml;
 
 import ac.aston.oml.controller.OMLController;
-import ac.aston.oml.model.OMLModel;
+import ac.aston.oml.model.OMLModelGateway;
 import ac.aston.oml.view.gui.OMLView;
 import jcummins.gui.GUITools;
 
@@ -48,7 +48,7 @@ public class OpenMicroLabs {
 		GUITools.setNativeLookAndFeel();
 
 		OMLController c = new OMLController();
-		c.init(new OMLModel(), new OMLView());
+		c.init(new OMLModelGateway(), new OMLView());
 	}
 
 }

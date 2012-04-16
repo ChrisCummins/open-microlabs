@@ -42,7 +42,7 @@ public class DrawAdvancedSettingsView {
 				"10 seconds", "30 seconds", "1 minute", "5 minutes", "Full" };
 
 		final OMLAdvancedSettingsView frame = new OMLAdvancedSettingsView();
-		frame.init(c.fontset);
+		frame.init(c.getFontset());
 		frame.setMinYText("0.0");
 		frame.setMaxYText("1023.0");
 		frame.setTimeRangeOptions(s, 3);

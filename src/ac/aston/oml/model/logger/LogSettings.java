@@ -29,10 +29,10 @@ import ac.aston.oml.model.com.Datamask;
  */
 public class LogSettings {
 
-	private final Datamask DATAMASK;
-	private final long READDELAY;
-	private final int READCOUNT;
-	private final String LOGPATH;
+	private final Datamask datamaskVal;
+	private final long readDelayVal;
+	private final int readCountVal;
+	private final String logPathVal;
 
 	/**
 	 * Constructs a LogSettingsView object from arguments.
@@ -46,12 +46,12 @@ public class LogSettings {
 	 * @param logPath
 	 *            The file path to the log (null for no file logging).
 	 */
-	public LogSettings(Datamask datamask, long readDelay, int readCount,
-			String logPath) {
-		this.DATAMASK = datamask;
-		this.READDELAY = readDelay;
-		this.READCOUNT = readCount;
-		this.LOGPATH = logPath;
+	public LogSettings(final Datamask datamask, final long readDelay,
+			final int readCount, final String logPath) {
+		this.datamaskVal = datamask;
+		this.readDelayVal = readDelay;
+		this.readCountVal = readCount;
+		this.logPathVal = logPath;
 	}
 
 	/**
@@ -59,8 +59,8 @@ public class LogSettings {
 	 * 
 	 * @return Datamask.
 	 */
-	public Datamask datamask() {
-		return DATAMASK;
+	public final Datamask datamask() {
+		return datamaskVal;
 	}
 
 	/**
@@ -68,8 +68,8 @@ public class LogSettings {
 	 * 
 	 * @return Long.
 	 */
-	public long readDelay() {
-		return READDELAY;
+	public final long readDelay() {
+		return readDelayVal;
 	}
 
 	/**
@@ -77,8 +77,8 @@ public class LogSettings {
 	 * 
 	 * @return Int, or <code>null</code> for unlimited readings.
 	 */
-	public int readCount() {
-		return READCOUNT;
+	public final int readCount() {
+		return readCountVal;
 	}
 
 	/**
@@ -86,8 +86,8 @@ public class LogSettings {
 	 * 
 	 * @return String, or <code>null</code> if not logging to file.
 	 */
-	public String logPath() {
-		return LOGPATH;
+	public final String logPath() {
+		return logPathVal;
 	}
 
 }
