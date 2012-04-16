@@ -18,6 +18,9 @@
 
 package ac.aston.oml.view.gui;
 
+import ac.aston.oml.include.AppDetails;
+import ac.aston.oml.view.CommSettingsView;
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.GridLayout;
@@ -31,9 +34,6 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.TitledBorder;
-
-import ac.aston.oml.include.AppDetails;
-import ac.aston.oml.view.CommSettingsView;
 
 import jcummins.gui.HTMLFontset;
 import jcummins.gui.JComboBoxUtils;
@@ -50,12 +50,27 @@ public class OMLCommSettingsView extends JFrame implements CommSettingsView {
 	/** Serial UID. */
 	private static final long serialVersionUID = -7903183494493646804L;
 
-	private static final int frameWidth = 320;
-	private static final int frameHeight = 370;
-	private static final int topHeight = 90;
-	private static final int btmHeight = 50;
-	private static final int midHeight = frameHeight - btmHeight - topHeight
-			- 30;
+	private static final int FRAME_WIDTH = 320;
+	private static final int FRAME_HEIGHT = 370;
+
+	private static final int PAD5 = 5;
+	private static final int PAD10 = 10;
+	private static final int PAD15 = 15;
+	private static final int PAD20 = 20;
+	private static final int PAD30 = 30;
+
+	private static final int TOP_GRID_ROWS = 4;
+	private static final int TOP_GRID_COL = 2;
+	private static final int GRID_VGAP = 10;
+	private static final int GRID_HGAP = 5;
+
+	private static final int MID_GRID_ROWS = 6;
+	private static final int MID_GRID_COL = 2;
+
+	private static final int TOP_HEIGHT = 90;
+	private static final int BTM_HEIGHT = 50;
+	private static final int MID_HEIGHT = FRAME_HEIGHT - BTM_HEIGHT
+			- TOP_HEIGHT - PAD30;
 
 	private HTMLFontset h;
 
@@ -75,7 +90,7 @@ public class OMLCommSettingsView extends JFrame implements CommSettingsView {
 	 */
 	public OMLCommSettingsView() {
 		this.setTitle(AppDetails.name());
-		this.setSize(frameWidth, frameHeight);
+		this.setSize(FRAME_WIDTH, FRAME_HEIGHT);
 		this.setResizable(false);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setIconImage(AppDetails.icon());
@@ -83,83 +98,68 @@ public class OMLCommSettingsView extends JFrame implements CommSettingsView {
 	}
 
 	@Override
-	public void init(HTMLFontset h) {
-		this.h = h;
+	public final void init(final HTMLFontset fontset) {
+		this.h = fontset;
 		this.setContentPane(createContentPane());
 	}
 
 	@Override
-	public void teardown() {
+	public final void teardown() {
 		this.dispose();
 	}
 
-	public JFrame fetchFrame() {
+	@Override
+	public final JFrame fetchFrame() {
 		return this;
 	}
 
-	public void addRefreshPortsButtonListener(ActionListener l) {
-		comRefreshButton.addActionListener(l);
-	}
-
 	@Override
-	public void setComOptions(Object[] o) {
+	public final void setComOptions(final Object[] o) {
 		JComboBoxUtils.updateContents(comBox, o);
 	}
 
 	@Override
-	public void setBaudOptions(Object[] is, int index) {
+	public final void setBaudOptions(final Object[] is, final int index) {
 		JComboBoxUtils.updateContents(baudBox, is, index);
 	}
 
 	@Override
-	public void setDataOptions(Object[] o, int index) {
+	public final void setDataOptions(final Object[] o, final int index) {
 		JComboBoxUtils.updateContents(dataBox, o, index);
 	}
 
 	@Override
-	public void setStopOptions(Object[] o, int index) {
+	public final void setStopOptions(final Object[] o, final int index) {
 		JComboBoxUtils.updateContents(stopBox, o, index);
 	}
 
 	@Override
-	public void setParityOptions(Object[] o, int index) {
+	public final void setParityOptions(final Object[] o, final int index) {
 		JComboBoxUtils.updateContents(parityBox, o, index);
 	}
 
 	@Override
-	public void setFlowOptions(Object[] o, int index) {
+	public final void setFlowOptions(final Object[] o, final int index) {
 		JComboBoxUtils.updateContents(flowBox, o, index);
 	}
 
 	@Override
-	public void addRefreshButtonListener(ActionListener l) {
+	public final void addRefreshButtonListener(final ActionListener l) {
 		comRefreshButton.addActionListener(l);
 	}
 
-	/**
-	 * Adds an ActionListener to the "Done" button.
-	 * 
-	 * @param l
-	 *            ActionListener
-	 */
-	public void addDoneButtonListener(ActionListener l) {
+	@Override
+	public final void addDoneButtonListener(final ActionListener l) {
 		doneButton.addActionListener(l);
 	}
 
-	/**
-	 * Adds an ActionListener to the "Test" button.
-	 * 
-	 * @param l
-	 *            ActionListener
-	 */
-	public void addTestButtonListener(ActionListener l) {
+	@Override
+	public final void addTestButtonListener(final ActionListener l) {
 		testButton.addActionListener(l);
 	}
 
 	/*
 	 * Draws the main content pane for the OMLCommSettingsView frame.
-	 * 
-	 * @return Content pane.
 	 */
 	private JPanel createContentPane() {
 		// PANEL OBJECTS -------------------------------------------------------
@@ -175,14 +175,15 @@ public class OMLCommSettingsView extends JFrame implements CommSettingsView {
 		JPanel mainPanel = new JPanel();
 		mainPanel.setLayout(null);
 		mainPanel.setLocation(0, 0);
-		mainPanel.setSize(frameWidth - 20, frameHeight - 20);
+		mainPanel.setSize(FRAME_WIDTH - PAD20, FRAME_HEIGHT - PAD20);
 		mainPanel.setBackground(Color.white);
 
 		// TOP -----------------------------------------------------------------
 		JPanel topPanel = new JPanel();
-		topPanel.setLayout(new GridLayout(4, 2, 10, 5));
-		topPanel.setLocation(5, 5);
-		topPanel.setSize(frameWidth - 15, topHeight);
+		topPanel.setLayout(new GridLayout(TOP_GRID_ROWS, TOP_GRID_COL,
+				GRID_VGAP, GRID_HGAP));
+		topPanel.setLocation(PAD5, PAD5);
+		topPanel.setSize(FRAME_WIDTH - PAD15, TOP_HEIGHT);
 		topPanel.setBorder(borderTop);
 		topPanel.setBackground(Color.white);
 		mainPanel.add(topPanel);
@@ -204,9 +205,10 @@ public class OMLCommSettingsView extends JFrame implements CommSettingsView {
 
 		// MID -----------------------------------------------------------------
 		JPanel midPanel = new JPanel();
-		midPanel.setLayout(new GridLayout(6, 2, 20, 5));
-		midPanel.setLocation(5, topHeight + 5);
-		midPanel.setSize(frameWidth - 15, midHeight);
+		midPanel.setLayout(new GridLayout(MID_GRID_ROWS, MID_GRID_COL, PAD20,
+				PAD5));
+		midPanel.setLocation(PAD5, TOP_HEIGHT + PAD5);
+		midPanel.setSize(FRAME_WIDTH - PAD15, MID_HEIGHT);
 		midPanel.setBorder(borderMid);
 		midPanel.setBackground(Color.white);
 		mainPanel.add(midPanel);
@@ -266,17 +268,17 @@ public class OMLCommSettingsView extends JFrame implements CommSettingsView {
 		// BOTTOM --------------------------------------------------------------
 		JPanel btmPanel = new JPanel();
 		btmPanel.setLayout(null);
-		btmPanel.setLocation(5, midPanel.getLocation().y + midHeight);
-		btmPanel.setSize(frameWidth - 15, btmHeight - 10);
+		btmPanel.setLocation(PAD5, midPanel.getLocation().y + MID_HEIGHT);
+		btmPanel.setSize(FRAME_WIDTH - PAD15, BTM_HEIGHT - PAD10);
 		btmPanel.setBackground(Color.white);
 		mainPanel.add(btmPanel);
 
 		testButton.setToolTipText("Test microcontroller with these settings");
 		testButton.setIcon(new ImageIcon("img/22x22/plus.png", AppDetails
 				.name()));
-		testButton.setLocation(5, 5);
-		testButton.setSize((btmPanel.getSize().width / 2) - 10,
-				btmPanel.getSize().height - 10);
+		testButton.setLocation(PAD5, PAD5);
+		testButton.setSize((btmPanel.getSize().width / 2) - PAD10,
+				btmPanel.getSize().height - PAD10);
 		testButton.setBackground(Color.white);
 		btmPanel.add(testButton);
 
@@ -284,9 +286,10 @@ public class OMLCommSettingsView extends JFrame implements CommSettingsView {
 		doneButton.setIcon(new ImageIcon("img/22x22/play.png", AppDetails
 				.name()));
 		doneButton.setLocation(
-				(testButton.getLocation().x + testButton.getWidth()) + 10, 5);
-		doneButton.setSize((btmPanel.getSize().width / 2) - 10,
-				btmPanel.getSize().height - 10);
+				(testButton.getLocation().x + testButton.getWidth()) + PAD10,
+				PAD5);
+		doneButton.setSize((btmPanel.getSize().width / 2) - PAD10,
+				btmPanel.getSize().height - PAD10);
 		doneButton.setBackground(Color.white);
 		btmPanel.add(doneButton);
 
@@ -294,32 +297,32 @@ public class OMLCommSettingsView extends JFrame implements CommSettingsView {
 	}
 
 	@Override
-	public int getSelectedComOption() {
+	public final int getSelectedComOption() {
 		return comBox.getSelectedIndex();
 	}
 
 	@Override
-	public int getSelectedBaudOption() {
+	public final int getSelectedBaudOption() {
 		return baudBox.getSelectedIndex();
 	}
 
 	@Override
-	public int getSelectedDataOption() {
+	public final int getSelectedDataOption() {
 		return dataBox.getSelectedIndex();
 	}
 
 	@Override
-	public int getSelectedStopOption() {
+	public final int getSelectedStopOption() {
 		return stopBox.getSelectedIndex();
 	}
 
 	@Override
-	public int getSelectedParityOption() {
+	public final int getSelectedParityOption() {
 		return parityBox.getSelectedIndex();
 	}
 
 	@Override
-	public int getSelectedFlowOption() {
+	public final int getSelectedFlowOption() {
 		return flowBox.getSelectedIndex();
 	}
 

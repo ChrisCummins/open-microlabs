@@ -32,7 +32,7 @@ import java.awt.image.BufferedImage;
  */
 public abstract class AppDetails {
 	private static final String NAME = "Open MicroLabs";
-	private static final String VERSION = "v0.5 Beta";
+	private static final String VERSION = "v0.5.3 Beta";
 	private static final String AUTHOR = "Chris Cummins";
 	private static final String DATA_DELIMITER = ", ";
 	private static final String DATA_EOL = "\r";

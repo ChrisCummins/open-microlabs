@@ -51,14 +51,41 @@ import ac.aston.oml.view.LoggerView;
  */
 public class OMLLoggerView extends JFrame implements LoggerView {
 	private static final long serialVersionUID = -4475975253216864808L;
-	private static final String graphXlabel = "Time (hh:mm:ss)";
-	private static final String graphYlabel = null;
+	private static final String GRAPH_X_LABEL = "Time (hh:mm:ss)";
+	private static final String GRAPH_Y_LABEL = null;
+
+	private static final int PAD5 = 5;
+	private static final int PAD7 = 7;
+	private static final int PAD8 = 8;
+	private static final int PAD10 = 10;
+	private static final int PAD15 = 15;
+	private static final int PAD20 = 20;
+	private static final int PAD22 = 22;
+	private static final int PAD30 = 30;
+	private static final int PAD40 = 40;
+	private static final int PAD65 = 65;
+	private static final int PAD120 = 120;
+	private static final int PAD200 = 200;
 
 	// GUI CONFIG --------------------------------------------------------------
-	private static final int frameWidth = 800;
-	private static final int frameHeight = 600;
-	private static final int graphHeight = frameHeight - 200;
-	private static final int btmHeight = 80;
+	private static final int FRAME_WIDTH = 800;
+	private static final int FRAME_HEIGHT = 600;
+	private static final int GRAPH_HEIGHT = FRAME_HEIGHT - PAD200;
+	private static final int BTM_HEIGHT = 80;
+	
+	private static final int PIN_COUNT = 7;
+	private static final int SLAVE_BITS = 1;
+
+	private static final int RESULTS_GRID_ROWS = 6;
+	private static final int RESULTS_GRID_COL = 9;
+	private static final int RESULTS_COL_WIDTH = 70;
+
+	private static final int LABEL_WIDTH = 140;
+	private static final int LABEL_HEIGHT = 30;
+	private static final int LABEL_X = 10;
+	private static final int LABEL_Y = 18;
+	private static final int DONE_WIDTH = 100;
+	private static final int DONE_HEIGHT = 30;
 
 	private final JLabel valSideLabel = new JLabel("");
 	private final JLabel avgSideLabel = new JLabel("Avg:");
@@ -81,8 +108,11 @@ public class OMLLoggerView extends JFrame implements LoggerView {
 	private double graphMinY;
 	private double graphMaxY;
 
+	/**
+	 * Create a new OMLLoggerView frame.
+	 */
 	public OMLLoggerView() {
-		this.setSize(frameWidth, frameHeight);
+		this.setSize(FRAME_WIDTH, FRAME_HEIGHT);
 		this.setResizable(false);
 		this.setBackground(Color.white);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -91,26 +121,29 @@ public class OMLLoggerView extends JFrame implements LoggerView {
 	}
 
 	@Override
-	public void init(HTMLFontset h, TimeSeriesCollection t, String graphTitle,
-			double graphMinY, double graphMaxY, double graphTimeRange,
-			String[] signals) {
-		this.h = h;
-		this.graphMinY = graphMinY;
-		this.graphMaxY = graphMaxY;
+	public final void init(final HTMLFontset fontset,
+			final TimeSeriesCollection t, final String graphTitle,
+			final double graphMinYVal, final double graphMaxYVal,
+			final double graphTimeRange, final String[] signals) {
+		this.h = fontset;
+		this.graphMinY = graphMinYVal;
+		this.graphMaxY = graphMaxYVal;
 		this.setContentPane(createContentPane(t, graphTitle, graphTimeRange,
 				signals));
 	}
 
 	@Override
-	public void teardown() {
+	public final void teardown() {
 		this.dispose();
 	}
 
-	public JFrame fetchFrame() {
+	@Override
+	public final JFrame fetchFrame() {
 		return this;
 	}
 
-	public void setViewLoggingCompleted(double graphTimeRange) {
+	@Override
+	public final void setViewLoggingCompleted(final double graphTimeRange) {
 		final XYPlot plot = snsChart.getXYPlot();
 		ValueAxis axis = plot.getDomainAxis();
 		axis.setAutoRange(true);
@@ -128,7 +161,7 @@ public class OMLLoggerView extends JFrame implements LoggerView {
 			avgLabel[i].setText("");
 		}
 
-		footerLabel.setSize(doneButton.getLocation().x, 30);
+		footerLabel.setSize(doneButton.getLocation().x, PAD30);
 		footerLabel.setHorizontalAlignment(JLabel.CENTER);
 
 		btmPanel.remove(progressBar);
@@ -139,66 +172,82 @@ public class OMLLoggerView extends JFrame implements LoggerView {
 	}
 
 	@Override
-	public void setValLabels(String[] s) {
-		for (int i = 0; i < s.length; i++)
-			if (s[i] != null)
+	public final void setValLabels(final String[] s) {
+		for (int i = 0; i < s.length; i++) {
+			if (s[i] != null) {
 				valLabel[i].setText(h.format("label-bold", s[i]));
-			else
+			} else {
 				valLabel[i].setText(h.format("label-red", "!!!"));
+			}
+		}
 	}
 
 	@Override
-	public void setMinLabels(String[] s) {
-		for (int i = 0; i < s.length; i++)
+	public final void setMinLabels(final String[] s) {
+		for (int i = 0; i < s.length; i++) {
 			minLabel[i].setText(h.format("body", s[i]));
+		}
 	}
 
 	@Override
-	public void setMaxLabels(String[] s) {
-		for (int i = 0; i < s.length; i++)
+	public final void setMaxLabels(final String[] s) {
+		for (int i = 0; i < s.length; i++) {
 			maxLabel[i].setText(h.format("body", s[i]));
+		}
 	}
 
 	@Override
-	public void setAvgLabels(String[] s) {
-		for (int i = 0; i < s.length; i++)
+	public final void setAvgLabels(final String[] s) {
+		for (int i = 0; i < s.length; i++) {
 			avgLabel[i].setText(h.format("body", s[i]));
+		}
 	}
 
 	@Override
-	public void setReadingsLabel(String s) {
+	public final void setReadingsLabel(final String s) {
 		this.setTitle(s);
 	}
 
 	@Override
-	public void setSignalStrenghLabel(String s) {
+	public final void setSignalStrenghLabel(final String s) {
 		this.footerLabel.setText(h.format("label", s));
 	}
 
 	@Override
-	public void setProgressBar(int current, int max) {
+	public final void setProgressBar(final int current, final int max) {
 		this.progressBar.setMaximum(max);
 		this.progressBar.setValue(current);
 	}
 
 	@Override
-	public void addDoneButtonListener(ActionListener l) {
+	public final void addDoneButtonListener(final ActionListener l) {
 		this.doneButton.addActionListener(l);
 	}
 
-	private JPanel createContentPane(TimeSeriesCollection t, String graphTitle,
-			double graphTimeRange, String[] signals) {
+	/*
+	 * Create JComponents and populate main panel.
+	 */
+	private JPanel createContentPane(final TimeSeriesCollection t,
+			final String graphTitle, final double graphTimeRange,
+			final String[] signals) {
 		chanLabel = new JLabel[signals.length];
 
 		int activeSignalCount = 0;
 		for (int i = 0; i < signals.length; i++) {
-			chanLabel[i] = new JLabel(h.format("label", (char) ((i / 7) + 65)
-					+ "-0x" + String.format("%02x", (i % 7) + 1).toUpperCase()));
+			chanLabel[i] = new JLabel(
+					h.format(
+							"label",
+							(char) ((i / PAD7) + PAD65)
+									+ "-0x"
+									+ String.format("%02x",
+											(i % PIN_COUNT) + SLAVE_BITS)
+											.toUpperCase()));
 			chanLabel[i].setHorizontalAlignment(JLabel.CENTER);
-			if (signals[i] != null)
+			if (signals[i] != null) {
 				activeSignalCount++;
-			else
+			} else {
 				chanLabel[i].setEnabled(false);
+			}
 		}
 
 		typeLabel = new JLabel[activeSignalCount];
@@ -208,12 +257,13 @@ public class OMLLoggerView extends JFrame implements LoggerView {
 		avgLabel = new JLabel[activeSignalCount];
 
 		int index = 0;
-		for (int i = 0; i < signals.length; i++)
+		for (int i = 0; i < signals.length; i++) {
 			if (signals[i] != null) {
 				typeLabel[index] = new JLabel(h.format("body", signals[i]));
 				typeLabel[index].setHorizontalAlignment(JLabel.CENTER);
 				index++;
 			}
+		}
 
 		for (int i = 0; i < activeSignalCount; i++) {
 			valLabel[i] = new JLabel();
@@ -232,8 +282,8 @@ public class OMLLoggerView extends JFrame implements LoggerView {
 		mainPanel.setBackground(Color.white);
 
 		// Create graph.
-		snsChart = ChartFactory.createTimeSeriesChart(graphTitle, graphXlabel,
-				graphYlabel, t, true, true, false);
+		snsChart = ChartFactory.createTimeSeriesChart(graphTitle,
+				GRAPH_X_LABEL, GRAPH_Y_LABEL, t, true, true, false);
 		final XYPlot plot = snsChart.getXYPlot();
 		ValueAxis axis = plot.getDomainAxis();
 		axis.setAutoRange(true);
@@ -242,26 +292,27 @@ public class OMLLoggerView extends JFrame implements LoggerView {
 		axis.setRange(graphMinY, graphMaxY);
 
 		ChartPanel snsChartPanel = new ChartPanel(snsChart);
-		snsChartPanel.setPreferredSize(new Dimension(frameWidth - 20,
-				graphHeight - 10));
+		snsChartPanel.setPreferredSize(new Dimension(FRAME_WIDTH - PAD20,
+				GRAPH_HEIGHT - PAD10));
 
 		// Set up graph panel.
 		final JPanel graphPanel = new JPanel();
-		graphPanel.setSize(frameWidth - 20, graphHeight);
+		graphPanel.setSize(FRAME_WIDTH - PAD20, GRAPH_HEIGHT);
 		graphPanel.setLocation(0, 0);
 		graphPanel.setBackground(Color.white);
 		graphPanel.add(snsChartPanel);
 
 		// Set up results panel.
 		final JPanel resultsPanel = new JPanel();
-		resultsPanel.setLayout(new GridLayout(6, 9));
+		resultsPanel.setLayout(new GridLayout(RESULTS_GRID_ROWS,
+				RESULTS_GRID_COL));
 		resultsPanel.setBackground(Color.white);
 
 		// Set up scroll pane.
 		final JScrollPane scrollPane = new JScrollPane(resultsPanel);
-		scrollPane.setSize(frameWidth - 20, frameHeight - btmHeight
-				- graphHeight + 8);
-		scrollPane.setLocation(5, graphHeight);
+		scrollPane.setSize(FRAME_WIDTH - PAD20, FRAME_HEIGHT - BTM_HEIGHT
+				- GRAPH_HEIGHT + PAD8);
+		scrollPane.setLocation(PAD5, GRAPH_HEIGHT);
 		scrollPane.setBackground(Color.white);
 		scrollPane
 				.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
@@ -269,76 +320,89 @@ public class OMLLoggerView extends JFrame implements LoggerView {
 				.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
 
 		// Set results panel size.
-		resultsPanel.setPreferredSize(new Dimension(40 + (signals.length * 70),
-				frameHeight - btmHeight - graphHeight - 120));
+		resultsPanel.setPreferredSize(new Dimension(PAD40
+				+ (signals.length * RESULTS_COL_WIDTH), FRAME_HEIGHT
+				- BTM_HEIGHT - GRAPH_HEIGHT - PAD120));
 		resultsPanel.revalidate();
 
 		// Set up bottom panel.
 		btmPanel.setLayout(null);
-		btmPanel.setSize(frameWidth, btmHeight);
-		btmPanel.setLocation(0, this.getHeight() - btmHeight);
+		btmPanel.setSize(FRAME_WIDTH, BTM_HEIGHT);
+		btmPanel.setLocation(0, this.getHeight() - BTM_HEIGHT);
 		btmPanel.setBackground(Color.white);
 
 		resultsPanel.add(new JLabel(""));
-		for (JLabel l : chanLabel)
+		for (JLabel l : chanLabel) {
 			resultsPanel.add(l);
+		}
 
 		index = 0;
 		resultsPanel.add(new JLabel(""));
-		for (JLabel l : chanLabel)
+		for (JLabel l : chanLabel) {
 			if (l.isEnabled()) {
 				resultsPanel.add(typeLabel[index]);
 				index++;
-			} else
+			} else {
 				resultsPanel.add(new JLabel(""));
+			}
+		}
 
 		resultsPanel.add(valSideLabel);
 		index = 0;
-		for (JLabel l : chanLabel)
+		for (JLabel l : chanLabel) {
 			if (l.isEnabled()) {
 				resultsPanel.add(valLabel[index]);
 				index++;
-			} else
+			} else {
 				resultsPanel.add(new JLabel(""));
+			}
+		}
 
 		resultsPanel.add(new JLabel("Min:"));
 		index = 0;
-		for (JLabel l : chanLabel)
+		for (JLabel l : chanLabel) {
 			if (l.isEnabled()) {
 				resultsPanel.add(minLabel[index]);
 				index++;
-			} else
+			} else {
 				resultsPanel.add(new JLabel(""));
+			}
+		}
 
 		resultsPanel.add(new JLabel("Max:"));
 		index = 0;
-		for (JLabel l : chanLabel)
+		for (JLabel l : chanLabel) {
 			if (l.isEnabled()) {
 				resultsPanel.add(maxLabel[index]);
 				index++;
-			} else
+			} else {
 				resultsPanel.add(new JLabel(""));
+			}
+		}
 
 		resultsPanel.add(avgSideLabel);
 		index = 0;
-		for (JLabel l : chanLabel)
-			if (l.isEnabled()) {
+		for (JLabel label : chanLabel) {
+			if (label.isEnabled()) {
 				resultsPanel.add(avgLabel[index]);
 				index++;
-			} else
+			} else {
 				resultsPanel.add(new JLabel(""));
+			}
+		}
 
 		// Instantiate bottom panel objects.
-		footerLabel.setSize(140, 30);
-		footerLabel.setLocation(10, 18);
+		footerLabel.setSize(LABEL_WIDTH, LABEL_HEIGHT);
+		footerLabel.setLocation(LABEL_X, LABEL_Y);
 		doneButton.setIcon(new ImageIcon("img/22x22/stop.png"));
-		doneButton.setSize(100, 30);
-		doneButton.setLocation(frameWidth - 20 - doneButton.getWidth(), 15);
+		doneButton.setSize(DONE_WIDTH, DONE_HEIGHT);
+		doneButton.setLocation(FRAME_WIDTH - PAD20 - doneButton.getWidth(),
+				PAD15);
 		progressBar = new JProgressBar();
-		progressBar.setSize(frameWidth - 40 - doneButton.getWidth()
-				- footerLabel.getWidth(), 20);
+		progressBar.setSize(FRAME_WIDTH - PAD40 - doneButton.getWidth()
+				- footerLabel.getWidth(), PAD20);
 		progressBar.setValue(0);
-		progressBar.setLocation(footerLabel.getWidth() + 10, 22);
+		progressBar.setLocation(footerLabel.getWidth() + PAD10, PAD22);
 
 		// Populate bottom panel.
 		btmPanel.add(footerLabel);

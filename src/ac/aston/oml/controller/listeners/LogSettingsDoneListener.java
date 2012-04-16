@@ -169,8 +169,9 @@ public class LogSettingsDoneListener implements ActionListener {
 		} else {
 			a = createAdvancedSettings();
 		}
-		v.lv().init(c.getFontset(), m.logger().getData(), AppDetails.name(),
-				a.minY(), a.maxY(), a.timeRange(),
+		v.lv().init(c.getFontset(), m.logger().getData(),
+				AppDetails.name() + " " + AppDetails.version(), a.minY(),
+				a.maxY(), a.timeRange(),
 				m.logger().getLogSettings().datamask().signalsToString());
 		GUITools.centreFrame(v.lv().fetchFrame());
 	}

@@ -18,6 +18,9 @@
 
 package ac.aston.oml.view.gui;
 
+import ac.aston.oml.include.AppDetails;
+import ac.aston.oml.view.AdvancedSettingsView;
+
 import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.event.ActionListener;
@@ -34,12 +37,9 @@ import javax.swing.JTextArea;
 import jcummins.gui.HTMLFontset;
 import jcummins.gui.JComboBoxUtils;
 
-import ac.aston.oml.include.AppDetails;
-import ac.aston.oml.view.AdvancedSettingsView;
-
 /**
- * This extension of JFrame draws a frame that can be used to set the GUI
- * settings for a logging session.
+ * This extension of JFrame draws a frame that can be used to set the Advanced
+ * Settings for a logging session.
  * 
  * @author Chris Cummins
  * 
@@ -49,6 +49,7 @@ public class OMLAdvancedSettingsView extends JFrame implements
 	private static final long serialVersionUID = -1475245631891524654L;
 	private static final int FRAME_WIDTH = 260;
 	private static final int FRAME_HEIGHT = 150;
+	private static final int GRID_PANEL_VGAP = 5;
 
 	private HTMLFontset h;
 
@@ -57,6 +58,9 @@ public class OMLAdvancedSettingsView extends JFrame implements
 	private final JTextArea maxYText = new JTextArea(1, 8);
 	private final JButton doneButton = new JButton("Done");
 
+	/**
+	 * Create a new OMLAdvancedSettingsView frame.
+	 */
 	public OMLAdvancedSettingsView() {
 		this.setTitle(AppDetails.name());
 		this.setSize(FRAME_WIDTH, FRAME_HEIGHT);
@@ -67,57 +71,64 @@ public class OMLAdvancedSettingsView extends JFrame implements
 	}
 
 	@Override
-	public void init(HTMLFontset h) {
-		this.h = h;
+	public final void init(final HTMLFontset fontset) {
+		this.h = fontset;
 		this.setContentPane(createContentPane());
 	}
 
 	@Override
-	public void teardown() {
+	public final void teardown() {
 		this.dispose();
 	}
 
-	public JFrame fetchFrame() {
+	@Override
+	public final JFrame fetchFrame() {
 		return this;
 	}
 
 	@Override
-	public void setTimeRangeOptions(Object[] o, int selectedIndex) {
+	public final void setTimeRangeOptions(final Object[] o,
+			final int selectedIndex) {
 		JComboBoxUtils.updateContents(timeRangeBox, o, selectedIndex);
 	}
 
-	public void setMinYText(String s) {
+	@Override
+	public final void setMinYText(final String s) {
 		minYText.setText(s);
 	}
 
-	public void setMaxYText(String s) {
+	@Override
+	public final void setMaxYText(final String s) {
 		maxYText.setText(s);
 	}
 
 	@Override
-	public void addDoneButtonListener(ActionListener l) {
+	public final void addDoneButtonListener(final ActionListener l) {
 		doneButton.addActionListener(l);
 	}
 
 	@Override
-	public int getTimeRangeSelectedIndex() {
+	public final int getTimeRangeSelectedIndex() {
 		return timeRangeBox.getSelectedIndex();
 	}
 
 	@Override
-	public String getMinYText() {
+	public final String getMinYText() {
 		return minYText.getText();
 	}
 
 	@Override
-	public String getMaxYText() {
+	public final String getMaxYText() {
 		return maxYText.getText();
 	}
 
+	/*
+	 * Create JComponents and populate panel.
+	 */
 	private JPanel createContentPane() {
 		final JPanel contentPanel = new JPanel();
 		final GridLayout g = new GridLayout(4, 1);
-		g.setVgap(5);
+		g.setVgap(GRID_PANEL_VGAP);
 		contentPanel.setLayout(g);
 		contentPanel.setSize(FRAME_WIDTH, FRAME_HEIGHT);
 
