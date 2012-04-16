@@ -29,45 +29,55 @@ package ac.aston.oml.view;
  */
 public interface ViewGateway {
 	/**
+	 * Display an information message to the user.
 	 * 
 	 * @param msg
+	 *            Message to be displayed.
 	 */
 	void showMessage(String msg);
 
 	/**
+	 * Display an error message to the user.
 	 * 
 	 * @param ms
+	 *            Error message to be displayed.
 	 */
 	void showError(String ms);
 
 	/**
+	 * Display a yes no prompt to the user and get result.
 	 * 
 	 * @param msg
-	 * @return
+	 *            Yes no message.
+	 * @return <code>true</code> if user answered yes, else <code>false</code>
 	 */
 	boolean showYesNoPrompt(String msg);
 
 	/**
+	 * Returns an object which implements the CommSettingsView interface.
 	 * 
-	 * @return
+	 * @return CommSettingsView.
 	 */
 	CommSettingsView cs();
 
 	/**
+	 * Returns an object which implements the LogSettingsView interface.
 	 * 
-	 * @return
+	 * @return LogSettingsView.
 	 */
 	LogSettingsView ls();
 
 	/**
+	 * Returns an object which implements the AdvancedSettingsView interface.
 	 * 
-	 * @return
+	 * @return AdvancedSettingsView.
 	 */
 	AdvancedSettingsView as();
 
 	/**
+	 * Returns an object which implements the LoggerView interface.
 	 * 
-	 * @return
+	 * @return LoggerView.
 	 */
 	LoggerView lv();
 

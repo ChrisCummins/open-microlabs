@@ -30,40 +30,148 @@ import jcummins.gui.HTMLFontset;
  */
 public interface CommSettingsView {
 
-	public void init(HTMLFontset h);
+	/**
+	 * Initialise screens state data.
+	 * 
+	 * @param h
+	 *            HTMLFontset.
+	 */
+	void init(HTMLFontset h);
 
-	public void teardown();
+	/**
+	 * Dispose of screen state data and free memory.
+	 */
+	void teardown();
 
-	public JFrame fetchFrame();
+	/**
+	 * Fetch the parent frame.
+	 * 
+	 * @return JFrame.
+	 */
+	JFrame fetchFrame();
 
-	public void setComOptions(Object[] o);
+	/**
+	 * Set the options for the com ports.
+	 * 
+	 * @param o
+	 *            Objects (Strings).
+	 */
+	void setComOptions(Object[] o);
 
-	public void setBaudOptions(Object[] o, int index);
+	/**
+	 * Set the options for the baud rate.
+	 * 
+	 * @param o
+	 *            Objects (Strings).
+	 * @param index
+	 *            Default option.
+	 */
+	void setBaudOptions(Object[] o, int index);
 
-	public void setDataOptions(Object[] o, int index);
+	/**
+	 * Set the options for the data bits.
+	 * 
+	 * @param o
+	 *            Objects (Strings).
+	 * @param index
+	 *            Default options.
+	 */
+	void setDataOptions(Object[] o, int index);
 
-	public void setStopOptions(Object[] o, int index);
+	/**
+	 * Set the options for the stop bits.
+	 * 
+	 * @param o
+	 *            Objects (Strings).
+	 * @param index
+	 *            Default options.
+	 */
+	void setStopOptions(Object[] o, int index);
 
-	public void setParityOptions(Object[] o, int index);
+	/**
+	 * Set the options for the parity options.
+	 * 
+	 * @param o
+	 *            Objects (Strings).
+	 * @param index
+	 *            Default options.
+	 */
+	void setParityOptions(Object[] o, int index);
 
-	public void setFlowOptions(Object[] o, int index);
+	/**
+	 * Set the options for the flow control.
+	 * 
+	 * @param o
+	 *            Objects (Strings).
+	 * @param index
+	 *            Default options.
+	 */
+	void setFlowOptions(Object[] o, int index);
 
-	public int getSelectedComOption();
+	/**
+	 * Return selected com port option index.
+	 * 
+	 * @return Int index.
+	 */
+	int getSelectedComOption();
 
-	public int getSelectedBaudOption();
+	/**
+	 * Return selected baud rate option index.
+	 * 
+	 * @return Int index.
+	 */
+	int getSelectedBaudOption();
 
-	public int getSelectedDataOption();
+	/**
+	 * Return selected data bits option index.
+	 * 
+	 * @return Int index.
+	 */
+	int getSelectedDataOption();
 
-	public int getSelectedStopOption();
+	/**
+	 * Return selected stop bits option index.
+	 * 
+	 * @return Int index.
+	 */
+	int getSelectedStopOption();
 
-	public int getSelectedParityOption();
+	/**
+	 * Return selected parity option index.
+	 * 
+	 * @return Int index.
+	 */
+	int getSelectedParityOption();
 
-	public int getSelectedFlowOption();
+	/**
+	 * Return selected flow control option index.
+	 * 
+	 * @return Int index.
+	 */
+	int getSelectedFlowOption();
 
-	public void addRefreshButtonListener(ActionListener l);
+	/**
+	 * Add an Action Listener to the Refresh Com Ports button.
+	 * 
+	 * @param l
+	 *            Action Listener.
+	 */
+	void addRefreshButtonListener(ActionListener l);
 
-	public void addDoneButtonListener(ActionListener l);
+	/**
+	 * Add an Action Listener to the Done button.
+	 * 
+	 * @param l
+	 *            Action Listener.
+	 */
+	void addDoneButtonListener(ActionListener l);
 
-	public void addTestButtonListener(ActionListener l);
+	/**
+	 * Add an Action Listener to the Test Connection button.
+	 * 
+	 * @param l
+	 *            Action Listener.
+	 */
+	void addTestButtonListener(ActionListener l);
 
 }

@@ -30,36 +30,128 @@ import jcummins.gui.HTMLFontset;
  */
 public interface LogSettingsView {
 
-	public void init(HTMLFontset h, int pinCount, String[] signalTypes);
+	/**
+	 * Initialise screens state data.
+	 * 
+	 * @param h
+	 *            HTMLFontset.
+	 * @param pinCount
+	 *            Pin count.
+	 * @param signalTypes
+	 *            An array of strings representing signal names, one per signal.
+	 */
+	void init(HTMLFontset h, int pinCount, String[] signalTypes);
 
-	public void teardown();
+	/**
+	 * Dispose of screen state data and free memory.
+	 */
+	void teardown();
 
-	public JFrame fetchFrame();
+	/**
+	 * Fetch the parent frame.
+	 * 
+	 * @return JFrame.
+	 */
+	JFrame fetchFrame();
 
-	public void setPincount(int p);
+	/**
+	 * Set the number of pins in use and redraw.
+	 * 
+	 * @param p
+	 *            Integer.
+	 */
+	void setPincount(int p);
 
-	public void setSlaveBoxOptions(Object[] o);
+	/**
+	 * Set the options of the micronctroller slave box.
+	 * 
+	 * @param o
+	 *            Objects (Strings).
+	 */
+	void setSlaveBoxOptions(Object[] o);
 
-	public void setFilepathLabel(String s);
+	/**
+	 * Set the text for the file path label.
+	 * 
+	 * @param s
+	 *            String.
+	 */
+	void setFilepathLabel(String s);
 
-	public void addFileButtonListener(ActionListener l);
+	/**
+	 * Add an Action Listener to the File Select button.
+	 * 
+	 * @param l
+	 *            Action Listener.
+	 */
+	void addFileButtonListener(ActionListener l);
 
-	public void addDoneButtonListener(ActionListener l);
+	/**
+	 * Add an Action Listener to the Done button.
+	 * 
+	 * @param l
+	 *            Action Listener.
+	 */
+	void addDoneButtonListener(ActionListener l);
 
-	public void addAdvancedButtonListener(ActionListener l);
+	/**
+	 * Add an Action Listener to the AdvancedSettings button.
+	 * 
+	 * @param l
+	 *            Action Listener.
+	 */
+	void addAdvancedButtonListener(ActionListener l);
 
-	public void addSlaveOptionsListener(ActionListener l);
+	/**
+	 * Add an Action Listener to the Slave options box.
+	 * 
+	 * @param l
+	 *            Action Listener.
+	 */
+	void addSlaveOptionsListener(ActionListener l);
 
-	public int getSlaveBoxSelectedIndex();
+	/**
+	 * Return the selected index of the slave box.
+	 * 
+	 * @return Int index.
+	 */
+	int getSlaveBoxSelectedIndex();
 
-	public boolean getLogToFile ();
-	
-	public String getFilepathText();
+	/**
+	 * Return whether file logging is selected.
+	 * 
+	 * @return <code>true</code> if file logging is selected, else
+	 *         <code>false</code>.
+	 */
+	boolean getLogToFile();
 
-	public Integer[] getSignalTypeOptions();
+	/**
+	 * Set the text for the file path text.
+	 * 
+	 * @return String.
+	 */
+	String getFilepathText();
 
-	public String getReadDelayText();
+	/**
+	 * Returns an array of Integers corresponding to the selected signal type.
+	 * If a channel is not in use, value will be <code>null</code>.
+	 * 
+	 * @return Array of Integers, <code>null</code> possible.
+	 */
+	Integer[] getSignalTypeOptions();
 
-	public String getReadCountText();
+	/**
+	 * Returns the text from the read delay box.
+	 * 
+	 * @return String.
+	 */
+	String getReadDelayText();
+
+	/**
+	 * Returns the text from the read count box.
+	 * 
+	 * @return String.
+	 */
+	String getReadCountText();
 
 }

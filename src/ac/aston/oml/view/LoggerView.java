@@ -32,30 +32,112 @@ import org.jfree.data.time.TimeSeriesCollection;
  */
 public interface LoggerView {
 
-	public void init(HTMLFontset h, TimeSeriesCollection t, String graphTitle,
+	/**
+	 * Initialise screens state data.
+	 * 
+	 * @param h
+	 *            HTMLFontset.
+	 * @param t
+	 *            TimeSeriesCollection.
+	 * @param graphTitle
+	 *            Title of graph.
+	 * @param graphMinY
+	 *            Minimum Y value.
+	 * @param graphMaxY
+	 *            Maximum Y value.
+	 * @param graphTimeRange
+	 *            Time Range of graph (ms).
+	 * @param signals
+	 *            String array of all signals (include nulls).
+	 */
+	void init(HTMLFontset h, TimeSeriesCollection t, String graphTitle,
 			double graphMinY, double graphMaxY, double graphTimeRange,
 			String[] signals);
 
-	public void teardown();
+	/**
+	 * Dispose of screen state data and free memory.
+	 */
+	void teardown();
 
-	public JFrame fetchFrame();
+	/**
+	 * Fetch the parent frame.
+	 * 
+	 * @return JFrame.
+	 */
+	JFrame fetchFrame();
 
-	public void setViewLoggingCompleted(double graphTimeRange);
+	/**
+	 * Refresh view to show that Logging has completed.
+	 * 
+	 * @param graphTimeRange
+	 *            New time range (ms).
+	 */
+	void setViewLoggingCompleted(double graphTimeRange);
 
-	public void setValLabels(String[] s);
+	/**
+	 * Set the text for value labels being read.
+	 * 
+	 * @param s
+	 *            Array of strings, one per active signal.
+	 */
+	void setValLabels(String[] s);
 
-	public void setMinLabels(String[] s);
+	/**
+	 * Set the text for minimum value labels being read.
+	 * 
+	 * @param s
+	 *            Array of strings, one per active signal.
+	 */
+	void setMinLabels(String[] s);
 
-	public void setMaxLabels(String[] s);
+	/**
+	 * Set the text for maximum value labels being read.
+	 * 
+	 * @param s
+	 *            Array of strings, one per active signal.
+	 */
+	void setMaxLabels(String[] s);
 
-	public void setAvgLabels(String[] s);
+	/**
+	 * Set the text for average value labels being read.
+	 * 
+	 * @param s
+	 *            Array of strings, one per active signal.
+	 */
+	void setAvgLabels(String[] s);
 
-	public void setReadingsLabel(String s);
+	/**
+	 * Set the text for the readings label.
+	 * 
+	 * @param s
+	 *            String.
+	 */
+	void setReadingsLabel(String s);
 
-	public void setSignalStrenghLabel(String s);
+	/**
+	 * Set the text for the signal strength label.
+	 * 
+	 * @param s
+	 *            String.
+	 */
+	void setSignalStrenghLabel(String s);
 
-	public void setProgressBar(int current, int max);
+	/**
+	 * Set new values for the progress bar.
+	 * 
+	 * @param current
+	 *            Current reading count.
+	 * @param max
+	 *            Maximum reading count.
+	 */
+	void setProgressBar(int current, int max);
 
-	public void addDoneButtonListener(ActionListener l);
+	/**
+	 * Add an Action Listener to the Done/Cancel button.
+	 * 
+	 * @param l
+	 *            Action Listener.
+	 */
+	void addDoneButtonListener(ActionListener l);
 
 }

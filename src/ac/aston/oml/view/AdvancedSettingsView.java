@@ -30,23 +30,78 @@ import jcummins.gui.HTMLFontset;
  */
 public interface AdvancedSettingsView {
 
-	public void init(HTMLFontset h);
+	/**
+	 * Initialise screens state data.
+	 * 
+	 * @param h
+	 *            HTMLFontset.
+	 */
+	void init(HTMLFontset h);
 
-	public void teardown();
+	/**
+	 * Dispose of screen state data and free memory.
+	 */
+	void teardown();
 
-	public JFrame fetchFrame();
+	/**
+	 * Fetch the parent frame.
+	 * 
+	 * @return JFrame.
+	 */
+	JFrame fetchFrame();
 
-	public void setMinYText(String s);
+	/**
+	 * Sets the minimum Y box text.
+	 * 
+	 * @param s
+	 *            String.
+	 */
+	void setMinYText(String s);
 
-	public void setMaxYText(String s);
+	/**
+	 * Sets the maximum Y box text.
+	 * 
+	 * @param s
+	 *            String.
+	 */
+	void setMaxYText(String s);
 
-	public void setTimeRangeOptions(Object[] o, int selectedIndex);
+	/**
+	 * Set the options for the time range selector.
+	 * 
+	 * @param o
+	 *            Options (Strings).
+	 * @param selectedIndex
+	 *            Default selected index.
+	 */
+	void setTimeRangeOptions(Object[] o, int selectedIndex);
 
-	public void addDoneButtonListener(ActionListener l);
+	/**
+	 * Add an action listener to the done button.
+	 * 
+	 * @param l
+	 *            Action Listener.
+	 */
+	void addDoneButtonListener(ActionListener l);
 
-	public int getTimeRangeSelectedIndex();
+	/**
+	 * Returns the index of the selected time range.
+	 * 
+	 * @return Int index.
+	 */
+	int getTimeRangeSelectedIndex();
 
-	public String getMinYText();
+	/**
+	 * Returns the min y box text.
+	 * 
+	 * @return String.
+	 */
+	String getMinYText();
 
-	public String getMaxYText();
+	/**
+	 * Return the max y box text.
+	 * 
+	 * @return String.
+	 */
+	String getMaxYText();
 }
