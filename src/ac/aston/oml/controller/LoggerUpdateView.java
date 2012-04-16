@@ -31,13 +31,13 @@ import ac.aston.oml.view.ViewGateway;
  * @author Chris Cummins
  * 
  */
-public class DynamicNewData {
+public class LoggerUpdateView {
 
 	private final TimeSeriesCollection data;
 	private final LogSettings l;
 	private final ViewGateway v;
 
-	public DynamicNewData(TimeSeriesCollection data, LogSettings l,
+	public LoggerUpdateView(TimeSeriesCollection data, LogSettings l,
 			ViewGateway v) {
 		this.data = data;
 		this.l = l;

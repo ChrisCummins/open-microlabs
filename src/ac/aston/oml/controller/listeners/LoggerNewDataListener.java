@@ -21,7 +21,7 @@ package ac.aston.oml.controller.listeners;
 import org.jfree.data.general.SeriesChangeEvent;
 import org.jfree.data.general.SeriesChangeListener;
 
-import ac.aston.oml.controller.DynamicNewData;
+import ac.aston.oml.controller.LoggerUpdateView;
 import ac.aston.oml.controller.OMLController;
 import ac.aston.oml.model.ModelGateway;
 import ac.aston.oml.model.logger.LogSettings;
@@ -50,7 +50,7 @@ public class LoggerNewDataListener extends OMLController implements
 
 	@Override
 	public void seriesChanged(SeriesChangeEvent event) {
-		new DynamicNewData(m.logger().getData(), l, v);
+		new LoggerUpdateView(m.logger().getData(), l, v);
 
 		if (m.logger().getData().getItemCount(0) == m.logger().getLogSettings()
 				.readCount()) {
