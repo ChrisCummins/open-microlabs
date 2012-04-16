@@ -18,40 +18,55 @@
 
 package ac.aston.oml.model;
 
+import ac.aston.oml.model.logger.AdvancedSettings;
+import ac.aston.oml.model.logger.LogSettings;
+
 import java.io.IOException;
 
 import org.jfree.data.general.SeriesChangeListener;
 import org.jfree.data.time.TimeSeriesCollection;
 
-import ac.aston.oml.model.logger.AdvancedSettings;
-import ac.aston.oml.model.logger.LogSettings;
-
+/**
+ * The CommGateway interface details the method contract for the Logger Model.
+ * 
+ * @author Chris Cummins
+ * 
+ */
 public interface LoggerGateway {
 
 	/**
-	 * Starts a logging session. setLogSettings() must have been called
-	 * beforehand.
+	 * Starts a logging session. The comm model must have been setup beforehand.
 	 * 
 	 * @see ModelGateway#startLogging()
+	 * @throws IOException
+	 *             In case of file writing error.
 	 */
-	public void startLogging() throws IOException;
+	void startLogging() throws IOException;
 
 	/**
 	 * Stops a running logging session prematurely and prevents any more
 	 * readings from being made.
 	 */
-	public void stopLogging();
+	void stopLogging();
 
 	/**
-	 * Set the settings for a logging session.
+	 * Set the logging settings for the logging session.
 	 * 
 	 * @param l
 	 *            LogSettingsView.
+	 * @param c
+	 *            CommGateway.
+	 * @throws IOException
+	 *             In case of file logging IO error.
 	 * @see ac.aston.oml.model.logger.LogSettings#LogSettings()
 	 */
-	public void setLogSettings(LogSettings l, ComGateway c) throws IOException;
+	void setLogSettings(LogSettings l, CommGateway c) throws IOException;
 
-	public void setAdvancedSettings(AdvancedSettings a);
+	/**
+	 * Set the advanced settings for the logging session.
+	 * @param a
+	 */
+	void setAdvancedSettings(AdvancedSettings a);
 
 	/**
 	 * Adds a series change listener to the microcontroller data model,
@@ -60,11 +75,11 @@ public interface LoggerGateway {
 	 * @param l
 	 *            SeriesChangeListener.
 	 */
-	public void addNewDataListener(SeriesChangeListener l);
+	void addNewDataListener(SeriesChangeListener l);
 
-	public void addNewDataToLog(final TimeSeriesCollection data);
+	void addNewDataToLog(final TimeSeriesCollection data);
 
-	public boolean isLogging();
+	boolean isLogging();
 
 	/**
 	 * Returns the LogSettingsView.
@@ -72,15 +87,15 @@ public interface LoggerGateway {
 	 * @return LogSettingsView currently in use.
 	 * @see ac.aston.oml.model.logger.LogSettings#LogSettings()
 	 */
-	public LogSettings getLogSettings();
+	LogSettings getLogSettings();
 
-	public AdvancedSettings getAdvancedSettings();
+	AdvancedSettings getAdvancedSettings();
 
 	/**
 	 * Returns the current data which has been read from the microcontroller.
 	 * 
 	 * @return TimeSeriesCollection
 	 */
-	public TimeSeriesCollection getData();
+	TimeSeriesCollection getData();
 
 }
