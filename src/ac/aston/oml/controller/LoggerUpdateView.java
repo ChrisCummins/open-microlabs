@@ -147,9 +147,11 @@ public class LoggerUpdateView {
 			final List<TimeSeriesDataItem> vals = series.getItems();
 			double total = 0;
 
-			for (int j = 0; j < vals.size(); j++)
-				if (vals.get(j).getValue() != null)
+			for (int j = 0; j < vals.size(); j++) {
+				if (vals.get(j).getValue() != null) {
 					total += vals.get(j).getValue().doubleValue();
+				}
+			}
 
 			s[i] = l.datamask().activeSignals()[i]
 					.toString(total / vals.size());

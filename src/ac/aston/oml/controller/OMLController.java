@@ -35,31 +35,37 @@ import jcummins.gui.GUITools;
 
 /**
  * This implementation of the Controller interface performs the duties of
- * instantiating a model and view, then attaching the required listeners.
+ * instantiating a model and view, then attaching the required listeners and
+ * rendering the first view.
  * 
  * @author Chris Cummins
  * 
  */
 public class OMLController implements Controller {
-	protected ModelGateway m;
-	protected ViewGateway v;
+
+	private ModelGateway m;
+	private ViewGateway v;
 
 	@Override
-	public void init(ModelGateway m, ViewGateway v) {
-		this.m = m;
-		this.v = v;
+	public final void init(final ModelGateway model, final ViewGateway view) {
+		this.m = model;
+		this.v = view;
 
 		attachListeners();
-
 		renderCommSettingsView();
 	}
 
+	/*
+	 * Add listeners to frame components.
+	 */
 	private void attachListeners() {
+		// Comm Settings view listeners.
 		v.cs().addRefreshButtonListener(
 				new CommSettingsRefreshPortsListener(m, v));
 		v.cs().addTestButtonListener(new CommSettingsTestListener(m, v));
 		v.cs().addDoneButtonListener(new CommSettingsDoneListener(m, v));
 
+		// Log Settings view listeners.
 		v.ls().addFileButtonListener(new LogSettingsFileListener(v));
 		v.ls()
 				.addAdvancedButtonListener(
@@ -67,13 +73,16 @@ public class OMLController implements Controller {
 		v.ls().addDoneButtonListener(new LogSettingsDoneListener(m, v));
 		v.ls().addSlaveOptionsListener(new LogSettingsSlaveOptionsListener(v));
 
-		v.lv().addDoneButtonListener(new LoggerDoneListener(m, v));
-
+		// Advanced Settings view listeners.
 		v.as().addDoneButtonListener(new AdvancedSettingsDoneListenner(m, v));
 
-		// m.addNewDataListener (new ModelNewDataListener (v));
+		// Logger view listeners.
+		v.lv().addDoneButtonListener(new LoggerDoneListener(m, v));
 	}
 
+	/*
+	 * Renders the first frame and makes it visible.
+	 */
 	private void renderCommSettingsView() {
 		final OMLSettings c = m.getOMLSettings();
 		m.com().refreshCommPorts();

@@ -18,18 +18,18 @@
 
 package ac.aston.oml.controller.listeners;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
 import ac.aston.oml.model.ModelGateway;
 import ac.aston.oml.model.logger.AdvancedSettings;
 import ac.aston.oml.view.ViewGateway;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 /**
  * This implementation of the ActionListener interface is responsible for
- * getting GUI settings from the GUISettingsView class and setting those to the
- * view. Additionally, it will interpret any exceptions thrown and feed those
- * back to the view for the user.
+ * getting Advanced Settings from the AdvancedSettingsView frame and setting
+ * those to the model. Additionally, it will interpret any exceptions thrown and
+ * feed those back to the view for the user.
  * 
  * @author Chris Cummins
  * 
@@ -38,16 +38,27 @@ public class AdvancedSettingsDoneListenner implements ActionListener {
 	private final ModelGateway m;
 	private final ViewGateway v;
 
-	public AdvancedSettingsDoneListenner(ModelGateway m, ViewGateway v) {
-		this.m = m;
-		this.v = v;
+	/**
+	 * Construct an new listener.
+	 * 
+	 * @param model
+	 *            Model Gateway for setting Advanced Settings to.
+	 * @param view
+	 *            View Gateway for getting user input and showing errors.
+	 */
+	public AdvancedSettingsDoneListenner(final ModelGateway model,
+			final ViewGateway view) {
+		this.m = model;
+		this.v = view;
 	}
 
 	@Override
-	public void actionPerformed(ActionEvent e) {
+	public final void actionPerformed(final ActionEvent e) {
+		// Set up local variables.
 		Double minY;
 		Double maxY;
 
+		// Convert text boxes to numeric values.
 		try {
 			minY = Double.parseDouble(v.as().getMinYText());
 			maxY = Double.parseDouble(v.as().getMaxYText());
@@ -56,18 +67,23 @@ public class AdvancedSettingsDoneListenner implements ActionListener {
 			return;
 		}
 
+		// Check validity of values.
 		if (maxY < minY) {
 			v.showError("Maximum Y value should be greater than minimum!");
 			return;
 		}
 
-		Double graphTimeRange = (Double) m.getOMLSettings().graphTimeRangeOptions[1][v
+		// Get graph time range.
+		final Double graphTimeRange = (Double) m.getOMLSettings().graphTimeRangeOptions[1][v
 				.as().getTimeRangeSelectedIndex()];
 
+		// Construct AdvancedSettings from obtained data.
 		final AdvancedSettings a = new AdvancedSettings(graphTimeRange, minY,
 				maxY);
+
+		// Set AdvancedSettings to model and hide frame.
 		m.logger().setAdvancedSettings(a);
-		v.as().teardown();
+		v.as().fetchFrame().setVisible(false);
 	}
 
 }

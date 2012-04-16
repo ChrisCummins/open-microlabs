@@ -29,6 +29,7 @@ import ac.aston.oml.view.ViewGateway;
  * 
  */
 public interface Controller {
+
 	/**
 	 * Initialise the Open MicroLabs program.
 	 * 
