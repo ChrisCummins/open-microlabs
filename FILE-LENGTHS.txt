@@ -1,0 +1,93 @@
+ac.aston.oml
+	OpenMicroLabs						55
+	package-info						27
+
+ac.aston.oml.controller
+	CommExceptionResponse				72
+	Controller							44
+	LoggerUpdateView					163
+	OMLController						108
+	package-info						28
+
+ac.aston.oml.controller.listeners
+	AdvancedSettingsDoneListener		91
+	AdvancedSettingsShowListener		73
+	CommSettingsDoneListener			122
+	CommSettingsRefreshPortsListener 	63
+	CommSettingsTestListener			97
+	LoggerDoneListener					78
+	LoggerNewDataListener				76
+	LogSettingsDoneListener				180
+	LogSettingsFileListener				75
+	LogSettingsSlaveOptionsListener		57
+	package-info						28
+
+ac.aston.oml.include
+	AppDetails							129
+	package-info						28
+	CommGateway							118
+	LoggerGateway						126
+	ModelGateway						55
+	OMLGateway							61
+	package-info						28
+
+ac.aston.oml.model.com
+	CommSettings						121
+	Datamask							161
+	OMLComGateway						93
+	package-info						27
+	SerialBuffer						68
+	SerialReader						143
+
+ac.aston.oml.model.com.signals
+	OMLRaw								45
+	OMLSignal							90
+	OMLVoltage							51
+	OMLTemperature						52
+	package-info						28
+	
+ac.aston.oml.model.logger
+	AdvancedSettings					109
+	Logger								144
+	LogSettings							94
+	OMLLoggerGateway					112
+	package-info						28
+	SerialLogger						145
+
+ac.aston.oml.model.logger.file
+	FileLogger							125
+	package-info						27
+	
+ac.aston.oml.model.settings
+	OMLDefaultSettings					99
+	OMLSettings							218
+	package-info						27
+
+ac.aston.oml.test
+	OMLTestSettings						71
+	package-info						27
+	
+ac.aston.oml.test.view
+	DrawAdvancedSettingsView			58
+	DrawCommSettingsView				71
+	DrawLoggerView						73
+	DrawLogSettingsView					61
+	package-info						27
+
+ac.aston.oml.view
+	AdvancedSettingView					108
+	CommSettingsView					178
+	LoggerView							144
+	LogSettingsView						158
+	package-info						27
+	ViewGateway							85
+	
+ac.aston.oml.view.gui
+	OMLAdvancedSettingsView				166
+	OMLCommSettingsView					330
+	OMLLoggerView						421
+	OMLLogSettingsView					353
+	OMLView								103
+	package-info						27
+	
+TOTAL = 6,477 lines of code.

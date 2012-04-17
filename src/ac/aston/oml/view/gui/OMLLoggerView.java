@@ -72,7 +72,7 @@ public class OMLLoggerView extends JFrame implements LoggerView {
 	private static final int FRAME_HEIGHT = 600;
 	private static final int GRAPH_HEIGHT = FRAME_HEIGHT - PAD200;
 	private static final int BTM_HEIGHT = 80;
-	
+
 	private static final int PIN_COUNT = 7;
 	private static final int SLAVE_BITS = 1;
 

@@ -20,6 +20,7 @@ package ac.aston.oml.model.settings;
 
 import ac.aston.oml.model.com.signals.OMLRaw;
 import ac.aston.oml.model.com.signals.OMLSignal;
+import ac.aston.oml.model.com.signals.OMLTemperature;
 import ac.aston.oml.model.com.signals.OMLVoltage;
 import jcummins.gui.HTMLFont;
 import jcummins.gui.HTMLFontset;
@@ -57,9 +58,10 @@ public abstract class OMLDefaultSettings {
 					"30 seconds", "60 seconds", "10 minutes" },
 			{ 1000.0, 2500.0, 5000.0, 10000.0, 30000.0, 60000.0, 600000 } };
 
-	private static final String[] SIGNAL_TYPE_OPTIONS = { "Raw", "Voltage" };
+	private static final String[] SIGNAL_TYPE_OPTIONS = { "Raw", "Voltage",
+			"Temperature" };
 	private static final OMLSignal[] SIGNAL_TYPES = { new OMLRaw(),
-			new OMLVoltage() };
+			new OMLVoltage(), new OMLTemperature() };
 
 	private static final int FONT_SIZE = 3;
 	private static final int BAUD_OPTIONS_SELECTED = 5;

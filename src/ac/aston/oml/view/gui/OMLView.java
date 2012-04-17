@@ -42,6 +42,9 @@ public class OMLView implements ViewGateway {
 	private final OMLAdvancedSettingsView as;
 	private final OMLLoggerView lv;
 
+	/**
+	 * Constructs a new OMLView.
+	 */
 	public OMLView() {
 		this.cs = new OMLCommSettingsView();
 		this.ls = new OMLLogSettingsView();
@@ -50,7 +53,7 @@ public class OMLView implements ViewGateway {
 	}
 
 	@Override
-	public void showMessage(String msg) {
+	public final void showMessage(final String msg) {
 		JOptionPane.showMessageDialog(
 				null,
 				msg,
@@ -59,7 +62,7 @@ public class OMLView implements ViewGateway {
 	}
 
 	@Override
-	public void showError(String msg) {
+	public final void showError(final String msg) {
 		JOptionPane.showMessageDialog(
 				null,
 				msg,
@@ -68,34 +71,32 @@ public class OMLView implements ViewGateway {
 	}
 
 	@Override
-	public boolean showYesNoPrompt(String msg) {
+	public final boolean showYesNoPrompt(final String msg) {
 		String[] options = { "Yes", "No" };
 		final int n = JOptionPane.showOptionDialog(null, msg, AppDetails.name()
 				+ " " + AppDetails.version(), JOptionPane.YES_NO_OPTION,
 				JOptionPane.QUESTION_MESSAGE, null, options, 0);
-		if (n == 0)
-			return true;
-		else
-			return false;
+
+		return (n == 0);
 	}
 
 	@Override
-	public CommSettingsView cs() {
+	public final CommSettingsView cs() {
 		return cs;
 	}
 
 	@Override
-	public LogSettingsView ls() {
+	public final LogSettingsView ls() {
 		return ls;
 	}
 
 	@Override
-	public AdvancedSettingsView as() {
+	public final AdvancedSettingsView as() {
 		return as;
 	}
 
 	@Override
-	public LoggerView lv() {
+	public final LoggerView lv() {
 		return lv;
 	}
 }
