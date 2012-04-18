@@ -30,9 +30,17 @@ import java.util.ArrayList;
  * 
  */
 public class Datamask {
+
+	private static final int BIN_0 = 0;
+	private static final int BIN_1 = 1;
+	private static final int BIN_OFFSET = 128;
+	private static final int BYTE_BITS = 8;
+	private static final int PIN_BITS = 7;
+	private static final int SBI_BITS = BYTE_BITS - PIN_BITS;
+
 	private final OMLSignal[] signals;
 	private final OMLSignal[] activeSignals;
-	private final char comChar;
+	private final char[] comChar;
 
 	/**
 	 * Produces a Datamask object from the given argument.
@@ -118,8 +126,30 @@ public class Datamask {
 	 * 
 	 * @return character.
 	 */
-	public final char asciiChar() {
+	public final char[] asciiChar() {
 		return comChar;
+	}
+	
+	/**
+	 * Returns the com data request as a binary string, with individual bytes
+	 * separated by a space.
+	 * 
+	 * @return Binary string.
+	 */
+	public final String binaryCode() {
+		byte[] bytes = comChar.toString().getBytes();
+
+		StringBuilder binary = new StringBuilder();
+		for (byte b : bytes) {
+			int val = b;
+			for (int i = 0; i < PIN_BITS + SBI_BITS; i++) {
+				binary.append((val & BIN_OFFSET) == BIN_0 ? BIN_0 : BIN_1);
+				val <<= 1;
+			}
+			binary.append(' ');
+		}
+
+		return binary.toString();
 	}
 
 	/*
@@ -140,21 +170,36 @@ public class Datamask {
 	}
 
 	/*
-	 * Iterates over signals and produces an ascii char data request code.
+	 * Iterates over signals and produces an array of char data request codes.
 	 */
-	private char getChar() {
-		String binary = "";
-		for (OMLSignal signal : signals) {
-			if (signal != null) {
-				binary += "1";
-			} else {
-				binary += "0";
+	private char[] getChar() {
+		// Setup local variable.
+		String characters = "";
+
+		// Iterate over sets of signals.
+		for (int i = 0; i < (signals.length / PIN_BITS); i++) {
+			String binary = "";
+
+			// Iterate over individual signals within set.
+			for (int j = 0; j < PIN_BITS; j++) {
+				if (signals[(i * PIN_BITS) + j] != null) {
+					binary += "1";
+				} else {
+					binary += "0";
+				}
 			}
+
+			// Add trailing SBI bit.
+			if (i == (signals.length / PIN_BITS) - 1) {
+				binary += "0";
+			} else {
+				binary += "1";
+			}
+
+			// Convert code into one byte.
+			characters += (char) Integer.parseInt(binary, 2);
 		}
 
-		// TODO: Proper char creation.
-
-		return (char) Integer.parseInt(binary + "0", 2);
+		return characters.toCharArray();
 	}
-
 }
