@@ -6,7 +6,7 @@ University, UK.
 INSTALL DIRECTIONS
 ==================
 Before running the program, the RXTX library binaries must be placed in the
-necessary locations:
+required locations:
 
 Windows
 	Copy the following files from the appropriate arch directory in lib
