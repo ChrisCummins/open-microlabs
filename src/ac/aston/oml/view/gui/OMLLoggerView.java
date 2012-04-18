@@ -303,10 +303,7 @@ public class OMLLoggerView extends JFrame implements LoggerView {
 		graphPanel.add(snsChartPanel);
 
 		// Set up results panel.
-		final JPanel resultsPanel = new JPanel();
-		resultsPanel.setLayout(new GridLayout(RESULTS_GRID_ROWS,
-				RESULTS_GRID_COL));
-		resultsPanel.setBackground(Color.white);
+		final JPanel resultsPanel = createResultsPane();
 
 		// Set up scroll pane.
 		final JScrollPane scrollPane = new JScrollPane(resultsPanel);
@@ -336,7 +333,39 @@ public class OMLLoggerView extends JFrame implements LoggerView {
 			resultsPanel.add(l);
 		}
 
-		index = 0;
+		// Instantiate bottom panel objects.
+		footerLabel.setSize(LABEL_WIDTH, LABEL_HEIGHT);
+		footerLabel.setLocation(LABEL_X, LABEL_Y);
+		doneButton.setIcon(new ImageIcon("img/22x22/stop.png"));
+		doneButton.setSize(DONE_WIDTH, DONE_HEIGHT);
+		doneButton.setLocation(FRAME_WIDTH - PAD20 - doneButton.getWidth(),
+				PAD15);
+		progressBar = new JProgressBar();
+		progressBar.setSize(FRAME_WIDTH - PAD40 - doneButton.getWidth()
+				- footerLabel.getWidth(), PAD20);
+		progressBar.setValue(0);
+		progressBar.setLocation(footerLabel.getWidth() + PAD10, PAD22);
+
+		// Populate bottom panel.
+		btmPanel.add(footerLabel);
+		btmPanel.add(progressBar);
+		btmPanel.add(doneButton);
+
+		// Populate main panel.
+		mainPanel.add(graphPanel);
+		mainPanel.add(scrollPane);
+		mainPanel.add(btmPanel);
+
+		return mainPanel;
+	}
+
+	private JPanel createResultsPane() {
+		final JPanel resultsPanel = new JPanel();
+		resultsPanel.setLayout(new GridLayout(RESULTS_GRID_ROWS,
+				RESULTS_GRID_COL));
+		resultsPanel.setBackground(Color.white);
+
+		int index = 0;
 		resultsPanel.add(new JLabel(""));
 		for (JLabel l : chanLabel) {
 			if (l.isEnabled()) {
@@ -391,30 +420,7 @@ public class OMLLoggerView extends JFrame implements LoggerView {
 			}
 		}
 
-		// Instantiate bottom panel objects.
-		footerLabel.setSize(LABEL_WIDTH, LABEL_HEIGHT);
-		footerLabel.setLocation(LABEL_X, LABEL_Y);
-		doneButton.setIcon(new ImageIcon("img/22x22/stop.png"));
-		doneButton.setSize(DONE_WIDTH, DONE_HEIGHT);
-		doneButton.setLocation(FRAME_WIDTH - PAD20 - doneButton.getWidth(),
-				PAD15);
-		progressBar = new JProgressBar();
-		progressBar.setSize(FRAME_WIDTH - PAD40 - doneButton.getWidth()
-				- footerLabel.getWidth(), PAD20);
-		progressBar.setValue(0);
-		progressBar.setLocation(footerLabel.getWidth() + PAD10, PAD22);
-
-		// Populate bottom panel.
-		btmPanel.add(footerLabel);
-		btmPanel.add(progressBar);
-		btmPanel.add(doneButton);
-
-		// Populate main panel.
-		mainPanel.add(graphPanel);
-		mainPanel.add(scrollPane);
-		mainPanel.add(btmPanel);
-
-		return mainPanel;
+		return resultsPanel;
 	}
 
 }
