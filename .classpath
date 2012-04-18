@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry excluding="microcontroller/" kind="src" path="src"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/JCummins Library"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/com.jcummins"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="lib/win_x64/RXTXcomm.jar">
 		<attributes>
