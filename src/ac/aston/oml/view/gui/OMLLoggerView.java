@@ -54,8 +54,9 @@ public class OMLLoggerView extends JFrame implements LoggerView {
 	private static final String GRAPH_X_LABEL = "Time (hh:mm:ss)";
 	private static final String GRAPH_Y_LABEL = null;
 
+	private static final int ASCII_OFFSET = 65;
+	
 	private static final int PAD5 = 5;
-	private static final int PAD7 = 7;
 	private static final int PAD8 = 8;
 	private static final int PAD10 = 10;
 	private static final int PAD15 = 15;
@@ -63,11 +64,9 @@ public class OMLLoggerView extends JFrame implements LoggerView {
 	private static final int PAD22 = 22;
 	private static final int PAD30 = 30;
 	private static final int PAD40 = 40;
-	private static final int PAD65 = 65;
 	private static final int PAD120 = 120;
 	private static final int PAD200 = 200;
 
-	// GUI CONFIG --------------------------------------------------------------
 	private static final int FRAME_WIDTH = 800;
 	private static final int FRAME_HEIGHT = 600;
 	private static final int GRAPH_HEIGHT = FRAME_HEIGHT - PAD200;
@@ -237,7 +236,7 @@ public class OMLLoggerView extends JFrame implements LoggerView {
 			chanLabel[i] = new JLabel(
 					h.format(
 							"label",
-							(char) ((i / PAD7) + PAD65)
+							(char) ((i / PIN_COUNT) + ASCII_OFFSET)
 									+ "-0x"
 									+ String.format("%02x",
 											(i % PIN_COUNT) + SLAVE_BITS)
