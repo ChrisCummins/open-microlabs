@@ -67,6 +67,9 @@ ac.aston.oml.test
 	OMLTestSettings						71
 	package-info						27
 	
+ac.aston.oml.test.model
+	DatamaskTest						56
+	
 ac.aston.oml.test.view
 	DrawAdvancedSettingsView			58
 	DrawCommSettingsView				71
@@ -90,4 +93,4 @@ ac.aston.oml.view.gui
 	OMLView								103
 	package-info						27
 	
-TOTAL = 6,483 lines of code.
+TOTAL = 6,539 lines of code.

@@ -21,6 +21,9 @@ package ac.aston.oml.test;
 import org.jfree.data.time.TimeSeries;
 import org.jfree.data.time.TimeSeriesCollection;
 
+import ac.aston.oml.model.com.signals.OMLRaw;
+import ac.aston.oml.model.com.signals.OMLSignal;
+import ac.aston.oml.model.com.signals.OMLVoltage;
 import ac.aston.oml.model.settings.OMLDefaultSettings;
 import ac.aston.oml.model.settings.OMLSettings;
 
@@ -31,6 +34,11 @@ import ac.aston.oml.model.settings.OMLSettings;
  * 
  */
 public abstract class OMLTestSettings {
+
+	/** Signals. */
+	public static final OMLSignal[] SIGNAL = { new OMLVoltage(), null,
+			new OMLRaw(), new OMLVoltage(), new OMLVoltage(), null, null, null,
+			null, new OMLVoltage(), new OMLRaw(), null, null, new OMLRaw() };
 
 	/** Signal names. */
 	public static final String[] SIGNALS = { "Voltage", null, "Raw", "Voltage",

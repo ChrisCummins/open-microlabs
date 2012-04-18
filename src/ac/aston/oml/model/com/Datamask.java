@@ -129,7 +129,7 @@ public class Datamask {
 	public final char[] asciiChar() {
 		return comChar;
 	}
-	
+
 	/**
 	 * Returns the com data request as a binary string, with individual bytes
 	 * separated by a space.
@@ -137,23 +137,24 @@ public class Datamask {
 	 * @return Binary string.
 	 */
 	public final String binaryCode() {
-		byte[] bytes = comChar.toString().getBytes();
-
 		StringBuilder binary = new StringBuilder();
-		for (byte b : bytes) {
-			int val = b;
-			for (int i = 0; i < PIN_BITS + SBI_BITS; i++) {
-				if ((val & BIN_OFFSET) == BIN_0) {
-					binary.append(BIN_0);
-				} else {
-					binary.append(BIN_1);
+
+		// Iterate over characters within data request.
+		for (Character c : comChar) {
+			// Iterate over bytes within char.
+			for (byte b : c.toString().getBytes()) {
+				int val = b;
+				for (int i = 0; i < PIN_BITS + SBI_BITS; i++) {
+					// Append either BIN_0 or BIN_1 to binary string.
+					binary.append((val & BIN_OFFSET) == 0 ? BIN_0 : BIN_1);
+					val <<= 1;
 				}
-				val <<= 1;
+				binary.append(' ');
 			}
-			binary.append(' ');
 		}
 
-		return binary.toString();
+		// Return binary string, with last space removed.
+		return binary.toString().substring(0, binary.length() - 1);
 	}
 
 	/*
