@@ -18,14 +18,14 @@
 
 package ac.openmicrolabs.view.gui;
 
-import javax.swing.JOptionPane;
-
 import ac.openmicrolabs.include.AppDetails;
 import ac.openmicrolabs.view.AdvancedSettingsView;
 import ac.openmicrolabs.view.CommSettingsView;
 import ac.openmicrolabs.view.LogSettingsView;
 import ac.openmicrolabs.view.LoggerView;
 import ac.openmicrolabs.view.ViewGateway;
+
+import javax.swing.JOptionPane;
 
 /**
  * This implementation of the ViewGateway interface is responsible for rendering
@@ -37,7 +37,7 @@ import ac.openmicrolabs.view.ViewGateway;
  */
 public class OMLView implements ViewGateway {
 
-	private final OMLCommSettingsView cs;
+	private OMLCommSettingsView cs;
 	private final OMLLogSettingsView ls;
 	private final OMLAdvancedSettingsView as;
 	private final OMLLoggerView lv;

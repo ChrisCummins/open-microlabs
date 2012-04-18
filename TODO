@@ -1,11 +1,8 @@
 openmicrolabs.*
-	Close Program Listener
 	Messageboxes set background frames translucent
+	Close Program Listener
 	Tooltips
 	
-openmicrolabs.view
-	readDelay in seconds
-
 openmicrolabs.model.data
 	Multithreaded avg calculator
 

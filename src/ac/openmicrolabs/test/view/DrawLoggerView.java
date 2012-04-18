@@ -18,12 +18,11 @@
 
 package ac.openmicrolabs.test.view;
 
-import com.jcummins.gui.GUITools;
-
 import ac.openmicrolabs.model.settings.OMLSettings;
 import ac.openmicrolabs.test.OMLTestSettings;
 import ac.openmicrolabs.view.gui.OMLLoggerView;
 
+import com.jcummins.gui.GUITools;
 
 /**
  * Testing class for OMLLoggerView.
@@ -63,11 +62,10 @@ public abstract class DrawLoggerView {
 		frame.setMaxLabels(tmp);
 		frame.setAvgLabels(tmp);
 		frame.setReadingsLabel("<?>");
-
-		frame.setVisible(true);
 		frame.repaint();
 		GUITools.centreFrame(frame);
 
+		frame.setVisible(true);
 	}
 
 }

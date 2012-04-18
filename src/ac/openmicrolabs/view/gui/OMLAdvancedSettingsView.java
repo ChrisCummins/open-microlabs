@@ -34,8 +34,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 
-import com.jcummins.gui.HTMLFontset;
 import com.jcummins.gui.JComboBoxUtils;
+import com.jcummins.html.font.HTMLFontset;
 
 
 /**

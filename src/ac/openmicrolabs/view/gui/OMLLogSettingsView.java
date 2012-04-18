@@ -36,8 +36,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.ScrollPaneConstants;
 
-import com.jcummins.gui.HTMLFontset;
 import com.jcummins.gui.JComboBoxUtils;
+import com.jcummins.html.font.HTMLFontset;
 
 import ac.openmicrolabs.include.AppDetails;
 import ac.openmicrolabs.view.LogSettingsView;

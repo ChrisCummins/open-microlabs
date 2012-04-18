@@ -18,7 +18,7 @@
 
 package ac.openmicrolabs.model.settings;
 
-import com.jcummins.gui.HTMLFontset;
+import com.jcummins.html.font.HTMLFontset;
 
 import ac.openmicrolabs.model.com.signals.OMLSignal;
 

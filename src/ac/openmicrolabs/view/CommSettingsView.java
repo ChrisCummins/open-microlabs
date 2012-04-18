@@ -22,7 +22,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JFrame;
 
-import com.jcummins.gui.HTMLFontset;
+import com.jcummins.html.font.HTMLFontset;
 
 
 /**

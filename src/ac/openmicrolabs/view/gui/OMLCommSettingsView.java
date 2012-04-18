@@ -35,8 +35,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.TitledBorder;
 
-import com.jcummins.gui.HTMLFontset;
 import com.jcummins.gui.JComboBoxUtils;
+import com.jcummins.html.font.HTMLFontset;
 import com.jcummins.misc.GetSystemProperties;
 
 

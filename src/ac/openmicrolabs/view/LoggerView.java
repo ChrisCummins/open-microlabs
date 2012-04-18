@@ -25,7 +25,7 @@ import javax.swing.JFrame;
 
 import org.jfree.data.time.TimeSeriesCollection;
 
-import com.jcummins.gui.HTMLFontset;
+import com.jcummins.html.font.HTMLFontset;
 
 /**
  * @author Chris Cummins

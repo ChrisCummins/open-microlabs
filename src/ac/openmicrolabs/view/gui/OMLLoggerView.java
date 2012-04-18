@@ -40,7 +40,7 @@ import org.jfree.chart.axis.ValueAxis;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.data.time.TimeSeriesCollection;
 
-import com.jcummins.gui.HTMLFontset;
+import com.jcummins.html.font.HTMLFontset;
 
 import ac.openmicrolabs.include.AppDetails;
 import ac.openmicrolabs.view.LoggerView;
