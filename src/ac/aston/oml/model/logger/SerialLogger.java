@@ -119,7 +119,7 @@ public class SerialLogger extends Observable implements Runnable {
 			String stringbuffer = serialReader.sendDataRequest(logSettings
 					.datamask().asciiChar());
 
-			// Split information into seperate strings.
+			// Split information into separate strings.
 			String[] splitbuffer = stringbuffer.split(AppDetails
 					.serialDelimiter()); //
 

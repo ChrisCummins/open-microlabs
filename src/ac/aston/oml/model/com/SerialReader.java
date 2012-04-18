@@ -41,9 +41,10 @@ import jcummins.serial.SerialComm;
 public class SerialReader extends SerialComm {
 
 	private static final long DEFAULT_SLEEP_TIME = 100;
-	private static final char TEST_CONNECT_CHAR = (char) 255;
+	private static final char[] TEST_CONNECT_CHAR = { (char) 127 };
 
 	private final CommSettings commSettings;
+
 	private long sleepTime = DEFAULT_SLEEP_TIME;
 
 	/**
@@ -63,14 +64,17 @@ public class SerialReader extends SerialComm {
 	 * for the time specified with sleepTime before returning the contents of
 	 * the serial read buffer.
 	 * 
-	 * @param c
-	 *            Char to be transmitted.
+	 * @param dataRequest
+	 *            Char array to be transmitted.
 	 * @return String buffer.
 	 * @throws IOException
 	 *             In case of IO error.
 	 */
-	public final String sendDataRequest(final char c) throws IOException {
-		super.write(c);
+	public final String sendDataRequest(final char[] dataRequest)
+			throws IOException {
+		for (char c : dataRequest) {
+			super.write(c);
+		}
 
 		try {
 			Thread.sleep(sleepTime);
@@ -104,7 +108,7 @@ public class SerialReader extends SerialComm {
 			UnsupportedCommOperationException {
 		super.connect(AppDetails.name());
 
-		String s = sendDataRequest((char) TEST_CONNECT_CHAR);
+		String s = sendDataRequest(TEST_CONNECT_CHAR);
 		super.close();
 
 		return (s.length() > 0);

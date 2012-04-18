@@ -143,7 +143,11 @@ public class Datamask {
 		for (byte b : bytes) {
 			int val = b;
 			for (int i = 0; i < PIN_BITS + SBI_BITS; i++) {
-				binary.append((val & BIN_OFFSET) == BIN_0 ? BIN_0 : BIN_1);
+				if ((val & BIN_OFFSET) == BIN_0) {
+					binary.append(BIN_0);
+				} else {
+					binary.append(BIN_1);
+				}
 				val <<= 1;
 			}
 			binary.append(' ');
