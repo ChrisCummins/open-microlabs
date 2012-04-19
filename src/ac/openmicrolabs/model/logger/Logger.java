@@ -49,6 +49,9 @@ public class Logger implements Observer {
 	private final TimeSeries[] series;
 	private final TimeSeriesCollection seriesCollection;
 
+	private long readingCount;
+	private long nullReadingCount;
+
 	/**
 	 * Creates a new Logger object. It adds itself as an observer to the
 	 * SerialLogger argument and creates new TimeSeries and
@@ -113,10 +116,14 @@ public class Logger implements Observer {
 
 	@Override
 	public final void update(final Observable arg0, final Object arg1) {
-		// TODO: SeriesException handling.
 		Double[] d = (Double[]) arg1;
 		for (int i = 0; i < series.length; i++) {
+			readingCount++;
 			series[i].addOrUpdate(new Millisecond(), d[i]);
+
+			if (d[i] == null) {
+				nullReadingCount++;
+			}
 		}
 	}
 
@@ -140,4 +147,23 @@ public class Logger implements Observer {
 	public final TimeSeriesCollection getData() {
 		return seriesCollection;
 	}
+
+	/**
+	 * Returns the total number of readings made.
+	 * 
+	 * @return Long.
+	 */
+	public final long getReadingCount() {
+		return readingCount;
+	}
+
+	/**
+	 * Returns the number of null readings made.
+	 * 
+	 * @return Long.
+	 */
+	public final long getNullReadingCount() {
+		return nullReadingCount;
+	}
+
 }

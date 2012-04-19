@@ -107,5 +107,15 @@ public class OMLLoggerGateway implements LoggerGateway {
 	public final TimeSeriesCollection getData() {
 		return logger.getData();
 	}
+	
+	@Override
+	public final long getReadingCount() {
+		return logger.getReadingCount();
+	}
+
+	@Override
+	public final long getNullReadingCount() {
+		return logger.getNullReadingCount();
+	}
 
 }

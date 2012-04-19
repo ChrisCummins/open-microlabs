@@ -18,7 +18,7 @@
 
 package ac.openmicrolabs.controller.listeners;
 
-import ac.openmicrolabs.controller.LoggerUpdateView;
+import ac.openmicrolabs.controller.LoggerScreenStateUpdater;
 import ac.openmicrolabs.model.ModelGateway;
 import ac.openmicrolabs.model.logger.LogSettings;
 import ac.openmicrolabs.view.ViewGateway;
@@ -65,7 +65,7 @@ public class LoggerNewDataListener implements SeriesChangeListener {
 		}
 
 		// Update screen state.
-		new LoggerUpdateView(data, l, v);
+		new LoggerScreenStateUpdater(data, l, m, v);
 
 		// If last reading, set screen state to readings complete.
 		if (data.getItemCount(0) == l.readCount()) {

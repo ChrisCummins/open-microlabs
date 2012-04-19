@@ -18,6 +18,7 @@
 
 package ac.openmicrolabs.controller;
 
+import ac.openmicrolabs.model.ModelGateway;
 import ac.openmicrolabs.model.logger.LogSettings;
 import ac.openmicrolabs.view.ViewGateway;
 
@@ -32,12 +33,14 @@ import org.jfree.data.time.TimeSeriesDataItem;
  * 
  * @author Chris Cummins
  */
-public class LoggerUpdateView {
+public class LoggerScreenStateUpdater {
 
 	private static final int READ_DELAY_TO_SECONDS_DIVISOR = 1000;
+	private static final int PERCENTAGE_MULTIPLIER = 100;
 
 	private final TimeSeriesCollection data;
 	private final LogSettings l;
+	private final ModelGateway m;
 	private final ViewGateway v;
 
 	/**
@@ -47,13 +50,17 @@ public class LoggerUpdateView {
 	 *            Data model.
 	 * @param logSettings
 	 *            Log Settings in use.
+	 * @param model
+	 *            ModelGateway for getting reading counts from Logger.
 	 * @param view
 	 *            ViewGateway for updating view.
 	 */
-	public LoggerUpdateView(final TimeSeriesCollection dataCollection,
-			final LogSettings logSettings, final ViewGateway view) {
+	public LoggerScreenStateUpdater(final TimeSeriesCollection dataCollection,
+			final LogSettings logSettings, final ModelGateway model,
+			final ViewGateway view) {
 		this.data = dataCollection;
 		this.l = logSettings;
+		this.m = model;
 		this.v = view;
 
 		updateReadings();
@@ -82,8 +89,9 @@ public class LoggerUpdateView {
 	 * Update the signal strength label.
 	 */
 	private void updateSignalStrength() {
-		String s = "100%" + " signal strength";
-		// TODO: Calculation
+		int p = (int) ((double) m.logger().getNullReadingCount() / m.logger()
+				.getNullReadingCount()) * PERCENTAGE_MULTIPLIER;
+		String s = p + "% signal strength";
 		v.lv().setSignalStrenghLabel(s);
 	}
 

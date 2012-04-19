@@ -121,5 +121,18 @@ public interface LoggerGateway {
 	 * @return TimeSeriesCollection
 	 */
 	TimeSeriesCollection getData();
+	
+	/**
+	 * Returns the total number of readings made.
+	 * 
+	 * @return Long.
+	 */
+	long getReadingCount();
+	/**
+	 * Returns the number of null readings made.
+	 * 
+	 * @return Long.
+	 */
+	long getNullReadingCount();
 
 }
