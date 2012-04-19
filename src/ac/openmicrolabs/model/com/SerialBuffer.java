@@ -61,7 +61,7 @@ public class SerialBuffer extends Observable implements Observer, Runnable {
 			}
 		}
 
-		return queue.removeFirst();
+		return ((!queue.isEmpty()) ? queue.removeFirst() : null);
 	}
 
 }

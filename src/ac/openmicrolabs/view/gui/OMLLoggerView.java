@@ -163,9 +163,8 @@ public class OMLLoggerView extends JFrame implements LoggerView {
 
 		reportButton.setSize(doneButton.getSize());
 		reportButton.setIcon(new ImageIcon("img/22x22/save.png"));
-		reportButton.setLocation(
-				doneButton.getX() - doneButton.getWidth() - PAD10,
-				doneButton.getY());
+		reportButton.setLocation(doneButton.getX() - doneButton.getWidth()
+				- PAD10, doneButton.getY());
 		reportButton.setBackground(Color.white);
 
 		footerLabel.setSize(reportButton.getLocation().x, PAD30);
@@ -231,7 +230,7 @@ public class OMLLoggerView extends JFrame implements LoggerView {
 	public final void addDoneButtonListener(final ActionListener l) {
 		this.doneButton.addActionListener(l);
 	}
-	
+
 	@Override
 	public final void addReportButtonListener(final ActionListener l) {
 		this.reportButton.addActionListener(l);
@@ -243,6 +242,9 @@ public class OMLLoggerView extends JFrame implements LoggerView {
 	private JPanel createContentPane(final TimeSeriesCollection t,
 			final String graphTitle, final double graphTimeRange,
 			final String[] signals) {
+
+		btmPanel.remove(reportButton);
+
 		chanLabel = new JLabel[signals.length];
 
 		int activeSignalCount = 0;
@@ -341,11 +343,6 @@ public class OMLLoggerView extends JFrame implements LoggerView {
 		btmPanel.setLocation(0, this.getHeight() - BTM_HEIGHT);
 		btmPanel.setBackground(Color.white);
 
-		resultsPanel.add(new JLabel(""));
-		for (JLabel l : chanLabel) {
-			resultsPanel.add(l);
-		}
-
 		// Instantiate bottom panel objects.
 		footerLabel.setSize(LABEL_WIDTH, LABEL_HEIGHT);
 		footerLabel.setLocation(LABEL_X, LABEL_Y);
@@ -377,6 +374,11 @@ public class OMLLoggerView extends JFrame implements LoggerView {
 		resultsPanel.setLayout(new GridLayout(RESULTS_GRID_ROWS,
 				RESULTS_GRID_COL));
 		resultsPanel.setBackground(Color.white);
+
+		resultsPanel.add(new JLabel(""));
+		for (JLabel l : chanLabel) {
+			resultsPanel.add(l);
+		}
 
 		int index = 0;
 		resultsPanel.add(new JLabel(""));

@@ -60,7 +60,10 @@ public class LoggerSaveReportListener implements ActionListener {
 		// Get report filepath from user.
 		if (fileChooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
 
-			if (fileChooser.getSelectedFile().exists()) {
+			final File file = new File(fileChooser.getSelectedFile()
+					.getAbsolutePath() + FILE_EXTENSION);
+
+			if (file.exists()) {
 				boolean b = fileOverwrite(fileChooser.getSelectedFile());
 				if (!b) {
 					return;

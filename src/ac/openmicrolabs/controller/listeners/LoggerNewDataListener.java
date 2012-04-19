@@ -70,6 +70,19 @@ public class LoggerNewDataListener implements SeriesChangeListener {
 		// If last reading, set screen state to readings complete.
 		if (data.getItemCount(0) == l.readCount()) {
 			v.lv().setViewLoggingCompleted(l.readCount() * l.readDelay());
+
+			String s = "<b>" + m.logger().getReadingCount()
+					+ " readings complete";
+			if (m.logger().getNullReadingCount() > 0) {
+				s += " (" + m.logger().getNullReadingCount()
+						+ " reading";
+				if (m.logger().getNullReadingCount() > 1) {
+					s += "s";
+				}
+				s += " lost)";
+			}
+			s += ".</b>";
+			v.lv().setSignalStrenghLabel(s);
 		}
 	}
 }

@@ -89,9 +89,13 @@ public class LoggerScreenStateUpdater {
 	 * Update the signal strength label.
 	 */
 	private void updateSignalStrength() {
-		int p = (int) ((double) m.logger().getNullReadingCount() / m.logger()
-				.getNullReadingCount()) * PERCENTAGE_MULTIPLIER;
-		String s = p + "% signal strength";
+		float lostPercentage = (float) 0.0;
+		if (m.logger().getReadingCount() > 0) {
+			lostPercentage = (((float) m.logger().getNullReadingCount() / (float) m
+					.logger().getReadingCount()) * PERCENTAGE_MULTIPLIER);
+		}
+		String s = (int) (PERCENTAGE_MULTIPLIER - lostPercentage)
+				+ "% signal strength";
 		v.lv().setSignalStrenghLabel(s);
 	}
 
