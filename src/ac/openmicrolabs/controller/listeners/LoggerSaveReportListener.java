@@ -34,6 +34,8 @@ import javax.swing.JFileChooser;
  */
 public class LoggerSaveReportListener implements ActionListener {
 
+	private static final String FILE_EXTENSION = ".html";
+
 	private final ModelGateway m;
 	private final ViewGateway v;
 
@@ -57,14 +59,14 @@ public class LoggerSaveReportListener implements ActionListener {
 
 		// Get report filepath from user.
 		if (fileChooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
-			
+
 			if (fileChooser.getSelectedFile().exists()) {
 				boolean b = fileOverwrite(fileChooser.getSelectedFile());
 				if (!b) {
 					return;
 				}
 			}
-			
+
 			generateReport(fileChooser.getSelectedFile().getAbsolutePath());
 		} else {
 			return;
@@ -83,7 +85,7 @@ public class LoggerSaveReportListener implements ActionListener {
 	 */
 	private void generateReport(final String path) {
 		try {
-			m.logger().saveReport(path);
+			m.logger().saveReport(path + FILE_EXTENSION);
 		} catch (IOException e) {
 			v.showError("File write error! Unable to save report.");
 		}

@@ -29,15 +29,12 @@
 #define UBRR16_9600  0x67               // 9600b/s @ 16MHZ (0.160% error).
 #define UBBR16_19200 0x33               // 19200b/s @ 16MHZ (0.160% error).
 #define UBRR16_38400 0x19               // 38400b/s @ 16MHZ (0.160% error).
-// List of references voltages for ADC.
 #define AREF_AVCC (1<<REFS0)            // Vcc (5V).
-// UBRR value to be used for USART0.
-#define UBRR0_value UBRR16_38400
-// UBRR value to be used for USART1.
-#define UBRR1_value UBRR16_38400
-// AREF value to be used for ADC.
-#define AREF_value AREF_AVCC
-#define ADC_PRESCALE_VALUE ((1 << ADPS2) | (1 << ADPS1) | (1 << ADPS0))
+#define ADC_PRESCALE_127 ((1 << ADPS2) | (1 << ADPS1) | (1 << ADPS0))
+#define DESIRED_UBRR0 UBRR16_38400
+#define DESIRED_UBRR1 UBRR16_38400
+#define DESIRED_AREF AREF_AVCC
+#define DESIRED_ADC_PRESCALE ADC_PRESCALE_127
 
 // Char buffer used for storing ADC values for transmission.
 static char usart0_tx_buffer[5];
@@ -48,63 +45,24 @@ static char usart0_rx_buffer[256];
 // Char buffer used for storing received data request responses from slaves.
 static char usart1_rx_buffer[512];
 
-// Function prototypes.
-void
-appendToString(char c, char *string);
-
-void
-waitForADC();
-
-void
-processInstruction(char c);
-
 /**
- * Main method, initialises USARTs, ADC, interrupts, and then loops nothing.
+ * Start an ADC conversion and wait until finished.
  */
-int
-main(void)
-{
-  // Set USART bauds.
-  UBRR0 = UBRR0_value;
-  UBRR1 = UBRR1_value;
-
-  // Enable rx/tx/rxi for USART0 and USART1.
-  UCSR0B |= (1 << RXEN0) | (1 << TXEN0) | (1 << RXCIE0);
-  UCSR1B |= (1 << RXEN1) | (1 << TXEN1) | (1 << RXCIE1);
-
-  // Setup ADC AREF.
-  ADMUX = AREF_value;
-
-  // Set ADC Options.
-  ADCSRA |= ADC_PRESCALE_VALUE | ((1 << ADEN) | (1 << ADSC));
-
-  // Set free running mode.
-  ADCSRB = 0x00;
-
-  // Perform dummy ADC conversion.
-  waitForADC();
-
-  // Enable interrupts.
-  sei();
-
-  // Do nothing.
-  while (1)
-    asm("NOP");
-}
-
 void
-waitForADC()
+performADC()
 {
   // Start ADC.
   ADCSRA |= (1 << ADSC);
 
   // While ADC is in progress, do nothing.
   while (ADCSRA & (1 << ADSC))
-    asm ("NOP");
+    {
+      asm ("NOP");
+    }
 }
 
 void
-appendToString(char c, char *string)
+appendToString(char *string, char c)
 {
   // Get string last char index.
   uint16_t index = strlen(string);
@@ -117,51 +75,43 @@ appendToString(char c, char *string)
 }
 
 void
-processInstruction(char c)
+txCharUSART0(char c)
 {
-  // Initialise temporary variable.
-  uint16_t index;
-
-  if (strlen(usart0_rx_buffer) > 0) // If USART0 RX buffer contains chars,
+  while (!(UCSR0A & 1 << UDRE0))
     {
-      index = strlen(usart0_rx_buffer) - 1; // Get buffer index.
-      usart0_rx_buffer[index] &= 0xFE; // Disable SBI for last instruction.
+      asm("NOP");
+    }
+  UDR0 = c;
+}
 
-      index = 0; // Initialise counter.
-      while (usart0_rx_buffer[index] != '\0') // Iterate over chars in USART0 RX buffer.
-        {
-          while (!(UCSR1A & 1 << UDRE1)) // While UDR0 isn't clear:
-            asm("NOP");
-          // Do nothing.
-          UDR1 = usart0_rx_buffer[index++]; // Then transmit USART0 RX buffer char.
-        }
-    }
-  for (index = 0x01; index < 0x08; index++) // Iterate from 1 - 7.
-    if (c & (1 << index)) // If instruction bit 'index' set high:
-      {
-        ADMUX = (ADMUX & 0xE0) | (index &= 0x1F); // Set ADC channel to 'index'.
-        waitForADC();
-        // Do nothing.
-        sprintf(usart0_tx_buffer, "%d,", ADC); // Then format result into USART0 TX buffer.
-        uint8_t i = 0; // Initialise counter.
-        while (usart0_tx_buffer[i] != '\0') // Iterate over USART0 TX buffer chars.
-          {
-            while (!(UCSR0A & 1 << UDRE0)) // While UDR0 isn't clear:
-              asm("NOP");
-            // Do nothing.
-            UDR0 = usart0_tx_buffer[i++]; // Transmit character via USART0.
-          }
-        memset(usart0_tx_buffer, 0x0, sizeof(usart0_tx_buffer)); // Clear USART0 TX Buffer.
-      }
-  if (strlen(usart0_rx_buffer) < 1) // If USART0 RX buffer is empty,
+void
+txStringUSART0(char *string, int index)
+{
+  index = 0;
+  while (string[index] != '\0')
     {
-      while (!(UCSR0A & 1 << UDRE0)) // While UDR0 isn't clear:
-        asm("NOP");
-      // Do nothing.
-      UDR0 = '\r'; // Transmit EOL character via USART0.
+      txCharUSART0(string[index++]);
     }
-  else
-    memset(usart0_rx_buffer, 0x0, sizeof(usart0_rx_buffer)); // Clear USART0 RX buffer.
+}
+
+void
+txCharUSART1(char c)
+{
+  while (!(UCSR1A & 1 << UDRE1))
+    {
+      asm("NOP");
+    }
+  UDR1 = c;
+}
+
+void
+txStringUSART1(char *string, int index)
+{
+  index = 0;
+  while (string[index] != '\0')
+    {
+      txCharUSART1(string[index++]);
+    }
 }
 
 /**
@@ -172,52 +122,118 @@ USART0_RX_vect(void) __attribute__ ((signal,used, externally_visible));
 void
 USART0_RX_vect(void)
 {
-  // Turn off USART0 RX interrupt.
-  UCSR0B |= (0 << RXCIE0);
+  UCSR0B |= (0 << RXCIE0);                  // Turn off USART0 RX interrupt.
+  unsigned char c = UDR0;                            // Read char from UDR0.
 
-  // Read char from UDR0.
-  unsigned char c = UDR0;
-
-  // If char SBI is set, add to USART0 RX bufer.
+  uint16_t index;
   if (c & (1 << 0))
     {
-      appendToString(c, usart0_rx_buffer);
+      // Add to USART0 RX bufer:
+      appendToString(usart0_rx_buffer, c);
     }
-  else // Otherwise, process instruction:
+  else
     {
-      processInstruction(c);
+      if (strlen(usart0_rx_buffer) > 0)
+        {
+          // Disable SIB for last char.
+          index = strlen(usart0_rx_buffer) - 1;
+          usart0_rx_buffer[index] &= 0xFE;
+          txStringUSART1(usart0_rx_buffer, index);
+        }
+
+      // Iterate over ADC channels [1, 7].
+      for (index = 0x01; index < 0x08; index++)
+        {
+          // If instruction bit 'index' set high:
+          if (c & (1 << index))
+            {
+              // Set ADC channel to 'index'.
+              ADMUX = (ADMUX & 0xE0) | (index &= 0x1F);
+
+              performADC();
+
+              // Put result in USART0 TX buffer.
+              sprintf(usart0_tx_buffer, "%d,", ADC);
+
+              // Transmit USART0 TX buffer.
+              uint8_t index;
+              txStringUSART0(usart0_tx_buffer, index);
+
+              // Clear USART0 TX Buffer.
+              memset(usart0_tx_buffer, 0x0, sizeof(usart0_tx_buffer));
+            }
+        }
+
+      // If USART0 RX buffer is empty.
+      if (strlen(usart0_rx_buffer) < 1)
+        {
+          while (!(UCSR0A & 1 << UDRE0))          // While UDR0 isn't clear:
+            asm("NOP");
+          // Do nothing.
+          UDR0 = '\r';                 // Transmit EOL character via USART0.
+        }
+      else
+        memset(usart0_rx_buffer, 0x0, sizeof(usart0_rx_buffer)); // Clear USART0 RX buffer.
     }
-  UCSR0B |= (1 << RXCIE0); // Turn RX interrupt back on.
+  UCSR0B |= (1 << RXCIE0);                     // Turn RX interrupt back on.
 }
 
 /**
- * USART1 Receive character interrupt.
+ * USART1 Receive character interrupt..
  */
 void
 USART1_RX_vect(void) __attribute__ ((signal,used, externally_visible));
 void
 USART1_RX_vect(void)
 {
-  // Turn off USART1 RX interrupt.
-  UCSR1B |= (0 << RXCIE1);
-
-  // Read char from UDR1.
-  unsigned char c = UDR1;
-
-  appendToString(c, usart1_rx_buffer);
-
-  uint16_t index;
-  if (c == '\r') // If char is EOL,
-    { // Transmit USART1 RX buffer:
-      index = 0; // Initialise counter.
+  UCSR1B |= (0 << RXCIE1);                  // Turn off USART1 RX interrupt.
+  unsigned char c = UDR1;                            // Read char from UDR1.
+  uint16_t index = strlen(usart1_rx_buffer);            // Get buffer index.
+  usart1_rx_buffer[index] = c;                        // Add char to buffer.
+  usart1_rx_buffer[index + 1] = '\0';            // Add null char to string.
+  if (c == '\r')                                          // If char is EOL,
+    {                                          // Transmit USART1 RX buffer:
+      index = 0;                                      // Initialise counter.
       while (usart1_rx_buffer[index] != '\0') // Iterate over USART1 RX buffer.
         {
-          while (!(UCSR0A & 1 << UDRE0)) // While UDR0 isn't clear:
+          while (!(UCSR0A & 1 << UDRE0))          // While UDR0 isn't clear:
             asm ("NOP");
           // Do nothing.
           UDR0 = usart1_rx_buffer[index++]; // Transmit character via USART0.
         }
       memset(usart1_rx_buffer, 0x0, sizeof(usart1_rx_buffer)); // Clear USART1 RX buffer
     }
-  UCSR1B |= (1 << RXCIE1); // Turn USART1 RX interrupt back on.
+  UCSR1B |= (1 << RXCIE1);              // Turn USART1 RX interrupt back on.
+}
+
+int
+main(void)
+{
+  // Set USART bauds.
+  UBRR0 = DESIRED_UBRR0;
+  UBRR1 = DESIRED_UBRR1;
+
+  // Enable rx/tx/rxi for USART0 and USART1.
+  UCSR0B |= (1 << RXEN0) | (1 << TXEN0) | (1 << RXCIE0);
+  UCSR1B |= (1 << RXEN1) | (1 << TXEN1) | (1 << RXCIE1);
+
+  // Setup ADC AREF.
+  ADMUX = DESIRED_AREF;
+
+  // Set ADC Prescale.
+  ADCSRA |= (DESIRED_ADC_PRESCALE | (1 << ADEN) | (1 << ADSC));
+
+  // Set free running mode.
+  ADCSRB = 0x00;
+
+  performADC();
+
+  // Enable interrupts.
+  sei();
+
+  // Do nothing.
+  while (1)
+    {
+      asm("NOP");
+    }
 }
