@@ -67,7 +67,7 @@ public abstract class DrawLoggerView {
 		
 		frame.setSignalStrenghLabel("90%");
 
-		frame.setViewLoggingCompleted(10000.0);
+		frame.setViewLoggingCompleted(GRAPH_RANGE);
 		
 		frame.setVisible(true);
 	}
