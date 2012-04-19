@@ -141,4 +141,11 @@ public interface LoggerView {
 	 */
 	void addDoneButtonListener(ActionListener l);
 
+	/**
+	 * Add an Action Listener to the Save Report button.
+	 * 
+	 * @param l Action listener.
+	 */
+	void addReportButtonListener(final ActionListener l);
+
 }

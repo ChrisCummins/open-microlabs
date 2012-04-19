@@ -20,6 +20,7 @@ package ac.openmicrolabs.model.logger;
 
 import ac.openmicrolabs.model.com.SerialBuffer;
 import ac.openmicrolabs.model.com.signals.OMLSignal;
+import ac.openmicrolabs.model.logger.report.ReportWriter;
 
 import java.io.IOException;
 import java.util.Observable;
@@ -103,6 +104,19 @@ public class Logger implements Observer {
 	public final void stopLogging() {
 		serialLoggerThread.interrupt();
 		serialBufferThread.interrupt();
+	}
+
+	/**
+	 * Saves an HTML report of a logging session to the specified filepath.
+	 * 
+	 * @param filepath
+	 *            File path.
+	 * @throws IOException
+	 *             In case of file IO error.
+	 */
+	public final void saveReport(final String filepath) throws IOException {
+		ReportWriter.generateReport(filepath, serialLogger.getLogSettings()
+				.datamask().activeSignals(), seriesCollection);
 	}
 
 	/**

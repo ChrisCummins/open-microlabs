@@ -32,7 +32,6 @@ import javax.swing.JProgressBar;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
 
-
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
@@ -56,7 +55,7 @@ public class OMLLoggerView extends JFrame implements LoggerView {
 	private static final String GRAPH_Y_LABEL = null;
 
 	private static final int ASCII_OFFSET = 65;
-	
+
 	private static final int PAD5 = 5;
 	private static final int PAD8 = 8;
 	private static final int PAD10 = 10;
@@ -104,6 +103,7 @@ public class OMLLoggerView extends JFrame implements LoggerView {
 	private final JLabel footerLabel = new JLabel("");
 	private JProgressBar progressBar;
 	private final JButton doneButton = new JButton("Cancel");
+	private final JButton reportButton = new JButton("Save");
 
 	private double graphMinY;
 	private double graphMaxY;
@@ -161,10 +161,18 @@ public class OMLLoggerView extends JFrame implements LoggerView {
 			avgLabel[i].setText("");
 		}
 
-		footerLabel.setSize(doneButton.getLocation().x, PAD30);
+		reportButton.setSize(doneButton.getSize());
+		reportButton.setIcon(new ImageIcon("img/22x22/save.png"));
+		reportButton.setLocation(
+				doneButton.getX() - doneButton.getWidth() - PAD10,
+				doneButton.getY());
+		reportButton.setBackground(Color.white);
+
+		footerLabel.setSize(reportButton.getLocation().x, PAD30);
 		footerLabel.setHorizontalAlignment(JLabel.CENTER);
 
 		btmPanel.remove(progressBar);
+		btmPanel.add(reportButton);
 		btmPanel.repaint();
 		doneButton.setText("Done");
 		doneButton.setIcon(new ImageIcon("img/22x22/play.png", AppDetails
@@ -222,6 +230,11 @@ public class OMLLoggerView extends JFrame implements LoggerView {
 	@Override
 	public final void addDoneButtonListener(final ActionListener l) {
 		this.doneButton.addActionListener(l);
+	}
+	
+	@Override
+	public final void addReportButtonListener(final ActionListener l) {
+		this.reportButton.addActionListener(l);
 	}
 
 	/*

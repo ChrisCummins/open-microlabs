@@ -101,8 +101,7 @@ public class LogSettingsDoneListener implements ActionListener {
 		try {
 			m.logger().setLogSettings(l, m.com());
 		} catch (IllegalArgumentException e) {
-			// TODO:
-			// Thrown by ??? because read delay was too small.
+			// Thrown because read delay was too small.
 			v.showError(e.getMessage());
 			return;
 		} catch (IOException e) {

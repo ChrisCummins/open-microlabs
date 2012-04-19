@@ -28,12 +28,16 @@ import com.jcummins.html.table.HTMLTableRow;
 import org.jfree.data.time.TimeSeriesCollection;
 
 /**
+ * This utility class is used to generate a HTMLTable from a
+ * TimeSeriesCollection of OMLData readings.
+ * 
  * @author Chris Cummins
  * 
  */
 public abstract class TableGenerator {
 
 	private static final int TABLE_BORDER_WIDTH = 1;
+	private static final String NULL_READING_TEXT = "-";
 
 	/**
 	 * Returns a representation of the TimeSeriesCollection as a table.
@@ -48,8 +52,10 @@ public abstract class TableGenerator {
 			final OMLSignal[] activeSignals) {
 		final HTMLTable table = new HTMLTable(TABLE_BORDER_WIDTH);
 
+		// Add header row.
 		table.add(generateHeader(activeSignals));
 
+		// Add data rows.
 		for (int i = 0; i < t.getItemCount(0); i++) {
 			table.add(generateRow(t, activeSignals, i));
 		}
@@ -57,10 +63,17 @@ public abstract class TableGenerator {
 		return table;
 	}
 
+	/*
+	 * Creates and returns a table row containing headers.
+	 */
 	private static HTMLTableRow generateHeader(final OMLSignal[] activeSignals) {
 
 		final HTMLTableRow tr = new HTMLTableRow();
+
+		// Add time header.
 		tr.add(new HTMLTableHeader("Time"));
+
+		// Add series headers.
 		for (OMLSignal s : activeSignals) {
 			tr.add(new HTMLTableHeader(s.name()));
 		}
@@ -68,25 +81,27 @@ public abstract class TableGenerator {
 		return tr;
 	}
 
+	/*
+	 * Creates and returns a table row containing data values.
+	 */
 	private static HTMLTableRow generateRow(final TimeSeriesCollection t,
 			final OMLSignal[] activeSignals, final int index) {
 
 		final HTMLTableRow tr = new HTMLTableRow();
 
+		// Add time reading.
 		tr.add(new HTMLTableData(t.getSeries(0).getTimePeriod(index).toString()));
 
+		// Add series data readings.
 		for (int i = 0; i < t.getSeriesCount(); i++) {
+			// Get reading.
 			final Number value = t.getSeries(i).getValue(index);
 
-			if (value != null) {
-				tr.add(new HTMLTableData(activeSignals[i].toString(value
-						.doubleValue())));
-			} else {
-				tr.add(new HTMLTableData("-"));
-			}
+			// Add reading, or NULL_READING_TEXT if reading is null.
+			tr.add(new HTMLTableData((value != null) ? activeSignals[i]
+					.toString(value.doubleValue()) : NULL_READING_TEXT));
 		}
 
-		return null;
+		return tr;
 	}
-
 }

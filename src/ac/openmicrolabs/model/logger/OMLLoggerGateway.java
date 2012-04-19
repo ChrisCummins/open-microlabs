@@ -53,6 +53,11 @@ public class OMLLoggerGateway implements LoggerGateway {
 	}
 
 	@Override
+	public final void saveReport(final String filepath) throws IOException {
+		logger.saveReport(filepath);
+	}
+
+	@Override
 	public final void setLogSettings(final LogSettings l, final CommGateway c)
 			throws IOException {
 		serialLogger = new SerialLogger(l, c.getSerialReader());
@@ -107,7 +112,7 @@ public class OMLLoggerGateway implements LoggerGateway {
 	public final TimeSeriesCollection getData() {
 		return logger.getData();
 	}
-	
+
 	@Override
 	public final long getReadingCount() {
 		return logger.getReadingCount();

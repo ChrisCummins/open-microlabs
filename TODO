@@ -1,16 +1,8 @@
 openmicrolabs.*
-	Messageboxes set background frames translucent
 	Close Program Listener
 	Tooltips
 	
-openmicrolabs.model.data
-	Multithreaded avg calculator
-
-openmicrolabs.model.logger.file
-	FileLogger
-
-openmicrolabs.model.logger.report
-	HtmlLogFile
-
+	Free running mode.
+	
 openmicrolabs.model.settings
 	File parser

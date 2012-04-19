@@ -29,10 +29,10 @@ import ac.openmicrolabs.controller.listeners.LogSettingsDoneListener;
 import ac.openmicrolabs.controller.listeners.LogSettingsFileListener;
 import ac.openmicrolabs.controller.listeners.LogSettingsSlaveOptionsListener;
 import ac.openmicrolabs.controller.listeners.LoggerDoneListener;
+import ac.openmicrolabs.controller.listeners.LoggerSaveReportListener;
 import ac.openmicrolabs.model.ModelGateway;
 import ac.openmicrolabs.model.settings.OMLSettings;
 import ac.openmicrolabs.view.ViewGateway;
-
 
 /**
  * This implementation of the Controller interface performs the duties of
@@ -78,6 +78,7 @@ public class OMLController implements Controller {
 		v.as().addDoneButtonListener(new AdvancedSettingsDoneListenner(m, v));
 
 		// Logger view listeners.
+		v.lv().addReportButtonListener(new LoggerSaveReportListener(m, v));
 		v.lv().addDoneButtonListener(new LoggerDoneListener(m, v));
 	}
 

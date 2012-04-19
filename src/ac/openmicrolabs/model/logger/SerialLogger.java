@@ -113,6 +113,9 @@ public class SerialLogger extends Observable implements Runnable {
 				* AppDetails.sleepTime());
 	}
 
+	/*
+	 * Performs a serial read and interprets data.
+	 */
 	private void takeReading() {
 		try {
 			// Get information from microcontroller.

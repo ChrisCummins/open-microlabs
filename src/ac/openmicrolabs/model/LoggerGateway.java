@@ -50,6 +50,16 @@ public interface LoggerGateway {
 	void stopLogging();
 
 	/**
+	 * Saves an HTML report of a logging session to the specified filepath.
+	 * 
+	 * @param filepath
+	 *            File path.
+	 * @throws IOException
+	 *             In case of file IO error.
+	 */
+	void saveReport(String filepath) throws IOException;
+
+	/**
 	 * Set the logging settings for the logging session.
 	 * 
 	 * @param l
@@ -121,13 +131,14 @@ public interface LoggerGateway {
 	 * @return TimeSeriesCollection
 	 */
 	TimeSeriesCollection getData();
-	
+
 	/**
 	 * Returns the total number of readings made.
 	 * 
 	 * @return Long.
 	 */
 	long getReadingCount();
+
 	/**
 	 * Returns the number of null readings made.
 	 * 
