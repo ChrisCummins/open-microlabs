@@ -78,9 +78,15 @@ public class AdvancedSettingsDoneListenner implements ActionListener {
 				.getGraphTimeRangeOptions()[1][v.as()
 				.getTimeRangeSelectedIndex()];
 
-		// Construct AdvancedSettings from obtained data.
-		final AdvancedSettings a = new AdvancedSettings(graphTimeRange, minY,
-				maxY);
+		// Try to construct AdvancedSettings from obtained data.
+		AdvancedSettings a;
+		try {
+			a = new AdvancedSettings(graphTimeRange,
+					minY, maxY);
+		} catch (IllegalArgumentException e1) {
+			v.showError(e1.getMessage());
+			return;
+		}
 
 		// Set AdvancedSettings to model and hide frame.
 		m.logger().setAdvancedSettings(a);

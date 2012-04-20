@@ -6,3 +6,5 @@ openmicrolabs.*
 	
 openmicrolabs.model.settings
 	File parser
+	
+Strip chars from number conversion
