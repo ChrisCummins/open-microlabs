@@ -28,6 +28,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 
+import com.jcummins.file.DirTools;
 import com.jcummins.gui.GUITools;
 
 
@@ -111,7 +112,7 @@ public class CommSettingsDoneListener implements ActionListener {
 				.init(c.getFontset(), DEFAULT_PIN_COUNT,
 						c.getSignalTypeOptions());
 		v.ls().setFilepathLabel(
-				System.getProperty("user.dir") + File.separator + "log.dat");
+				DirTools.pwd() + File.separator + "log.dat");
 		v.ls().setSlaveBoxOptions(SLAVE_OPTIONS);
 
 		// Make frame visible.

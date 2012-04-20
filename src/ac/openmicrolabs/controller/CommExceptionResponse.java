@@ -44,9 +44,12 @@ public final class CommExceptionResponse {
 	/**
 	 * Catch an exception and react.
 	 * 
-	 * @param v ViewGateway for displaying error messages.
-	 * @param portName The name of the port that connection attempt was to.
-	 * @param e The Exception thrown.
+	 * @param v
+	 *            ViewGateway for displaying error messages.
+	 * @param portName
+	 *            The name of the port that connection attempt was to.
+	 * @param e
+	 *            The Exception thrown.
 	 */
 	public static void catchException(final ViewGateway v,
 			final String portName, final Throwable e) {
