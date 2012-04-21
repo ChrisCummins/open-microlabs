@@ -33,7 +33,7 @@ import org.jfree.data.time.TimeSeriesDataItem;
  * 
  * @author Chris Cummins
  */
-public class LoggerScreenStateUpdater {
+public class NewDataRunnable implements Runnable {
 
 	private static final int READ_DELAY_TO_SECONDS_DIVISOR = 1000;
 	private static final int PERCENTAGE_MULTIPLIER = 100;
@@ -55,7 +55,7 @@ public class LoggerScreenStateUpdater {
 	 * @param view
 	 *            ViewGateway for updating view.
 	 */
-	public LoggerScreenStateUpdater(final TimeSeriesCollection dataCollection,
+	public NewDataRunnable(final TimeSeriesCollection dataCollection,
 			final LogSettings logSettings, final ModelGateway model,
 			final ViewGateway view) {
 		this.data = dataCollection;
@@ -63,6 +63,10 @@ public class LoggerScreenStateUpdater {
 		this.m = model;
 		this.v = view;
 
+	}
+	
+	@Override
+	public final void run() {
 		updateReadings();
 		updateSignalStrength();
 		updateProgressBar();

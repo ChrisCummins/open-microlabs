@@ -18,7 +18,10 @@
 
 package ac.openmicrolabs.controller.listeners;
 
-import ac.openmicrolabs.controller.LoggerScreenStateUpdater;
+import javax.swing.SwingUtilities;
+
+import ac.openmicrolabs.controller.LoggingFinishedRunnable;
+import ac.openmicrolabs.controller.NewDataRunnable;
 import ac.openmicrolabs.model.ModelGateway;
 import ac.openmicrolabs.model.logger.LogSettings;
 import ac.openmicrolabs.view.ViewGateway;
@@ -65,24 +68,14 @@ public class LoggerNewDataListener implements SeriesChangeListener {
 		}
 
 		// Update screen state.
-		new LoggerScreenStateUpdater(data, l, m, v);
+		final NewDataRunnable worker = new NewDataRunnable(data, l, m, v);
+		SwingUtilities.invokeLater(worker);
 
 		// If last reading, set screen state to readings complete.
 		if (data.getItemCount(0) == l.readCount()) {
-			v.lv().setViewLoggingCompleted(l.readCount() * l.readDelay());
-
-			String s = "<b>" + m.logger().getReadingCount()
-					+ " readings complete";
-			if (m.logger().getNullReadingCount() > 0) {
-				s += " (" + m.logger().getNullReadingCount()
-						+ " reading";
-				if (m.logger().getNullReadingCount() > 1) {
-					s += "s";
-				}
-				s += " lost)";
-			}
-			s += ".</b>";
-			v.lv().setSignalStrenghLabel(s);
+			final LoggingFinishedRunnable run = new LoggingFinishedRunnable(l,
+					m, v);
+			SwingUtilities.invokeLater(run);
 		}
 	}
 }
