@@ -78,29 +78,30 @@ appendToString(char *string, char c)
 }
 
 /*
- * Transmit a character through USART0.
+ * Transmit a character through USART port.
  */
 void
-txCharUSART(char c, volatile uint8_t *udr, volatile uint8_t *ucsra, uint8_t bit)
+txCharUSART(char c, volatile uint8_t *udr_address,
+    volatile uint8_t *ucsra_address, uint8_t udre_bit)
 {
-  while (!(*ucsra & 1 << bit))
+  while (!(*ucsra_address & 1 << udre_bit))
     {
       asm("NOP");
     }
-  *udr = c;
+  *udr_address = c;
 }
 
 /*
- * Transmit a string through USART0.
+ * Transmit a string through USART port.
  */
 void
 txStringUSART(char *string, int index, volatile uint8_t *udr,
-    volatile uint8_t *ucsra, uint8_t bit)
+    volatile uint8_t *ucsra_address, uint8_t udre_bit)
 {
   index = 0;
   while (string[index] != '\0')
     {
-      txCharUSART(string[index++], udr, ucsra, bit);
+      txCharUSART(string[index++], udr, ucsra_address, udre_bit);
     }
 }
 
