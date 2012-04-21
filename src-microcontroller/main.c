@@ -40,10 +40,10 @@
 static char usart0_tx_buffer[5];
 
 // Char buffer used for received data request slave instructions.
-static char usart0_rx_buffer[256];
+static char usart0_rx_buffer[28];
 
 // Char buffer used for storing received data request responses from slaves.
-static char usart1_rx_buffer[512];
+static char usart1_rx_buffer[980];
 
 /**
  * Start an ADC conversion and wait until finished.
