@@ -61,6 +61,9 @@ performADC()
     }
 }
 
+/*
+ * Add a character to the end of a string.
+ */
 void
 appendToString(char *string, char c)
 {
@@ -74,46 +77,36 @@ appendToString(char *string, char c)
   string[index + 1] = '\0';
 }
 
+/*
+ * Transmit a character through USART0.
+ */
 void
-txCharUSART0(char c)
+txCharUSART(char c, volatile uint8_t *udr, volatile uint8_t *ucsra, uint8_t bit)
 {
-  while (!(UCSR0A & 1 << UDRE0))
+  while (!(*ucsra & 1 << bit))
     {
       asm("NOP");
     }
-  UDR0 = c;
+  *udr = c;
 }
 
+/*
+ * Transmit a string through USART0.
+ */
 void
-txStringUSART0(char *string, int index)
+txStringUSART(char *string, int index, volatile uint8_t *udr,
+    volatile uint8_t *ucsra, uint8_t bit)
 {
   index = 0;
   while (string[index] != '\0')
     {
-      txCharUSART0(string[index++]);
+      txCharUSART(string[index++], udr, ucsra, bit);
     }
 }
 
-void
-txCharUSART1(char c)
-{
-  while (!(UCSR1A & 1 << UDRE1))
-    {
-      asm("NOP");
-    }
-  UDR1 = c;
-}
-
-void
-txStringUSART1(char *string, int index)
-{
-  index = 0;
-  while (string[index] != '\0')
-    {
-      txCharUSART1(string[index++]);
-    }
-}
-
+/*
+ * Iterate over each bit of a char and perform ADCs and transmit as required.
+ */
 void
 processInstruction(char c)
 {
@@ -121,7 +114,7 @@ processInstruction(char c)
   uint8_t index;
   for (index = 0x01; index < 0x08; index++)
     {
-      // If instruction bit 'index' set high:
+      // If instruction bit 'index' is set:
       if (c & (1 << index))
         {
           // Set ADC channel to 'index'.
@@ -134,7 +127,7 @@ processInstruction(char c)
 
           // Transmit USART0 TX buffer.
           uint8_t i;
-          txStringUSART0(usart0_tx_buffer, i);
+          txStringUSART(usart0_tx_buffer, i, &UDR0, &UCSR0A, UDRE0);
         }
     }
 }
@@ -162,7 +155,9 @@ USART0_RX_vect(void)
           // Disable SIB for last char.
           uint8_t index = strlen(usart0_rx_buffer) - 1;
           usart0_rx_buffer[index] &= 0xFE;
-          txStringUSART1(usart0_rx_buffer, index);
+
+          // Transmit slave instructions.
+          txStringUSART(usart0_rx_buffer, index, &UDR1, &UCSR1A, UDRE1);
         }
 
       processInstruction(c);
@@ -171,7 +166,7 @@ USART0_RX_vect(void)
       if (strlen(usart0_rx_buffer) < 1)
         {
           // Transmit EOL.
-          txCharUSART0('\r');
+          txCharUSART('\r', &UDR0, &UCSR0A, UDRE0);
         }
       else
         {
@@ -182,7 +177,7 @@ USART0_RX_vect(void)
 }
 
 /**
- * USART1 Receive character interrupt.
+ * USART1 Receive character interrupt: add to buffer and transmit if EOL.
  */
 void
 USART1_RX_vect(void) __attribute__ ((signal,used, externally_visible));
@@ -199,7 +194,7 @@ USART1_RX_vect(void)
     {
       // Transmit USART1 RX buffer:
       uint16_t index;
-      txStringUSART0(usart1_rx_buffer, index);
+      txStringUSART(usart1_rx_buffer, index, &UDR0, &UCSR0A, UDRE0);
 
       // Clear USART1 RX buffer.
       memset(usart1_rx_buffer, 0x0, sizeof(usart1_rx_buffer));
