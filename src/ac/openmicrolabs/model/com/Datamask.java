@@ -52,7 +52,7 @@ public class Datamask {
 	public Datamask(final OMLSignal[] signalMask) {
 		this.signals = signalMask;
 		this.activeSignals = getActiveSignals();
-		this.comChar = getChar();
+		this.comChar = getCharArray();
 	}
 
 	/**
@@ -177,7 +177,7 @@ public class Datamask {
 	/*
 	 * Iterates over signals and produces an array of char data request codes.
 	 */
-	private char[] getChar() {
+	private char[] getCharArray() {
 		// Setup local variable.
 		String characters = "";
 

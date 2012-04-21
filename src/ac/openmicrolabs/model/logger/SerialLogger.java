@@ -39,8 +39,7 @@ public class SerialLogger extends Observable implements Runnable {
 	private final LogSettings logSettings;
 	private final SerialReader serialReader;
 	private final long restTime;
-
-	private Double[] databuffer;
+	private final int databufferSize;
 
 	/**
 	 * Creates a SerialLogger object form the given arguments. It then sets the
@@ -60,7 +59,7 @@ public class SerialLogger extends Observable implements Runnable {
 		this.serialReader = b;
 		this.setBufferSleepTime();
 		this.restTime = l.readDelay() - serialReader.getSleepTime();
-		this.databuffer = new Double[logSettings.datamask().activeSignals().length];
+		databufferSize = logSettings.datamask().activeSignals().length;
 	}
 
 	/**
@@ -75,15 +74,6 @@ public class SerialLogger extends Observable implements Runnable {
 				return;
 			}
 		}
-	}
-
-	/**
-	 * Returns the contents of the databuffer.
-	 * 
-	 * @return Double array.
-	 */
-	public final Double[] getDatabuffer() {
-		return databuffer;
 	}
 
 	/**
@@ -117,27 +107,34 @@ public class SerialLogger extends Observable implements Runnable {
 	 * Performs a serial read and interprets data.
 	 */
 	private void takeReading() {
+		// Setup databuffer.
+		final Double[] databuffer = new Double[databufferSize];
+
 		try {
 			// Get information from microcontroller.
-			String stringbuffer = serialReader.sendDataRequest(logSettings
-					.datamask().asciiChar());
+			final String stringbuffer = serialReader
+					.sendDataRequest(logSettings.datamask().asciiChar());
 
-			// Split information into separate strings.
-			String[] splitbuffer = stringbuffer.split(AppDetails
+			// Set splitbuffer.
+			final String[] splitbuffer = stringbuffer.split(AppDetails
 					.serialDelimiter()); //
 
 			// Iterate over databuffer.
 			for (int i = 0; i < databuffer.length; i++) {
 				try {
-					// Convert strings to doubles.
-					databuffer[i] = Double.parseDouble(splitbuffer[i]);
+					// Convert strings to doubles (remove non-numeric
+					// characters).
+					databuffer[i] = Double.parseDouble(splitbuffer[i]
+							.replaceAll("[^\\d]", ""));
 				} catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
 					// Else assign them null.
 					databuffer[i] = null;
 				}
 			}
 		} catch (IOException e) {
-			databuffer = null;
+			for (int i = 0; i < databuffer.length; i++) {
+				databuffer[i] = null;
+			}
 		}
 
 		// Update observers.
