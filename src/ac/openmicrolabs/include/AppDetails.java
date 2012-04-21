@@ -37,7 +37,7 @@ public abstract class AppDetails {
 	private static final String DATA_DELIMITER = ", ";
 	private static final String DATA_EOL = "\r";
 	private static final String SERIAL_DELIMITER = ",";
-	private static final long SLEEP_TIME = 3;
+	private static final long SLEEP_TIME = 5;
 
 	/**
 	 * Returns the program name.

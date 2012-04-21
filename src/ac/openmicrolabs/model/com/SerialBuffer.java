@@ -48,10 +48,16 @@ public class SerialBuffer extends Observable implements Observer, Runnable {
 		put((Double[]) arg1);
 	}
 
+	/*
+	 * Add latest data to queue.
+	 */
 	private void put(final Double[] d) {
 		queue.add(d);
 	}
 
+	/*
+	 * Waits until there is data, then returns it.
+	 */
 	private Double[] get() {
 		while (queue.isEmpty()) {
 			try {
