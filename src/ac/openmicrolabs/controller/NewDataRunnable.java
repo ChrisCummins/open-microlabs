@@ -22,11 +22,7 @@ import ac.openmicrolabs.model.ModelGateway;
 import ac.openmicrolabs.model.logger.LogSettings;
 import ac.openmicrolabs.view.ViewGateway;
 
-import java.util.List;
-
-import org.jfree.data.time.TimeSeries;
 import org.jfree.data.time.TimeSeriesCollection;
-import org.jfree.data.time.TimeSeriesDataItem;
 
 /**
  * This class updates the LoggerView with the latest data from the model.
@@ -64,7 +60,7 @@ public class NewDataRunnable implements Runnable {
 		this.v = view;
 
 	}
-	
+
 	@Override
 	public final void run() {
 		updateReadings();
@@ -156,23 +152,8 @@ public class NewDataRunnable implements Runnable {
 	 * Update the average reading values.
 	 */
 	private void updateAvg() {
-		String[] s = new String[data.getSeriesCount()];
-		for (int i = 0; i < s.length; i++) {
-			final TimeSeries series = data.getSeries(i);
-			@SuppressWarnings("unchecked")
-			final List<TimeSeriesDataItem> vals = series.getItems();
-			double total = 0;
-
-			for (int j = 0; j < vals.size(); j++) {
-				if (vals.get(j).getValue() != null) {
-					total += vals.get(j).getValue().doubleValue();
-				}
-			}
-
-			s[i] = l.datamask().activeSignals()[i]
-					.toString(total / vals.size());
-		}
-		v.lv().setAvgLabels(s);
+		(new AverageCalculatorWorker(data, m.logger().getLogSettings()
+				.datamask().activeSignals(), v)).execute();
 	}
 
 }

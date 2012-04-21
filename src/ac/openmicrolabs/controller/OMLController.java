@@ -18,6 +18,8 @@
 
 package ac.openmicrolabs.controller;
 
+import javax.swing.SwingUtilities;
+
 import com.jcummins.gui.GUITools;
 
 import ac.openmicrolabs.controller.listeners.AdvancedSettingsDoneListenner;
@@ -103,7 +105,12 @@ public class OMLController implements Controller {
 						c.getFlowOptionsSelected());
 
 		GUITools.centreFrame(v.cs().fetchFrame());
-		v.cs().fetchFrame().setVisible(true);
+		SwingUtilities.invokeLater(new Runnable() {
+			@Override
+			public final void run() {
+				v.cs().fetchFrame().setVisible(true);
+			}
+		});
 	}
 
 }

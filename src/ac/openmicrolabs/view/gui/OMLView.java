@@ -72,7 +72,7 @@ public class OMLView implements ViewGateway {
 
 	@Override
 	public final boolean showYesNoPrompt(final String msg) {
-		String[] options = { "Yes", "No" };
+		final String[] options = { "Yes", "No" };
 		final int n = JOptionPane.showOptionDialog(null, msg, AppDetails.name()
 				+ " " + AppDetails.version(), JOptionPane.YES_NO_OPTION,
 				JOptionPane.QUESTION_MESSAGE, null, options, 0);
