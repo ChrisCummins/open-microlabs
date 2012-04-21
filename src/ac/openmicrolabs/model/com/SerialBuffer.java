@@ -18,9 +18,9 @@
 
 package ac.openmicrolabs.model.com;
 
-import java.util.LinkedList;
 import java.util.Observable;
 import java.util.Observer;
+import java.util.concurrent.LinkedBlockingQueue;
 
 /**
  * This class acts as a FIFO queue between the SerialReader and any higher level
@@ -31,43 +31,45 @@ import java.util.Observer;
  */
 public class SerialBuffer extends Observable implements Observer, Runnable {
 
-	private LinkedList<Double[]> queue = new LinkedList<Double[]>();
+	private LinkedBlockingQueue<Double[]> queue = new LinkedBlockingQueue<Double[]>();
 	private Double[] msg;
 
 	@Override
 	public final void run() {
 		while (true) {
-			msg = get();
-			setChanged();
-			notifyObservers(msg);
+			try {
+				msg = get();
+				setChanged();
+				notifyObservers(msg);
+			} catch (NullPointerException e1) {
+				// Don't care.
+			} catch (InterruptedException e) {
+				// Don't care.
+			}
 		}
 	}
 
 	@Override
 	public final void update(final Observable arg0, final Object arg1) {
-		put((Double[]) arg1);
+		try {
+			put((Double[]) arg1);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 	}
 
 	/*
 	 * Add latest data to queue.
 	 */
-	private void put(final Double[] d) {
-		queue.add(d);
+	private void put(final Double[] d) throws InterruptedException {
+		queue.put(d);
 	}
 
 	/*
 	 * Waits until there is data, then returns it.
 	 */
-	private Double[] get() {
-		while (queue.isEmpty()) {
-			try {
-				Thread.sleep(1);
-			} catch (InterruptedException e) {
-				// Don't care.
-			}
-		}
-
-		return ((!queue.isEmpty()) ? queue.removeFirst() : null);
+	private Double[] get() throws InterruptedException {
+		return queue.take();
 	}
 
 }
