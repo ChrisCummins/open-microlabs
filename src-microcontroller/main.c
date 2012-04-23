@@ -132,7 +132,7 @@ txStringUSART(char *string, int index, volatile uint8_t *udr,
   index = 0;
   while (string[index] != '\0')
     {
-      txCharUSART(string[index++], udr, ucsra_address, udre_bit);
+      txCharUSART(string[index++], udr, ucsra, udre_bit);
     }
 }
 
