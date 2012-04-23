@@ -21,7 +21,6 @@
  */
 
 // INCLUDES ====================================================================
-
 #include <avr/io.h>
 #include <avr/interrupt.h>
 #include <stdio.h>
@@ -38,9 +37,13 @@
 #define AREF_VALUE (1<<REFS0)           // Vcc (5V).
 #define ADC_PRESCALE ((1<<ADPS2)|(1<<ADPS1)|(1<<ADPS0)) // PRESCALE 127.
 /* INSTRUCTION BITS
+ * LIB                  Low instruction bit.
+ * HIB                  High instruction bit.
  * SIB                  Slave instruction bit.
  * SIB_OFF_MASK         Value to set SIB low when char &= SIB_OFF_MASK.
  */
+#define LIB 1
+#define HIB 7
 #define SIB 0
 #define SIB_OFF_MASK 0xFE
 
@@ -147,7 +150,7 @@ localInstruction(char c)
 {
   // Iterate over ADC channels [1, 7].
   uint8_t index;
-  for (index = 0x01; index < 0x08; index++)
+  for (index = LIB; index <= HIB; index++)
     {
       // If instruction bit 'index' is set:
       if (c & (1 << index))
