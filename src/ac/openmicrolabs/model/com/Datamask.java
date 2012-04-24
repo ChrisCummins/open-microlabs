@@ -201,10 +201,6 @@ public class Datamask {
 				binary += "1";
 			}
 
-			// TODO: Remove debugging.
-			System.out.println((char) Integer.parseInt(binary, 2) + ": "
-					+ binary);
-
 			// Convert code into one byte.
 			characters += (char) Integer.parseInt(binary, 2);
 		}

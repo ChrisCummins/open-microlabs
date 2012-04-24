@@ -28,7 +28,6 @@ import java.io.IOException;
 
 import com.jcummins.serial.SerialComm;
 
-
 /**
  * This extension of the SerialComm class from the JCummins Library provides
  * Open MicroLabs specific functionality to the class. It represents the lowest
@@ -74,8 +73,6 @@ public class SerialReader extends SerialComm {
 	public final String sendDataRequest(final char[] dataRequest)
 			throws IOException {
 		for (char c : dataRequest) {
-			//TODO:
-			System.out.print(c);
 			super.write(c);
 		}
 
@@ -86,10 +83,7 @@ public class SerialReader extends SerialComm {
 		}
 
 		final String s = super.read();
-		
-		//TODO:
-		System.out.println("\n" + s);
-		
+
 		return s;
 	}
 
