@@ -39,7 +39,6 @@ import com.jcummins.gui.JComboBoxUtils;
 import com.jcummins.html.font.HTMLFontset;
 import com.jcummins.misc.GetSystemProperties;
 
-
 /**
  * This extension of JFrame draws a frame that can be used to set the comm
  * settings for serial communications with the microcontroller.
@@ -112,6 +111,11 @@ public class OMLCommSettingsView extends JFrame implements CommSettingsView {
 	@Override
 	public final JFrame fetchFrame() {
 		return this;
+	}
+
+	@Override
+	public final void setComLabel(final int i) {
+		comPortCountLabel.setText("" + i);
 	}
 
 	@Override
@@ -200,7 +204,8 @@ public class OMLCommSettingsView extends JFrame implements CommSettingsView {
 		topPanel.add(new JLabel(h.format("label", "System Architecture:")));
 		topPanel.add(new JLabel(
 				h.format("label", GetSystemProperties.osArch()), new ImageIcon(
-						"img/12x12/64 bit.png", OMLAppDetails.name()), JLabel.LEFT));
+						"img/12x12/64 bit.png", OMLAppDetails.name()),
+				JLabel.LEFT));
 		topPanel.add(new JLabel(h.format("label", "Com Ports:")));
 		topPanel.add(comPortCountLabel);
 
@@ -223,10 +228,12 @@ public class OMLCommSettingsView extends JFrame implements CommSettingsView {
 		midComPanel.setBackground(Color.white);
 
 		comBox.setBackground(Color.white);
+		comBox.setToolTipText("Set the desired com port to use");
 		midComPanel.add(comBox, BorderLayout.WEST);
 		comRefreshButton.setIcon(new ImageIcon("img/12x12/refresh.png", this
 				.getTitle()));
 		comRefreshButton.setBackground(Color.white);
+		comRefreshButton.setToolTipText("Refresh the list of available ports");
 		midComPanel.add(comRefreshButton, BorderLayout.EAST);
 
 		midPanel.add(midComPanel);
@@ -236,6 +243,7 @@ public class OMLCommSettingsView extends JFrame implements CommSettingsView {
 		midPanel.add(midBaudLabel);
 
 		baudBox.setBackground(Color.white);
+		baudBox.setToolTipText("Select the UART baud rate");
 		midPanel.add(baudBox);
 
 		JLabel midDataLabel = new JLabel(h.format("label", "Data Bits:"));
@@ -243,6 +251,7 @@ public class OMLCommSettingsView extends JFrame implements CommSettingsView {
 		midPanel.add(midDataLabel);
 
 		dataBox.setBackground(Color.white);
+		dataBox.setToolTipText("Select the number of UART data bits");
 		midPanel.add(dataBox);
 
 		JLabel midStopLabel = new JLabel(h.format("label", "Stop Bits:"));
@@ -250,6 +259,7 @@ public class OMLCommSettingsView extends JFrame implements CommSettingsView {
 		midPanel.add(midStopLabel);
 
 		stopBox.setBackground(Color.white);
+		stopBox.setToolTipText("Select the number of UART stop bits");
 		midPanel.add(stopBox);
 
 		JLabel midParityLabel = new JLabel(h.format("label", "Parity:"));
@@ -257,6 +267,7 @@ public class OMLCommSettingsView extends JFrame implements CommSettingsView {
 		midPanel.add(midParityLabel);
 
 		parityBox.setBackground(Color.white);
+		parityBox.setToolTipText("Select whether to use UART parity");
 		midPanel.add(parityBox);
 
 		JLabel midFlowLabel = new JLabel(h.format("label", "Flow Control"));
@@ -264,6 +275,7 @@ public class OMLCommSettingsView extends JFrame implements CommSettingsView {
 		midPanel.add(midFlowLabel);
 
 		flowBox.setBackground(Color.white);
+		flowBox.setToolTipText("Select whether to use UART flow control");
 		midPanel.add(flowBox);
 
 		// BOTTOM --------------------------------------------------------------
@@ -283,7 +295,7 @@ public class OMLCommSettingsView extends JFrame implements CommSettingsView {
 		testButton.setBackground(Color.white);
 		btmPanel.add(testButton);
 
-		doneButton.setToolTipText("Continue with these settings.");
+		doneButton.setToolTipText("Continue with these settings");
 		doneButton.setIcon(new ImageIcon("img/22x22/play.png", OMLAppDetails
 				.name()));
 		doneButton.setLocation(

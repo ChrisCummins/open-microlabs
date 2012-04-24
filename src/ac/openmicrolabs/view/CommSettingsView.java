@@ -24,7 +24,6 @@ import javax.swing.JFrame;
 
 import com.jcummins.html.font.HTMLFontset;
 
-
 /**
  * @author Chris Cummins
  * 
@@ -50,6 +49,14 @@ public interface CommSettingsView {
 	 * @return JFrame.
 	 */
 	JFrame fetchFrame();
+
+	/**
+	 * Set the comm port count.
+	 * 
+	 * @param i
+	 *            Integer comm port count.
+	 */
+	void setComLabel(int i);
 
 	/**
 	 * Set the options for the com ports.

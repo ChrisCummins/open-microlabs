@@ -18,6 +18,7 @@
 
 package ac.openmicrolabs.model.com;
 
+import ac.openmicrolabs.include.BSOD;
 import ac.openmicrolabs.include.OMLAppDetails;
 
 import gnu.io.NoSuchPortException;

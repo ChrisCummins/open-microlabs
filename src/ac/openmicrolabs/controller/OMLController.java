@@ -92,8 +92,10 @@ public class OMLController implements Controller {
 		m.com().refreshCommPorts();
 
 		v.cs().init(m.getOMLSettings().getFontset());
-		v.cs().setBaudOptions(c.getBaudOptions(), c.getBaudOptionsSelected());
+
+		v.cs().setComLabel(m.com().getCommCount());
 		v.cs().setComOptions(m.com().getCommPorts()[0]);
+		v.cs().setBaudOptions(c.getBaudOptions(), c.getBaudOptionsSelected());
 		v.cs().setDataOptions(c.getDatabitOptions()[0],
 				c.getDatabitOptionsSelected());
 		v.cs().setStopOptions(c.getStopbitOptions()[0],
@@ -112,5 +114,4 @@ public class OMLController implements Controller {
 			}
 		});
 	}
-
 }

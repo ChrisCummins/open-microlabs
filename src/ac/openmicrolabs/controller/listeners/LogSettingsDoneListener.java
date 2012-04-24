@@ -33,7 +33,6 @@ import java.io.IOException;
 
 import com.jcummins.gui.GUITools;
 
-
 /**
  * This implementation of the ActionListener interface is responsible for
  * getting log settings from the view and setting those to the model.
@@ -46,6 +45,7 @@ import com.jcummins.gui.GUITools;
 public class LogSettingsDoneListener implements ActionListener {
 
 	private static final int READ_DELAY_MULTIPLIER = 1000;
+	private static final int MINIMUM_READ_COUNT = 5;
 	private static final double DEFAULT_MINY = 0.0;
 	private static final double DEFAULT_MAXY = 1023.0;
 
@@ -79,6 +79,12 @@ public class LogSettingsDoneListener implements ActionListener {
 			v.showError("Read delay must be a positive integer!");
 			return;
 		}
+
+		if (readDelay <= MINIMUM_READ_COUNT) {
+			v.showError("Minimum read count is " + MINIMUM_READ_COUNT + "!");
+			return;
+		}
+
 		try {
 			readCount = Integer.parseInt(v.ls().getReadCountText());
 		} catch (NumberFormatException e) {
@@ -95,6 +101,10 @@ public class LogSettingsDoneListener implements ActionListener {
 
 		// Create session state data.
 		Datamask d = createDatamask();
+		if (d.activeSignals().length < 1) {
+			v.showError("No signals selected!");
+			return;
+		}
 		LogSettings l = new LogSettings(d, readDelay, readCount, filepath);
 
 		// Update record state data.
@@ -114,6 +124,7 @@ public class LogSettingsDoneListener implements ActionListener {
 			m.logger().startLogging();
 		} catch (IOException e) {
 			v.showError("Unable to log to file, IO error!");
+			m.logger().stopLogging();
 			return;
 		}
 
@@ -170,10 +181,10 @@ public class LogSettingsDoneListener implements ActionListener {
 			a = createAdvancedSettings();
 		}
 		try {
-		v.lv().init(c.getFontset(), m.logger().getData(),
-				OMLAppDetails.name() + " " + OMLAppDetails.version(), a.minY(),
-				a.maxY(), a.timeRange(),
-				m.logger().getLogSettings().datamask().signalsToString());
+			v.lv().init(c.getFontset(), m.logger().getData(),
+					OMLAppDetails.name() + " " + OMLAppDetails.version(),
+					a.minY(), a.maxY(), a.timeRange(),
+					m.logger().getLogSettings().datamask().signalsToString());
 		} catch (IllegalArgumentException e) {
 			v.showError(e.getMessage());
 		}

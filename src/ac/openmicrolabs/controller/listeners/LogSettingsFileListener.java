@@ -56,6 +56,8 @@ public class LogSettingsFileListener implements ActionListener {
 		if (fileChooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
 			if (fileChooser.getSelectedFile().exists()) {
 				fileOverwrite(fileChooser.getSelectedFile());
+			} else {
+				setFilePathLabel(fileChooser.getSelectedFile());
 			}
 		}
 	}
@@ -67,8 +69,14 @@ public class LogSettingsFileListener implements ActionListener {
 		boolean b = v.showYesNoPrompt("File exists, replace existing file?");
 
 		if (b) {
-			v.ls().setFilepathLabel(file.getAbsolutePath());
+			setFilePathLabel(file);
 		}
 	}
 
+	/*
+	 * Sets new file path to view.
+	 */
+	private void setFilePathLabel(final File file) {
+		v.ls().setFilepathLabel(file.getAbsolutePath());
+	}
 }

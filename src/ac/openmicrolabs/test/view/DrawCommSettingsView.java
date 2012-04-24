@@ -18,6 +18,8 @@
 
 package ac.openmicrolabs.test.view;
 
+import javax.swing.SwingUtilities;
+
 import com.jcummins.gui.GUITools;
 import com.jcummins.serial.DiscoverPorts;
 
@@ -54,6 +56,7 @@ public abstract class DrawCommSettingsView {
 		} else {
 			frame.setComOptions(ports);
 		}
+		frame.setComLabel(ports.length);
 
 		frame.setBaudOptions(c.getBaudOptions(), c.getBaudOptionsSelected());
 		frame.setDataOptions(c.getDatabitOptions()[0],
@@ -64,7 +67,13 @@ public abstract class DrawCommSettingsView {
 				c.getParityOptionsSelected());
 		frame.setFlowOptions(c.getFlowOptions()[0], c.getFlowOptionsSelected());
 
-		frame.setVisible(true);
+		GUITools.centreFrame(frame);
+
+		SwingUtilities.invokeLater(new Runnable() {
+			public void run() {
+				frame.setVisible(true);
+			}
+		});
 
 	}
 

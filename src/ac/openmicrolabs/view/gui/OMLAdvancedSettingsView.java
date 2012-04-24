@@ -135,14 +135,14 @@ public class OMLAdvancedSettingsView extends JFrame implements
 
 		final JPanel minYPanel = new JPanel();
 		minYPanel.setLayout(new GridLayout(1, 2));
-		minYPanel.add(new JLabel(h.format("label", "Min Y vale:")));
+		minYPanel.add(new JLabel(h.format("label", "Min Y value:")));
 		minYText.setText("0");
 		minYText.setBorder(BorderFactory.createLineBorder(Color.black));
 		minYPanel.add(minYText);
 
 		final JPanel maxYPanel = new JPanel();
 		maxYPanel.setLayout(new GridLayout(1, 2));
-		maxYPanel.add(new JLabel(h.format("label", "Max Y vale:")));
+		maxYPanel.add(new JLabel(h.format("label", "Max Y value:")));
 		maxYText.setText("1023");
 		maxYText.setBorder(BorderFactory.createLineBorder(Color.black));
 		maxYPanel.add(maxYText);

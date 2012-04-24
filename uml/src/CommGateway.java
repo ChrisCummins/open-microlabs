@@ -93,12 +93,6 @@ public interface CommGateway {
 	void setSerialReader(SerialReader r);
 
 	/**
-	 * Returns the number of available comm ports.
-	 * @return Integer comm port count.
-	 */
-	int getCommCount();
-	
-	/**
 	 * Returns a list of available comm ports.
 	 * 
 	 * @return 2xn Object array.

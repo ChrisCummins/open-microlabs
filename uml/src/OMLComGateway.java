@@ -39,8 +39,7 @@ import com.jcummins.serial.DiscoverPorts;
 public class OMLComGateway implements CommGateway {
 
 	private SerialReader serialReader;
-	private Object[][] comPorts;
-	private int comCount;
+	private Object[][] o;
 
 	@Override
 	public final boolean commTest() throws NoSuchPortException,
@@ -56,16 +55,14 @@ public class OMLComGateway implements CommGateway {
 
 	@Override
 	public final void refreshCommPorts() {
-		comCount = DiscoverPorts.size();
-
-		if (comCount > 0) {
-			comPorts = new Object[2][DiscoverPorts.size()];
-			comPorts[0] = DiscoverPorts.listToArray();
-			comPorts[1] = DiscoverPorts.listNamesToArray();
+		if (DiscoverPorts.size() > 0) {
+			o = new Object[2][DiscoverPorts.size()];
+			o[0] = DiscoverPorts.listToArray();
+			o[1] = DiscoverPorts.listNamesToArray();
 		} else {
-			comPorts = new Object[2][1];
-			comPorts[0][0] = "-NONE-";
-			comPorts[1][0] = "-NONE-";
+			o = new Object[2][1];
+			o[0][0] = "-NONE-";
+			o[1][0] = "-NONE-";
 		}
 	}
 
@@ -78,15 +75,10 @@ public class OMLComGateway implements CommGateway {
 	public final void setSerialReader(final SerialReader r) {
 		this.serialReader = r;
 	}
-	
-	@Override
-	public final int getCommCount() {
-		return comCount;
-	}
 
 	@Override
 	public final Object[][] getCommPorts() {
-		return comPorts;
+		return o;
 	}
 
 	@Override
