@@ -30,9 +30,9 @@ import java.awt.image.BufferedImage;
  * @author Chris Cummins
  * 
  */
-public abstract class AppDetails {
+public abstract class OMLAppDetails {
 	private static final String NAME = "Open MicroLabs";
-	private static final String VERSION = "v0.5.3 Beta";
+	private static final String VERSION = "v0.7.6 Beta";
 	private static final String AUTHOR = "Chris Cummins";
 	private static final String DATA_DELIMITER = ", ";
 	private static final String DATA_EOL = "\r";
@@ -61,7 +61,7 @@ public abstract class AppDetails {
 	 * Returns the program author.
 	 * 
 	 * @return Author string.
-	 */
+	 */	
 	public static final String author() {
 		return AUTHOR;
 	}

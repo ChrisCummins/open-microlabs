@@ -50,7 +50,7 @@ public class OMLComGateway implements CommGateway {
 	@Override
 	public final void commConnect() throws NoSuchPortException,
 			PortInUseException, UnsupportedCommOperationException, IOException {
-		serialReader.connect(ac.openmicrolabs.include.AppDetails.name());
+		serialReader.connect(ac.openmicrolabs.include.OMLAppDetails.name());
 	}
 
 	@Override

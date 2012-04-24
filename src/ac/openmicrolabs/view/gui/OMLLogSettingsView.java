@@ -39,7 +39,7 @@ import javax.swing.ScrollPaneConstants;
 import com.jcummins.gui.JComboBoxUtils;
 import com.jcummins.html.font.HTMLFontset;
 
-import ac.openmicrolabs.include.AppDetails;
+import ac.openmicrolabs.include.OMLAppDetails;
 import ac.openmicrolabs.view.LogSettingsView;
 
 
@@ -86,7 +86,7 @@ public class OMLLogSettingsView extends JFrame implements LogSettingsView,
 
 	private final JCheckBox fileCheckBox = new JCheckBox("Log to file:");
 	private final JButton fileButton = new JButton(new ImageIcon(
-			"img/32x32/folder.png", AppDetails.name()));
+			"img/32x32/folder.png", OMLAppDetails.name()));
 	private final JLabel fileLabel = new JLabel();
 
 	private final JTextArea readDelayText = new JTextArea(1, 8);
@@ -105,10 +105,10 @@ public class OMLLogSettingsView extends JFrame implements LogSettingsView,
 	 * Constructs a new OMLLogSettingsView frame.
 	 */
 	public OMLLogSettingsView() {
-		this.setTitle(AppDetails.name());
+		this.setTitle(OMLAppDetails.name());
 		this.setResizable(false);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.setIconImage(AppDetails.icon());
+		this.setIconImage(OMLAppDetails.icon());
 		this.setBackground(Color.white);
 	}
 
@@ -333,12 +333,12 @@ public class OMLLogSettingsView extends JFrame implements LogSettingsView,
 		readCountText.setBorder(BorderFactory.createLineBorder(Color.black));
 		btmPanel.add(readCountText);
 		guiButton.setToolTipText("Set advanced display options");
-		guiButton.setIcon(new ImageIcon("img/22x22/advanced.png", AppDetails
+		guiButton.setIcon(new ImageIcon("img/22x22/advanced.png", OMLAppDetails
 				.name()));
 		guiButton.setBackground(Color.white);
 		btmPanel.add(guiButton);
 		doneButton.setToolTipText("Continue with these settings");
-		doneButton.setIcon(new ImageIcon("img/22x22/play.png", AppDetails
+		doneButton.setIcon(new ImageIcon("img/22x22/play.png", OMLAppDetails
 				.name()));
 		doneButton.setBackground(Color.white);
 		btmPanel.add(doneButton);

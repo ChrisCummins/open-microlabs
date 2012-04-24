@@ -18,7 +18,7 @@
 
 package ac.openmicrolabs.view.gui;
 
-import ac.openmicrolabs.include.AppDetails;
+import ac.openmicrolabs.include.OMLAppDetails;
 import ac.openmicrolabs.view.AdvancedSettingsView;
 
 import java.awt.Color;
@@ -63,11 +63,11 @@ public class OMLAdvancedSettingsView extends JFrame implements
 	 * Create a new OMLAdvancedSettingsView frame.
 	 */
 	public OMLAdvancedSettingsView() {
-		this.setTitle(AppDetails.name());
+		this.setTitle(OMLAppDetails.name());
 		this.setSize(FRAME_WIDTH, FRAME_HEIGHT);
 		this.setResizable(false);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.setIconImage(AppDetails.icon());
+		this.setIconImage(OMLAppDetails.icon());
 		this.setBackground(Color.white);
 	}
 
@@ -152,7 +152,7 @@ public class OMLAdvancedSettingsView extends JFrame implements
 		timeRangePanel.add(new JLabel(h.format("label", "Graph Time Range:")));
 		timeRangePanel.add(timeRangeBox);
 
-		doneButton.setIcon(new ImageIcon("img/22x22/play.png", AppDetails
+		doneButton.setIcon(new ImageIcon("img/22x22/play.png", OMLAppDetails
 				.name()));
 
 		contentPanel.add(minYPanel);

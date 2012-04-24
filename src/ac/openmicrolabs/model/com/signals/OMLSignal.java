@@ -19,8 +19,8 @@
 package ac.openmicrolabs.model.com.signals;
 
 /**
- * This interface represents the raw result from a microcontroller AD
- * conversion.
+ * This class can be extended to provide a means for converting a raw ADC value
+ * into a real world physical value.
  * 
  * @author Chris Cummins
  * 

@@ -18,7 +18,7 @@
 
 package ac.openmicrolabs.model.com;
 
-import ac.openmicrolabs.include.AppDetails;
+import ac.openmicrolabs.include.OMLAppDetails;
 
 import gnu.io.NoSuchPortException;
 import gnu.io.PortInUseException;
@@ -74,6 +74,8 @@ public class SerialReader extends SerialComm {
 	public final String sendDataRequest(final char[] dataRequest)
 			throws IOException {
 		for (char c : dataRequest) {
+			//TODO:
+			System.out.print(c);
 			super.write(c);
 		}
 
@@ -83,7 +85,12 @@ public class SerialReader extends SerialComm {
 			// Don't care.
 		}
 
-		return super.read();
+		final String s = super.read();
+		
+		//TODO:
+		System.out.println("\n" + s);
+		
+		return s;
 	}
 
 	/**
@@ -107,7 +114,7 @@ public class SerialReader extends SerialComm {
 	public final boolean testConnection() throws IOException,
 			NoSuchPortException, PortInUseException,
 			UnsupportedCommOperationException {
-		super.connect(AppDetails.name());
+		super.connect(OMLAppDetails.name());
 
 		String s = sendDataRequest(TEST_CONNECT_CHAR);
 		super.close();

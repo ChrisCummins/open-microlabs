@@ -18,7 +18,7 @@
 
 package ac.openmicrolabs.view.gui;
 
-import ac.openmicrolabs.include.AppDetails;
+import ac.openmicrolabs.include.OMLAppDetails;
 import ac.openmicrolabs.view.CommSettingsView;
 
 import java.awt.BorderLayout;
@@ -90,11 +90,11 @@ public class OMLCommSettingsView extends JFrame implements CommSettingsView {
 	 * Creates a OMLCommSettingsView frame and sets content pane.
 	 */
 	public OMLCommSettingsView() {
-		this.setTitle(AppDetails.name());
+		this.setTitle(OMLAppDetails.name());
 		this.setSize(FRAME_WIDTH, FRAME_HEIGHT);
 		this.setResizable(false);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.setIconImage(AppDetails.icon());
+		this.setIconImage(OMLAppDetails.icon());
 		this.setBackground(Color.white);
 	}
 
@@ -191,16 +191,16 @@ public class OMLCommSettingsView extends JFrame implements CommSettingsView {
 
 		topPanel.add(new JLabel(h.format("label", "Operating System:")));
 		topPanel.add(new JLabel(h.format("label", GetSystemProperties.os()),
-				new ImageIcon("img/12x12/Desktop 2.png", AppDetails.name()),
+				new ImageIcon("img/12x12/Desktop 2.png", OMLAppDetails.name()),
 				JLabel.LEFT));
 		topPanel.add(new JLabel(h.format("label", "OS Version:")));
 		topPanel.add(new JLabel(h.format("label",
 				GetSystemProperties.osVersion()), new ImageIcon(
-				"img/12x12/advanced.png", AppDetails.name()), JLabel.LEFT));
+				"img/12x12/advanced.png", OMLAppDetails.name()), JLabel.LEFT));
 		topPanel.add(new JLabel(h.format("label", "System Architecture:")));
 		topPanel.add(new JLabel(
 				h.format("label", GetSystemProperties.osArch()), new ImageIcon(
-						"img/12x12/64 bit.png", AppDetails.name()), JLabel.LEFT));
+						"img/12x12/64 bit.png", OMLAppDetails.name()), JLabel.LEFT));
 		topPanel.add(new JLabel(h.format("label", "Com Ports:")));
 		topPanel.add(comPortCountLabel);
 
@@ -275,7 +275,7 @@ public class OMLCommSettingsView extends JFrame implements CommSettingsView {
 		mainPanel.add(btmPanel);
 
 		testButton.setToolTipText("Test microcontroller with these settings");
-		testButton.setIcon(new ImageIcon("img/22x22/plus.png", AppDetails
+		testButton.setIcon(new ImageIcon("img/22x22/plus.png", OMLAppDetails
 				.name()));
 		testButton.setLocation(PAD5, PAD5);
 		testButton.setSize((btmPanel.getSize().width / 2) - PAD10,
@@ -284,7 +284,7 @@ public class OMLCommSettingsView extends JFrame implements CommSettingsView {
 		btmPanel.add(testButton);
 
 		doneButton.setToolTipText("Continue with these settings.");
-		doneButton.setIcon(new ImageIcon("img/22x22/play.png", AppDetails
+		doneButton.setIcon(new ImageIcon("img/22x22/play.png", OMLAppDetails
 				.name()));
 		doneButton.setLocation(
 				(testButton.getLocation().x + testButton.getWidth()) + PAD10,

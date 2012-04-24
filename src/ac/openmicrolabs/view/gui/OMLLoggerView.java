@@ -41,7 +41,7 @@ import org.jfree.data.time.TimeSeriesCollection;
 
 import com.jcummins.html.font.HTMLFontset;
 
-import ac.openmicrolabs.include.AppDetails;
+import ac.openmicrolabs.include.OMLAppDetails;
 import ac.openmicrolabs.view.LoggerView;
 
 /**
@@ -116,7 +116,7 @@ public class OMLLoggerView extends JFrame implements LoggerView {
 		this.setResizable(false);
 		this.setBackground(Color.white);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.setIconImage(AppDetails.icon());
+		this.setIconImage(OMLAppDetails.icon());
 
 	}
 
@@ -151,7 +151,7 @@ public class OMLLoggerView extends JFrame implements LoggerView {
 		axis = plot.getRangeAxis();
 		axis.setRange(graphMinY, graphMaxY);
 
-		this.setTitle(AppDetails.name());
+		this.setTitle(OMLAppDetails.name());
 
 		valSideLabel.setText(h.format("label-bold", avgSideLabel.getText()));
 		avgSideLabel.setText("");
@@ -174,7 +174,7 @@ public class OMLLoggerView extends JFrame implements LoggerView {
 		btmPanel.add(reportButton);
 		btmPanel.repaint();
 		doneButton.setText("Done");
-		doneButton.setIcon(new ImageIcon("img/22x22/play.png", AppDetails
+		doneButton.setIcon(new ImageIcon("img/22x22/play.png", OMLAppDetails
 				.name()));
 	}
 

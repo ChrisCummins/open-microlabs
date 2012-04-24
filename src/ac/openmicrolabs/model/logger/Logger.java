@@ -133,6 +133,7 @@ public class Logger implements Observer {
 		Double[] d = (Double[]) arg1;
 		for (int i = 0; i < series.length; i++) {
 			readingCount++;
+
 			series[i].addOrUpdate(new Millisecond(), d[i]);
 
 			if (d[i] == null) {

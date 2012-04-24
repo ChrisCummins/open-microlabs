@@ -18,7 +18,7 @@
 
 package ac.openmicrolabs.model.logger.file;
 
-import ac.openmicrolabs.include.AppDetails;
+import ac.openmicrolabs.include.OMLAppDetails;
 import ac.openmicrolabs.model.com.signals.OMLSignal;
 
 import java.io.BufferedWriter;
@@ -74,7 +74,7 @@ public class FileLogger {
 
 		// Add the time.
 		String s = data.getSeries(0).getTimePeriod(index).toString()
-				+ AppDetails.datDelimiter();
+				+ OMLAppDetails.datDelimiter();
 
 		// Add data values.
 		for (int i = 0; i < signals.length; i++) {
@@ -83,12 +83,12 @@ public class FileLogger {
 			if (value != null) {
 				s += signals[i].toValue(value.doubleValue());
 			}
-			s += AppDetails.datDelimiter();
+			s += OMLAppDetails.datDelimiter();
 		}
 
 		// Write to file, removing last dat delimiter.
 		writeLine(s.substring(0, s.length()
-				- AppDetails.datDelimiter().length()));
+				- OMLAppDetails.datDelimiter().length()));
 	}
 
 	/*
@@ -96,16 +96,16 @@ public class FileLogger {
 	 */
 	private void writeHeader() {
 		// Add time header.
-		String s = "Time" + AppDetails.datDelimiter();
+		String s = "Time" + OMLAppDetails.datDelimiter();
 
 		// Add signal headers.
 		for (int i = 0; i < signals.length; i++) {
-			s += signals[i].name() + AppDetails.datDelimiter();
+			s += signals[i].name() + OMLAppDetails.datDelimiter();
 		}
 
 		// Write to file, removing last dat delimiter.
 		writeLine(s.substring(0, s.length()
-				- AppDetails.datDelimiter().length()));
+				- OMLAppDetails.datDelimiter().length()));
 	}
 
 	/*
@@ -115,7 +115,7 @@ public class FileLogger {
 		try {
 			final BufferedWriter out = new BufferedWriter(new FileWriter(path,
 					true));
-			out.write(s + AppDetails.datEOL());
+			out.write(s + OMLAppDetails.datEOL());
 			out.close();
 		} catch (IOException e) {
 			// Don't care.

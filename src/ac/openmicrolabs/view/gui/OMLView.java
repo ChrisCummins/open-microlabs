@@ -18,7 +18,7 @@
 
 package ac.openmicrolabs.view.gui;
 
-import ac.openmicrolabs.include.AppDetails;
+import ac.openmicrolabs.include.OMLAppDetails;
 import ac.openmicrolabs.view.AdvancedSettingsView;
 import ac.openmicrolabs.view.CommSettingsView;
 import ac.openmicrolabs.view.LogSettingsView;
@@ -57,8 +57,8 @@ public class OMLView implements ViewGateway {
 		JOptionPane.showMessageDialog(
 				null,
 				msg,
-				ac.openmicrolabs.include.AppDetails.name() + " "
-						+ AppDetails.version(), JOptionPane.PLAIN_MESSAGE);
+				ac.openmicrolabs.include.OMLAppDetails.name() + " "
+						+ OMLAppDetails.version(), JOptionPane.PLAIN_MESSAGE);
 	}
 
 	@Override
@@ -66,15 +66,15 @@ public class OMLView implements ViewGateway {
 		JOptionPane.showMessageDialog(
 				null,
 				msg,
-				ac.openmicrolabs.include.AppDetails.name() + " "
-						+ AppDetails.version(), JOptionPane.ERROR_MESSAGE);
+				ac.openmicrolabs.include.OMLAppDetails.name() + " "
+						+ OMLAppDetails.version(), JOptionPane.ERROR_MESSAGE);
 	}
 
 	@Override
 	public final boolean showYesNoPrompt(final String msg) {
 		final String[] options = { "Yes", "No" };
-		final int n = JOptionPane.showOptionDialog(null, msg, AppDetails.name()
-				+ " " + AppDetails.version(), JOptionPane.YES_NO_OPTION,
+		final int n = JOptionPane.showOptionDialog(null, msg, OMLAppDetails.name()
+				+ " " + OMLAppDetails.version(), JOptionPane.YES_NO_OPTION,
 				JOptionPane.QUESTION_MESSAGE, null, options, 0);
 
 		return (n == 0);

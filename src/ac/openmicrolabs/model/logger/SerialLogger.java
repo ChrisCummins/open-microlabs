@@ -18,7 +18,7 @@
 
 package ac.openmicrolabs.model.logger;
 
-import ac.openmicrolabs.include.AppDetails;
+import ac.openmicrolabs.include.OMLAppDetails;
 import ac.openmicrolabs.model.com.SerialReader;
 
 import java.io.IOException;
@@ -100,7 +100,7 @@ public class SerialLogger extends Observable implements Runnable {
 	 */
 	private void setBufferSleepTime() {
 		serialReader.setSleepTime(logSettings.datamask().activeSignals().length
-				* AppDetails.sleepTime());
+				* OMLAppDetails.sleepTime());
 	}
 
 	/*
@@ -116,7 +116,7 @@ public class SerialLogger extends Observable implements Runnable {
 					.sendDataRequest(logSettings.datamask().asciiChar());
 
 			// Set splitbuffer.
-			final String[] splitbuffer = stringbuffer.split(AppDetails
+			final String[] splitbuffer = stringbuffer.split(OMLAppDetails
 					.serialDelimiter()); //
 
 			// Iterate over databuffer.

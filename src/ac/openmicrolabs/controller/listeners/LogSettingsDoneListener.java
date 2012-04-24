@@ -18,7 +18,7 @@
 
 package ac.openmicrolabs.controller.listeners;
 
-import ac.openmicrolabs.include.AppDetails;
+import ac.openmicrolabs.include.OMLAppDetails;
 import ac.openmicrolabs.model.ModelGateway;
 import ac.openmicrolabs.model.com.Datamask;
 import ac.openmicrolabs.model.com.signals.OMLSignal;
@@ -169,10 +169,14 @@ public class LogSettingsDoneListener implements ActionListener {
 		} else {
 			a = createAdvancedSettings();
 		}
+		try {
 		v.lv().init(c.getFontset(), m.logger().getData(),
-				AppDetails.name() + " " + AppDetails.version(), a.minY(),
+				OMLAppDetails.name() + " " + OMLAppDetails.version(), a.minY(),
 				a.maxY(), a.timeRange(),
 				m.logger().getLogSettings().datamask().signalsToString());
+		} catch (IllegalArgumentException e) {
+			v.showError(e.getMessage());
+		}
 		GUITools.centreFrame(v.lv().fetchFrame());
 	}
 
