@@ -63,7 +63,7 @@ public class SerialLogger extends Observable implements Runnable {
 	}
 
 	/**
-	 * Takes a reading from the serial port.
+	 * Takes a reading from the serial port. If interrupted, will return.
 	 */
 	public final void run() {
 		for (int i = 0; i < logSettings.readCount(); i++) {

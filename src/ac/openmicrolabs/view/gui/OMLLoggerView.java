@@ -134,6 +134,12 @@ public class OMLLoggerView extends JFrame implements LoggerView {
 
 	@Override
 	public final void teardown() {
+		try {
+			btmPanel.remove(progressBar);
+			btmPanel.revalidate();
+		} catch (NullPointerException e) {
+			// Don't care.
+		}
 		this.dispose();
 	}
 
@@ -346,10 +352,13 @@ public class OMLLoggerView extends JFrame implements LoggerView {
 		// Instantiate bottom panel objects.
 		footerLabel.setSize(LABEL_WIDTH, LABEL_HEIGHT);
 		footerLabel.setLocation(LABEL_X, LABEL_Y);
+		footerLabel.setText("");
+
 		doneButton.setIcon(new ImageIcon("img/22x22/stop.png"));
 		doneButton.setSize(DONE_WIDTH, DONE_HEIGHT);
 		doneButton.setLocation(FRAME_WIDTH - PAD20 - doneButton.getWidth(),
 				PAD15);
+
 		progressBar = new JProgressBar();
 		progressBar.setSize(FRAME_WIDTH - PAD40 - doneButton.getWidth()
 				- footerLabel.getWidth(), PAD20);

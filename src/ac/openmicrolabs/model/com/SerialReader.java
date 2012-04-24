@@ -18,6 +18,7 @@
 
 package ac.openmicrolabs.model.com;
 
+import ac.openmicrolabs.include.BSOD;
 import ac.openmicrolabs.include.OMLAppDetails;
 
 import gnu.io.NoSuchPortException;
@@ -79,7 +80,7 @@ public class SerialReader extends SerialComm {
 		try {
 			Thread.sleep(sleepTime);
 		} catch (InterruptedException e) {
-			// Don't care.
+			(new BSOD(e)).init();
 		}
 
 		final String s = super.read();

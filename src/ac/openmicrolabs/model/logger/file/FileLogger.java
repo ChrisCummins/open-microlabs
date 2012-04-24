@@ -18,6 +18,7 @@
 
 package ac.openmicrolabs.model.logger.file;
 
+import ac.openmicrolabs.include.BSOD;
 import ac.openmicrolabs.include.OMLAppDetails;
 import ac.openmicrolabs.model.com.signals.OMLSignal;
 
@@ -118,7 +119,7 @@ public class FileLogger {
 			out.write(s + OMLAppDetails.datEOL());
 			out.close();
 		} catch (IOException e) {
-			// Don't care.
+			(new BSOD(e)).init();
 		}
 	}
 }

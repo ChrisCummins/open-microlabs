@@ -22,6 +22,8 @@ import java.util.Observable;
 import java.util.Observer;
 import java.util.concurrent.LinkedBlockingQueue;
 
+import ac.openmicrolabs.include.BSOD;
+
 /**
  * This class acts as a FIFO queue between the SerialReader and any higher level
  * loggers.
@@ -42,9 +44,9 @@ public class SerialBuffer extends Observable implements Observer, Runnable {
 				setChanged();
 				notifyObservers(msg);
 			} catch (NullPointerException e1) {
-				// Don't care.
-			} catch (InterruptedException e) {
-				// Don't care.
+				(new BSOD(e1)).init();
+			} catch (InterruptedException e2) {
+				(new BSOD(e2)).init();
 			}
 		}
 	}
@@ -54,7 +56,7 @@ public class SerialBuffer extends Observable implements Observer, Runnable {
 		try {
 			put((Double[]) arg1);
 		} catch (InterruptedException e) {
-			e.printStackTrace();
+			(new BSOD(e)).init();
 		}
 	}
 
