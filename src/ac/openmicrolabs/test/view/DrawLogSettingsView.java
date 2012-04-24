@@ -50,7 +50,6 @@ public abstract class DrawLogSettingsView {
 		frame.setSlaveBoxOptions(s);
 
 		frame.setFilepathLabel("C:\\test");
-		System.out.println(frame.getFilepathText());
 
 		frame.setPincount(PIN_COUNT * 2);
 

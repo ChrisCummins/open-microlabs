@@ -42,7 +42,6 @@ import com.jcummins.html.font.HTMLFontset;
 import ac.openmicrolabs.include.OMLAppDetails;
 import ac.openmicrolabs.view.LogSettingsView;
 
-
 /**
  * This extension of JFrame draws a frame that can be used to set the settings
  * for a logging session.
@@ -237,13 +236,13 @@ public class OMLLogSettingsView extends JFrame implements LogSettingsView,
 		pinOnBox = new JComboBox[p];
 		signalBox = new JComboBox[p];
 
+		final String[] chans = new String[p];
+
 		for (int i = 0; i < p; i++) {
-			final JLabel chanLabel = new JLabel(h.format(
-					"label",
-					(char) ((i / PINCOUNT) + PAD65)
-							+ "-0x"
-							+ String.format("%02x", (i % PINCOUNT) + 1)
-									.toUpperCase()));
+			chans[i] = (char) ((i / PINCOUNT) + PAD65) + "-0x"
+					+ String.format("%02x", (i % PINCOUNT) + 1).toUpperCase();
+
+			final JLabel chanLabel = new JLabel(h.format("label", chans[i]));
 			chanLabel.setHorizontalAlignment(JLabel.CENTER);
 			midPanel.add(chanLabel);
 		}
@@ -251,6 +250,8 @@ public class OMLLogSettingsView extends JFrame implements LogSettingsView,
 		for (int i = 0; i < p; i++) {
 			pinOnBox[i] = JComboBoxUtils.create(YES_NO, 1);
 			pinOnBox[i].addActionListener(this);
+			pinOnBox[i].setToolTipText("Select whether to take readings on"
+					+ " the respective pin (" + chans[i] + ")");
 			pinOnBox[i].setBackground(Color.white);
 			midPanel.add(pinOnBox[i]);
 		}
@@ -258,6 +259,8 @@ public class OMLLogSettingsView extends JFrame implements LogSettingsView,
 		midPanel.add(new JLabel("Type:"));
 		for (int i = 0; i < p; i++) {
 			signalBox[i] = JComboBoxUtils.create(signalTypes, 0);
+			signalBox[i].setToolTipText("Select the type of sensor attached to"
+					+ " the respective pin (" + chans[i] + ")");
 			signalBox[i].setBackground(Color.white);
 			midPanel.add(signalBox[i]);
 		}
@@ -280,11 +283,13 @@ public class OMLLogSettingsView extends JFrame implements LogSettingsView,
 		mainPanel.add(topPanel);
 
 		fileCheckBox.setSize(FILE_CHECK_BOX_WIDTH, TOP_HEIGHT);
+		fileCheckBox.setToolTipText("Set logging to file on or off");
 		fileCheckBox.setLocation(0, 0);
 		fileCheckBox.setBackground(Color.white);
 		fileCheckBox.addActionListener(this);
 		topPanel.add(fileCheckBox);
 
+		fileButton.setToolTipText("Select location for log file");
 		fileButton.setSize(FILE_BUTTON_WIDTH, TOP_HEIGHT);
 		fileButton.setLocation(FILE_BUTTON_X, 0);
 		fileButton.setEnabled(false);
@@ -297,6 +302,7 @@ public class OMLLogSettingsView extends JFrame implements LogSettingsView,
 								+ fileButton.getSize().width + PAD20),
 				TOP_HEIGHT);
 		fileLabel.setBorder(BorderFactory.createLoweredBevelBorder());
+		fileLabel.setToolTipText("Log file location");
 		fileLabel.setLocation(fileButton.getLocation().x
 				+ fileButton.getSize().width + PAD10, 0);
 		fileLabel.setEnabled(false);
@@ -320,24 +326,32 @@ public class OMLLogSettingsView extends JFrame implements LogSettingsView,
 		btmPanel.setLocation(0, this.getHeight() - BTM_HEIGHT);
 		btmPanel.setBackground(Color.white);
 
+		slaveBox.setToolTipText("Set the number of slave microcontrollers in"
+				+ " use");
 		btmPanel.add(slaveBox);
 
 		btmPanel.add(new JLabel("Delay between reads (s):"));
 
 		readDelayText.setText("1");
+		readDelayText.setToolTipText("Set the amount of time between "
+				+ "individual readings being made");
 		readDelayText.setBorder(BorderFactory.createLineBorder(Color.black));
 		readDelayText.setBackground(Color.white);
 		btmPanel.add(readDelayText);
 		btmPanel.add(new JLabel("Number of readings:"));
 		readCountText.setText("10");
+		readCountText.setToolTipText("Set the number of individual readings"
+				+ " to take");
 		readCountText.setBorder(BorderFactory.createLineBorder(Color.black));
 		btmPanel.add(readCountText);
-		guiButton.setToolTipText("Set advanced display options");
+
+		guiButton.setToolTipText("Show advanced options");
 		guiButton.setIcon(new ImageIcon("img/22x22/advanced.png", OMLAppDetails
 				.name()));
 		guiButton.setBackground(Color.white);
 		btmPanel.add(guiButton);
-		doneButton.setToolTipText("Continue with these settings");
+
+		doneButton.setToolTipText("Start logging with these settings");
 		doneButton.setIcon(new ImageIcon("img/22x22/play.png", OMLAppDetails
 				.name()));
 		doneButton.setBackground(Color.white);
