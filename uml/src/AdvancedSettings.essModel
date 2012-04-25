@@ -1,0 +1,58 @@
+[Box:  - ::ac.openmicrolabs]
+X=225
+Y=40
+
+[Box:  - ::ac.openmicrolabs.controller]
+X=1045
+Y=40
+
+[Box:  - ::ac.openmicrolabs.controller.listeners]
+X=2275
+Y=40
+
+[Box:  - ::ac.openmicrolabs.include]
+X=840
+Y=40
+
+[Box:  - ::ac.openmicrolabs.model]
+X=2070
+Y=40
+
+[Box:  - ::ac.openmicrolabs.model.com]
+X=1865
+Y=40
+
+[Box:  - ::ac.openmicrolabs.model.com.signals]
+X=1660
+Y=40
+
+[Box:  - ::ac.openmicrolabs.model.logger]
+X=2480
+Y=40
+
+[Box:  - ::ac.openmicrolabs.model.logger.file]
+X=635
+Y=40
+
+[Box:  - ::ac.openmicrolabs.model.logger.report]
+X=20
+Y=40
+
+[Box:  - ::ac.openmicrolabs.model.settings]
+X=1455
+Y=40
+
+[Box:  - ::ac.openmicrolabs.view]
+X=1250
+Y=40
+
+[Box:  - ::ac.openmicrolabs.view.gui]
+X=430
+Y=40
+
+[Diagram: ]
+OffsetX=0
+OffsetY=0
+Visibility=0
+ShowAssoc=1
+

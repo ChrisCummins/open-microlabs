@@ -1,4 +1,4 @@
-/* Chris Cummins - 16 Apr 2012
+/* Chris Cummins - 8 Apr 2012
  *
  * This file is part of Open MicroLabs.
  *
@@ -16,11 +16,28 @@
  * along with Open MicroLabs.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+package ac.openmicrolabs.controller;
+
+import ac.openmicrolabs.model.ModelGateway;
+import ac.openmicrolabs.view.ViewGateway;
+
 /**
- * This package contains an implementation of the view package.
+ * This interface specifies the required behaviour for a Open MicroLabs
+ * controller, fulfilling the roles of a controller within the MCV architecture.
  * 
  * @author Chris Cummins
- * @version 0.5
+ * 
  */
-package ac.openmicrolabs.view.gui;
+public interface Controller {
 
+	/**
+	 * Initialise the Open MicroLabs program.
+	 * 
+	 * @param m
+	 *            Model to be used.
+	 * @param v
+	 *            ViewGateway to be used.
+	 */
+	void init(ModelGateway m, ViewGateway v);
+
+}
