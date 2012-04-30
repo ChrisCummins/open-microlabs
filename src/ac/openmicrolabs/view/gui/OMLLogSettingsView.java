@@ -133,6 +133,7 @@ public class OMLLogSettingsView extends JFrame implements LogSettingsView,
 
 	@Override
 	public final void actionPerformed(final ActionEvent a) {
+		// File button context behaviour.
 		if (a.getSource() == fileCheckBox) {
 			if (!fileCheckBox.isSelected()) {
 				fileButton.setEnabled(false);
@@ -143,9 +144,14 @@ public class OMLLogSettingsView extends JFrame implements LogSettingsView,
 			}
 		}
 
+		// Pin type box context behaviour.
 		for (int i = 0; i < pinOnBox.length; i++) {
 			if (a.getSource() == pinOnBox[i]) {
-				signalBox[i].setEnabled(!signalBox[i].isEnabled());
+				if (pinOnBox[i].getSelectedIndex() == 0) {
+					signalBox[i].setEnabled(false);
+				} else {
+					signalBox[i].setEnabled(true);
+				}
 			}
 		}
 	}
