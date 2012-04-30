@@ -49,7 +49,13 @@ public abstract class OMLSignal {
 	 * @return Converted value as human readable string.
 	 */
 	public final String toString(final double rawInt) {
-		return signalToString(rawInt);
+		String s;
+		try {
+			s = signalToString(rawInt);
+		} catch (Throwable t) {
+			s = "!!!";
+		}
+		return s;
 	}
 
 	/**

@@ -41,6 +41,8 @@ import org.jfree.data.time.TimeSeriesCollection;
  */
 public class Logger implements Observer {
 
+	private static final int PAD65 = 65;
+
 	private final SerialLogger serialLogger;
 	private final Thread serialLoggerThread;
 
@@ -80,9 +82,15 @@ public class Logger implements Observer {
 		this.seriesCollection = new TimeSeriesCollection();
 
 		int index = 0;
-		for (OMLSignal signal : s.getLogSettings().datamask().signals()) {
-			if (signal != null) {
-				series[index] = new TimeSeries("0x0" + index);
+		final OMLSignal[] signals = s.getLogSettings().datamask().signals();
+		for (int i = 0; i < signals.length; i++) {
+			if (signals[i] != null) {
+				series[index] = new TimeSeries(
+						(char) ((i / signals.length) + PAD65)
+								+ "-0x"
+								+ String.format("%02x",
+										(i % signals.length) + 1).toUpperCase()
+								+ " " + signals[i].name());
 				seriesCollection.addSeries(series[index]);
 				index++;
 			}

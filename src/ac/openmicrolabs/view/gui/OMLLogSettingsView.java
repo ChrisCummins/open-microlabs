@@ -193,7 +193,7 @@ public class OMLLogSettingsView extends JFrame implements LogSettingsView,
 
 	@Override
 	public final Integer[] getSignalTypeOptions() {
-		Integer[] ret = new Integer[signalBox.length];
+		final Integer[] ret = new Integer[signalBox.length];
 
 		for (int i = 0; i < ret.length; i++) {
 			if (pinOnBox[i].getSelectedIndex() == 1) {
