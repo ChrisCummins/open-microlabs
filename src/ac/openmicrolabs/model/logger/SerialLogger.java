@@ -41,6 +41,8 @@ public class SerialLogger extends Observable implements Runnable {
 	private final long restTime;
 	private final int databufferSize;
 
+	private boolean stopRequest = false;
+
 	/**
 	 * Creates a SerialLogger object form the given arguments. It then sets the
 	 * SerialReader sleep time to the required amount calculated, and sets the
@@ -67,10 +69,14 @@ public class SerialLogger extends Observable implements Runnable {
 	 */
 	public final void run() {
 		for (int i = 0; i < logSettings.readCount(); i++) {
-			takeReading();
-			try {
-				Thread.sleep(restTime);
-			} catch (InterruptedException e) {
+			if (!stopRequest) {
+				takeReading();
+				try {
+					Thread.sleep(restTime);
+				} catch (InterruptedException e) {
+					return;
+				}
+			} else {
 				return;
 			}
 		}
@@ -92,6 +98,13 @@ public class SerialLogger extends Observable implements Runnable {
 	 */
 	public final LogSettings getLogSettings() {
 		return logSettings;
+	}
+
+	/**
+	 * Signal that the thread should stop execution.
+	 */
+	public final void stopThread() {
+		stopRequest = true;
 	}
 
 	/*

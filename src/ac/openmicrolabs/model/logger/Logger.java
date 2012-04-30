@@ -102,6 +102,8 @@ public class Logger implements Observer {
 	 * Stops a logging session.
 	 */
 	public final void stopLogging() {
+		serialLogger.stopThread();
+		serialBuffer.stopThread();
 		serialLoggerThread.interrupt();
 		serialBufferThread.interrupt();
 	}

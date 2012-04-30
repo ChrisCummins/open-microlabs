@@ -33,18 +33,23 @@ public class SerialBuffer extends Observable implements Observer, Runnable {
 
 	private LinkedBlockingQueue<Double[]> queue = new LinkedBlockingQueue<Double[]>();
 	private Double[] msg;
+	private boolean stopRequest = false;
 
 	@Override
 	public final void run() {
 		while (true) {
 			try {
-				msg = get();
-				setChanged();
-				notifyObservers(msg);
+				if (!stopRequest) {
+					msg = get();
+					setChanged();
+					notifyObservers(msg);
+				} else {
+					return;
+				}
 			} catch (NullPointerException e1) {
 				// Don't care.
 			} catch (InterruptedException e2) {
-				// Don't care.
+				return;
 			}
 		}
 	}
@@ -56,6 +61,13 @@ public class SerialBuffer extends Observable implements Observer, Runnable {
 		} catch (InterruptedException e) {
 			// Don't care.
 		}
+	}
+
+	/**
+	 * Signal that the thread should stop execution.
+	 */
+	public final void stopThread() {
+		stopRequest = true;
 	}
 
 	/*

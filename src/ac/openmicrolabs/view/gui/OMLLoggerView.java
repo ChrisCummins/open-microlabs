@@ -186,12 +186,16 @@ public class OMLLoggerView extends JFrame implements LoggerView {
 
 	@Override
 	public final void setValLabels(final String[] s) {
-		for (int i = 0; i < s.length; i++) {
-			if (s[i] != null) {
-				valLabel[i].setText(h.format("label-bold", s[i]));
-			} else {
-				valLabel[i].setText(h.format("label-red", "!!!"));
+		try {
+			for (int i = 0; i < s.length; i++) {
+				if (s[i] != null) {
+					valLabel[i].setText(h.format("label-bold", s[i]));
+				} else {
+					valLabel[i].setText(h.format("label-red", "!!!"));
+				}
 			}
+		} catch (ArrayIndexOutOfBoundsException e) {
+			// Don't care.
 		}
 	}
 

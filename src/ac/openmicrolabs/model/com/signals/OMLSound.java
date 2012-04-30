@@ -39,13 +39,12 @@ public class OMLSound extends OMLSignal {
 
 	@Override
 	protected final String signalToString(final double rawInt) {
-		return (new DecimalRounder(1)).round(signalToValue(rawInt)) + " dB";
+		return (new DecimalRounder(1)).round(toValue(rawInt)) + " dB";
 	}
 
 	@Override
 	protected final String signalName() {
-		// TODO Auto-generated method stub
-		return null;
+		return "Sound";
 	}
 
 }
